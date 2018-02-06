@@ -393,6 +393,9 @@ func TestWatchRestoreSyncedWatcher(t *testing.T) {
 	case <-time.After(time.Second):
 		t.Fatal("failed to receive event in 1 second")
 	}
+
+	t.Run("Normal", test(0))
+	t.Run("RunSyncWatchLoopBeforeRestore", test(time.Millisecond*120)) // longer than default waitDuration
 }
 
 // TestWatchBatchUnsynced tests batching on unsynced watchers
