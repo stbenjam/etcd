@@ -813,9 +813,9 @@ func parseCompactionRetention(mode, retention string) (ret time.Duration, err er
 	h, err := strconv.Atoi(retention)
 	if err == nil {
 		switch mode {
-		case CompactorModeRevision:
+		case compactor.ModeRevision:
 			ret = time.Duration(int64(h))
-		case CompactorModePeriodic:
+		case compactor.ModePeriodic:
 			ret = time.Duration(int64(h)) * time.Hour
 		}
 	} else {

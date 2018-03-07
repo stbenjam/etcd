@@ -611,7 +611,7 @@ func (cfg *Config) Validate() error {
 
 	switch cfg.AutoCompactionMode {
 	case "":
-	case CompactorModeRevision, CompactorModePeriodic:
+	case compactor.ModeRevision, compactor.ModePeriodic:
 	default:
 		return fmt.Errorf("unknown auto-compaction-mode %q", cfg.AutoCompactionMode)
 	}
