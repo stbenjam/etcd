@@ -202,3 +202,8 @@ func TestJWTBad(t *testing.T) {
 func testJWTOpts() string {
 	return fmt.Sprintf("%s,pub-key=%s,priv-key=%s,sign-method=RS256", tokenTypeJWT, jwtRSAPubKey, jwtRSAPrivKey)
 }
+
+// testJWTOpts is useful for passing to NewTokenProvider which requires a string.
+func testJWTOpts() string {
+	return fmt.Sprintf("%s,pub-key=%s,priv-key=%s,sign-method=RS256", tokenTypeJWT, jwtPubKey, jwtPrivKey)
+}
