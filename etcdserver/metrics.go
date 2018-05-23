@@ -82,6 +82,12 @@ var (
 		Name:      "snapshot_apply_in_progress_total",
 		Help:      "1 if the server is applying the incoming snapshot. 0 if none.",
 	})
+	slowApplies = prometheus.NewCounter(prometheus.CounterOpts{
+		Namespace: "etcd",
+		Subsystem: "server",
+		Name:      "slow_apply_total",
+		Help:      "The total number of slow apply requests (likely overloaded from slow disk).",
+	})
 	proposalsCommitted = prometheus.NewGauge(prometheus.GaugeOpts{
 		Namespace: "etcd",
 		Subsystem: "server",
