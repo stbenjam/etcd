@@ -336,6 +336,8 @@ func (cfg *config) configFromCmdLine() error {
 	cfg.ec.DeprecatedLogOutput = flags.UniqueStringsFromFlag(cfg.cf.flagSet, "log-output")
 	cfg.ec.LogOutputs = flags.UniqueStringsFromFlag(cfg.cf.flagSet, "log-outputs")
 
+	cfg.ec.CipherSuites = flags.StringsFromFlagV2(cfg.cf.flagSet, "cipher-suites")
+
 	cfg.ec.ClusterState = cfg.cf.clusterState.String()
 	cfg.cp.Fallback = cfg.cf.fallback.String()
 	cfg.cp.Proxy = cfg.cf.proxy.String()
