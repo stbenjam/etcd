@@ -130,6 +130,12 @@ var (
 		Name:      "quota_backend_bytes",
 		Help:      "Current backend storage quota size in bytes.",
 	})
+	quotaBackendBytes = prometheus.NewGauge(prometheus.GaugeOpts{
+		Namespace: "etcd",
+		Subsystem: "server",
+		Name:      "quota_backend_bytes",
+		Help:      "Current backend storage quota size in bytes.",
+	})
 	currentVersion = prometheus.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: "etcd",
 		Subsystem: "server",
