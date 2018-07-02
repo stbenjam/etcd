@@ -764,5 +764,4 @@ func (s *EtcdServer) AuthInfoFromCtx(ctx context.Context) (*auth.AuthInfo, error
 	}
 	authInfo = s.AuthStore().AuthInfoFromTLS(ctx)
 	return authInfo, nil
-
 }
