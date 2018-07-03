@@ -191,7 +191,7 @@ var (
 		Namespace: "etcd",
 		Subsystem: "mvcc",
 		Name:      "db_total_size_in_bytes",
-		Help:      "Total size of the underlying database in bytes.",
+		Help:      "Total size of the underlying database physically allocated in bytes.",
 	},
 		func() float64 {
 			reportDbTotalSizeInBytesMu.RLock()
