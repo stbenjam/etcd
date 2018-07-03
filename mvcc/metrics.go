@@ -187,6 +187,18 @@ var (
 			return reportDbTotalSizeInBytes()
 		},
 	)
+	dbTotalSize = prometheus.NewGaugeFunc(prometheus.GaugeOpts{
+		Namespace: "etcd",
+		Subsystem: "mvcc",
+		Name:      "db_total_size_in_bytes",
+		Help:      "Total size of the underlying database in bytes.",
+	},
+		func() float64 {
+			reportDbTotalSizeInBytesMu.RLock()
+			defer reportDbTotalSizeInBytesMu.RUnlock()
+			return reportDbTotalSizeInBytes()
+		},
+	)
 	// overridden by mvcc initialization
 	reportDbTotalSizeInBytesMu sync.RWMutex
 	reportDbTotalSizeInBytes   = func() float64 { return 0 }
@@ -285,6 +297,7 @@ func init() {
 	prometheus.MustRegister(dbCompactionPauseMs)
 	prometheus.MustRegister(dbCompactionTotalMs)
 	prometheus.MustRegister(dbCompactionKeysCounter)
+	prometheus.MustRegister(dbTotalSizeDebugging)
 	prometheus.MustRegister(dbTotalSize)
 	prometheus.MustRegister(dbTotalSizeDebug)
 	prometheus.MustRegister(dbTotalSizeInUse)
