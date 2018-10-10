@@ -136,6 +136,12 @@ var (
 		Name:      "quota_backend_bytes",
 		Help:      "Current backend storage quota size in bytes.",
 	})
+	readIndexFailed = prometheus.NewCounter(prometheus.CounterOpts{
+		Namespace: "etcd",
+		Subsystem: "server",
+		Name:      "read_indexes_failed_total",
+		Help:      "The total number of failed read indexes seen.",
+	})
 	quotaBackendBytes = prometheus.NewGauge(prometheus.GaugeOpts{
 		Namespace: "etcd",
 		Subsystem: "server",
