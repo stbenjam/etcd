@@ -1180,7 +1180,7 @@ func (as *authStore) Revision() uint64 {
 	return atomic.LoadUint64(&as.revision)
 }
 
-func (as *authStore) AuthInfoFromTLS(ctx context.Context) (ai *AuthInfo) {
+func (as *authStore) AuthInfoFromTLS(ctx context.Context) *AuthInfo {
 	peer, ok := peer.FromContext(ctx)
 	if !ok || peer == nil || peer.AuthInfo == nil {
 		return nil
