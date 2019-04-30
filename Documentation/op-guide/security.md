@@ -397,7 +397,7 @@ Note that the client origin policy is enforced whether authentication is enabled
 
 By default, `etcd --host-whitelist` and `embed.Config.HostWhitelist` are set *empty* to allow all hostnames. Note that when specifying hostnames, loopback addresses are not added automatically. To allow loopback interfaces, add them to whitelist manually (e.g. `"localhost"`, `"127.0.0.1"`, etc.).
 
-[v3.3.0](https://github.com/coreos/etcd/blob/master/CHANGELOG-3.3.md) adds [`etcd --peer-cert-allowed-cn`](https://github.com/coreos/etcd/pull/8616) flag to support [CN(Common Name)-based auth for inter-peer connections](https://github.com/coreos/etcd/issues/8262). Kubernetes TLS bootstrapping involves generating dynamic certificates for etcd members and other system components (e.g. API server, kubelet, etc.). Maintaining different CAs for each component provides tighter access control to etcd cluster but often tedious. When `--peer-cert-allowed-cn` flag is specified, node can only join with matching common name even with shared CAs. For example, each member in 3-node cluster is set up with CSRs (with `cfssl`) as below:
+[v3.3.0](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md) adds [`etcd --peer-cert-allowed-cn`](https://github.com/etcd-io/etcd/pull/8616) flag to support [CN(Common Name)-based auth for inter-peer connections](https://github.com/etcd-io/etcd/issues/8262). Kubernetes TLS bootstrapping involves generating dynamic certificates for etcd members and other system components (e.g. API server, kubelet, etc.). Maintaining different CAs for each component provides tighter access control to etcd cluster but often tedious. When `--peer-cert-allowed-cn` flag is specified, node can only join with matching common name even with shared CAs. For example, each member in 3-node cluster is set up with CSRs (with `cfssl`) as below:
 
 ```json
 {
@@ -456,6 +456,35 @@ I | embed: serving client requests on 127.0.0.1:32379
 I | embed: serving client requests on 127.0.0.1:22379
 I | embed: serving client requests on 127.0.0.1:2379
 ```
+
+[v3.2.19](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.2.md) and [v3.3.4](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md) fixes TLS reload when [certificate SAN field only includes IP addresses but no domain names](https://github.com/etcd-io/etcd/issues/9541). For example, a member is set up with CSRs (with `cfssl`) as below:
+
+```json
+{
+  "CN": "etcd.local",
+  "hosts": [
+    "127.0.0.1"
+  ],
+```
+
+In Go, server calls `(*tls.Config).GetCertificate` for TLS reload if and only if server's `(*tls.Config).Certificates` field is not empty, or `(*tls.ClientHelloInfo).ServerName` is not empty with a valid SNI from the client. Previously, etcd always populates `(*tls.Config).Certificates` on the initial client TLS handshake, as non-empty. Thus, client was always expected to supply a matching SNI in order to pass the TLS verification and to trigger `(*tls.Config).GetCertificate` to reload TLS assets.
+
+However, a certificate whose SAN field does [not include any domain names but only IP addresses](https://github.com/etcd-io/etcd/issues/9541) would request `*tls.ClientHelloInfo` with an empty `ServerName` field, thus failing to trigger the TLS reload on initial TLS handshake; this becomes a problem when expired certificates need to be replaced online.
+
+Now, `(*tls.Config).Certificates` is created empty on initial TLS client handshake, first to trigger `(*tls.Config).GetCertificate`, and then to populate rest of the certificates on every new TLS connection, even when client SNI is empty (e.g. cert only includes IPs).
+
+## Notes for Host Whitelist
+
+`etcd --host-whitelist` flag specifies acceptable hostnames from HTTP client requests. Client origin policy protects against ["DNS Rebinding"](https://en.wikipedia.org/wiki/DNS_rebinding) attacks to insecure etcd servers. That is, any website can simply create an authorized DNS name, and direct DNS to `"localhost"` (or any other address). Then, all HTTP endpoints of etcd server listening on `"localhost"` becomes accessible, thus vulnerable to DNS rebinding attacks. See [CVE-2018-5702](https://bugs.chromium.org/p/project-zero/issues/detail?id=1447#c2) for more detail.
+
+Client origin policy works as follows:
+
+1. If client connection is secure via HTTPS, allow any hostnames.
+2. If client connection is not secure and `"HostWhitelist"` is not empty, only allow HTTP requests whose Host field is listed in whitelist.
+
+Note that the client origin policy is enforced whether authentication is enabled or not, for tighter controls.
+
+By default, `etcd --host-whitelist` and `embed.Config.HostWhitelist` are set *empty* to allow all hostnames. Note that when specifying hostnames, loopback addresses are not added automatically. To allow loopback interfaces, add them to whitelist manually (e.g. `"localhost"`, `"127.0.0.1"`, etc.).
 
 ## Frequently asked questions
 

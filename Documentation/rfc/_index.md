@@ -61,6 +61,7 @@ the size in the future a little bit or make it configurable.
 ## Examples
 
 ### Put a key (foo=bar)
+
 ```
 // A put is always successful
 Put( PutRequest { key = foo, value = bar } )
@@ -216,5 +217,5 @@ WatchResponse {
 
 ```
 
-[api-protobuf]: https://github.com/coreos/etcd/blob/release-2.3/etcdserver/etcdserverpb/rpc.proto
-[kv-protobuf]: https://github.com/coreos/etcd/blob/release-2.3/storage/storagepb/kv.proto
+[api-protobuf]: https://github.com/etcd-io/etcd/blob/master/etcdserver/etcdserverpb/rpc.proto
+[kv-protobuf]: https://github.com/etcd-io/etcd/blob/master/mvcc/mvccpb/kv.proto

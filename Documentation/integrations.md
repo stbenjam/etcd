@@ -145,6 +145,7 @@ title: Libraries and tools
 - [cloudfoundry/cf-release](https://github.com/cloudfoundry/cf-release/tree/master/jobs/etcd)
 
 **Projects using etcd**
+
 - [etcd Raft users](../raft/README.md#notable-users) - projects using etcd's raft library implementation.
 - [apache/celix](https://github.com/apache/celix) - an implementation of the OSGi specification adapted to C and C++
 - [binocarlos/yoda](https://github.com/binocarlos/yoda) - etcd + ZeroMQ
