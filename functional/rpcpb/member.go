@@ -95,19 +95,10 @@ func (m *Member) CreateEtcdClientConfig(opts ...grpc.DialOption) (cfg *clientv3.
 		}
 	}
 
-	// TODO: make this configurable
-	level := "error"
-	if os.Getenv("ETCD_CLIENT_DEBUG") != "" {
-		level = "debug"
-	}
-	lcfg := logutil.DefaultZapLoggerConfig
-	lcfg.Level = zap.NewAtomicLevelAt(logutil.ConvertToZapLevel(level))
-
 	cfg = &clientv3.Config{
 		Endpoints:   []string{m.EtcdClientEndpoint},
 		DialTimeout: 10 * time.Second,
 		DialOptions: opts,
-		LogConfig:   &lcfg,
 	}
 	if secure {
 		// assume save TLS assets are already stord on disk
