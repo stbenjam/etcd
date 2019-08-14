@@ -569,7 +569,6 @@ func TestV3LeaseFailover(t *testing.T) {
 	md := metadata.Pairs(rpctypes.MetadataRequireLeaderKey, rpctypes.MetadataHasLeader)
 	mctx := metadata.NewOutgoingContext(context.Background(), md)
 	ctx, cancel := context.WithCancel(mctx)
-	defer cancel()
 	lac, err := lc.LeaseKeepAlive(ctx)
 	if err != nil {
 		t.Fatal(err)
