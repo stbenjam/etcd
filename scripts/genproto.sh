@@ -21,6 +21,9 @@ DIRS="./wal/walpb ./etcdserver/etcdserverpb ./etcdserver/api/snap/snappb ./raft/
 # disable go mod
 export GO111MODULE=off
 
+# disable go mod
+export GO111MODULE=off
+
 # exact version of packages to build
 GOGO_PROTO_SHA="1adfc126b41513cc696b209667c8656ea7aac67c"
 GRPC_GATEWAY_SHA="92583770e3f01b09a0d3e9bdf64321d8bebd48f2"
@@ -49,21 +52,32 @@ trap cleanup EXIT
 mkdir -p "${ETCD_IO_ROOT}"
 ln -s "${PWD}" "${ETCD_ROOT}"
 
-# Ensure we have the right version of protoc-gen-gogo by building it every time.
-# TODO(jonboulle): vendor this instead of `go get`ting it.
-go get -u github.com/gogo/protobuf/{proto,protoc-gen-gogo,gogoproto}
-go get -u golang.org/x/tools/cmd/goimports
+echo "Installing gogo/protobuf..."
+GOGOPROTO_ROOT="$GOPATH/src/github.com/gogo/protobuf"
+# rm -rf $GOGOPROTO_ROOT
+mkdir -p $GOPATH/src/github.com/gogo
+pushd $GOPATH/src/github.com/gogo
+  git clone https://github.com/gogo/protobuf.git
+popd
 pushd "${GOGOPROTO_ROOT}"
-	git reset --hard "${GOGO_PROTO_SHA}"
-	make install
+  git reset --hard HEAD
+  make install
 popd
 
-# generate gateway code
-go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+echo "Installing grpc-ecosystem/grpc-gateway..."
+GRPC_GATEWAY_ROOT="$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway"
+# rm -rf $GRPC_GATEWAY_ROOT
+mkdir -p $GOPATH/src/github.com/grpc-ecosystem
+go get -v -d github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
+go get -v -d github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+pushd $GOPATH/src/github.com/grpc-ecosystem
+  rm -rf ./grpc-gateway
+  git clone https://github.com/grpc-ecosystem/grpc-gateway.git
+popd
 pushd "${GRPC_GATEWAY_ROOT}"
 	git reset --hard "${GRPC_GATEWAY_SHA}"
-	go install ./protoc-gen-grpc-gateway
+	go install -v ./protoc-gen-grpc-gateway
+	go install -v ./protoc-gen-swagger
 popd
 
 for dir in ${DIRS}; do
