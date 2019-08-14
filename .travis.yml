@@ -20,6 +20,7 @@ env:
   - TARGET=linux-amd64-integration-4-cpu
   - TARGET=linux-amd64-functional
   - TARGET=linux-amd64-unit
+  - TARGET=linux-amd64-e2e
   - TARGET=all-build
   - TARGET=linux-amd64-grpcproxy
   - TARGET=linux-386-unit
@@ -31,9 +32,6 @@ matrix:
     env: TARGET=linux-amd64-grpcproxy
   - go: 1.12.9
     env: TARGET=linux-386-unit
-
-before_install:
-- if [[ $TRAVIS_GO_VERSION == 1.* ]]; then docker pull gcr.io/etcd-development/etcd-test:go${TRAVIS_GO_VERSION}; fi
 
 install:
 - go get -t -v -d ./...
