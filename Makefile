@@ -79,17 +79,17 @@ build-docker-test:
 	$(info GO_VERSION: $(GO_VERSION))
 	@sed -i.bak 's|REPLACE_ME_GO_VERSION|$(GO_VERSION)|g' ./tests/Dockerfile
 	docker build \
-	  --tag gcr.io/etcd-development/etcd-test:go$(GO_VERSION) \
+	  --tag gcr.io/etcd-development/etcd-test:go$(GO_VERSION)-release-3.3 \
 	  --file ./tests/Dockerfile .
 	@mv ./tests/Dockerfile.bak ./tests/Dockerfile
 
 push-docker-test:
 	$(info GO_VERSION: $(GO_VERSION))
-	gcloud docker -- push gcr.io/etcd-development/etcd-test:go$(GO_VERSION)
+	gcloud docker -- push gcr.io/etcd-development/etcd-test:go$(GO_VERSION)-release-3.3
 
 pull-docker-test:
 	$(info GO_VERSION: $(GO_VERSION))
-	docker pull gcr.io/etcd-development/etcd-test:go$(GO_VERSION)
+	docker pull gcr.io/etcd-development/etcd-test:go$(GO_VERSION)-release-3.3
 
 
 
