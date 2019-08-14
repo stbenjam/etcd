@@ -1087,6 +1087,12 @@ func (s *EtcdServer) run() {
 	}
 }
 
+func (s *EtcdServer) leaderChangedNotify() <-chan struct{} {
+	s.leaderChangedMu.RLock()
+	defer s.leaderChangedMu.RUnlock()
+	return s.leaderChanged
+}
+
 func (s *EtcdServer) applyAll(ep *etcdProgress, apply *apply) {
 	s.applySnapshot(ep, apply)
 	s.applyEntries(ep, apply)
