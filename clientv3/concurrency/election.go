@@ -50,6 +50,7 @@ func ResumeElection(s *Session, pfx string, leaderKey string, leaderRev int64) *
 	return &Election{
 		keyPrefix:     pfx,
 		session:       s,
+		keyPrefix:     pfx,
 		leaderKey:     leaderKey,
 		leaderRev:     leaderRev,
 		leaderSession: s,

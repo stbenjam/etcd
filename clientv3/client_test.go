@@ -86,6 +86,7 @@ func TestDialTimeout(t *testing.T) {
 	testCfgs := []Config{
 		{
 			Endpoints:   []string{"http://254.0.0.1:12345"},
+			DialOptions: []grpc.DialOption{grpc.WithBlock()},
 			DialTimeout: 2 * time.Second,
 			DialOptions: []grpc.DialOption{grpc.WithBlock()},
 		},
