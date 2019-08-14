@@ -16,15 +16,13 @@
 package authpb
 
 import (
-	"fmt"
-
-	proto "github.com/golang/protobuf/proto"
-
+	fmt "fmt"
+	io "io"
 	math "math"
+	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
-
-	io "io"
+	proto "github.com/golang/protobuf/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -51,6 +49,7 @@ var Permission_Type_name = map[int32]string{
 	1: "WRITE",
 	2: "READWRITE",
 }
+
 var Permission_Type_value = map[string]int32{
 	"READ":      0,
 	"WRITE":     1,
@@ -86,9 +85,12 @@ func (*User) Descriptor() ([]byte, []int) { return fileDescriptorAuth, []int{1} 
 
 // Permission is a single entity
 type Permission struct {
-	PermType Permission_Type `protobuf:"varint,1,opt,name=permType,proto3,enum=authpb.Permission_Type" json:"permType,omitempty"`
-	Key      []byte          `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
-	RangeEnd []byte          `protobuf:"bytes,3,opt,name=range_end,json=rangeEnd,proto3" json:"range_end,omitempty"`
+	PermType             Permission_Type `protobuf:"varint,1,opt,name=permType,proto3,enum=authpb.Permission_Type" json:"permType,omitempty"`
+	Key                  []byte          `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	RangeEnd             []byte          `protobuf:"bytes,3,opt,name=range_end,json=rangeEnd,proto3" json:"range_end,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *Permission) Reset()                    { *m = Permission{} }
@@ -98,8 +100,42 @@ func (*Permission) Descriptor() ([]byte, []int) { return fileDescriptorAuth, []i
 
 // Role is a single entry in the bucket authRoles
 type Role struct {
-	Name          []byte        `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	KeyPermission []*Permission `protobuf:"bytes,2,rep,name=keyPermission" json:"keyPermission,omitempty"`
+	Name                 []byte        `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	KeyPermission        []*Permission `protobuf:"bytes,2,rep,name=keyPermission,proto3" json:"keyPermission,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *Role) Reset()         { *m = Role{} }
+func (m *Role) String() string { return proto.CompactTextString(m) }
+func (*Role) ProtoMessage()    {}
+func (*Role) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8bbd6f3875b0e874, []int{2}
+}
+func (m *Role) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Role) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Role.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Role) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Role.Merge(m, src)
+}
+func (m *Role) XXX_Size() int {
+	return m.Size()
+}
+func (m *Role) XXX_DiscardUnknown() {
+	xxx_messageInfo_Role.DiscardUnknown(m)
 }
 
 func (m *Role) Reset()                    { *m = Role{} }
@@ -112,7 +148,6 @@ func init() {
 	proto.RegisterType((*User)(nil), "authpb.User")
 	proto.RegisterType((*Permission)(nil), "authpb.Permission")
 	proto.RegisterType((*Role)(nil), "authpb.Role")
-	proto.RegisterEnum("authpb.Permission_Type", Permission_Type_name, Permission_Type_value)
 }
 func (m *UserAddOptions) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
@@ -145,7 +180,7 @@ func (m *UserAddOptions) MarshalTo(dAtA []byte) (int, error) {
 func (m *User) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -153,35 +188,26 @@ func (m *User) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *User) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *User) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintAuth(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
-	}
-	if len(m.Password) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintAuth(dAtA, i, uint64(len(m.Password)))
-		i += copy(dAtA[i:], m.Password)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Roles) > 0 {
-		for _, s := range m.Roles {
+		for iNdEx := len(m.Roles) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Roles[iNdEx])
+			copy(dAtA[i:], m.Roles[iNdEx])
+			i = encodeVarintAuth(dAtA, i, uint64(len(m.Roles[iNdEx])))
+			i--
 			dAtA[i] = 0x1a
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
 	if m.Options != nil {
@@ -200,7 +226,7 @@ func (m *User) MarshalTo(dAtA []byte) (int, error) {
 func (m *Permission) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -208,34 +234,45 @@ func (m *Permission) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Permission) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Permission) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.PermType != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintAuth(dAtA, i, uint64(m.PermType))
-	}
-	if len(m.Key) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintAuth(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.RangeEnd) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.RangeEnd)
+		copy(dAtA[i:], m.RangeEnd)
 		i = encodeVarintAuth(dAtA, i, uint64(len(m.RangeEnd)))
-		i += copy(dAtA[i:], m.RangeEnd)
+		i--
+		dAtA[i] = 0x1a
 	}
-	return i, nil
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintAuth(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.PermType != 0 {
+		i = encodeVarintAuth(dAtA, i, uint64(m.PermType))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Role) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -243,39 +280,53 @@ func (m *Role) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Role) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Role) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintAuth(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.KeyPermission) > 0 {
-		for _, msg := range m.KeyPermission {
-			dAtA[i] = 0x12
-			i++
-			i = encodeVarintAuth(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.KeyPermission) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.KeyPermission[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintAuth(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0x12
 		}
 	}
-	return i, nil
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintAuth(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintAuth(dAtA []byte, offset int, v uint64) int {
+	offset -= sovAuth(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *UserAddOptions) Size() (n int) {
 	var l int
@@ -287,6 +338,9 @@ func (m *UserAddOptions) Size() (n int) {
 }
 
 func (m *User) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -311,6 +365,9 @@ func (m *User) Size() (n int) {
 }
 
 func (m *Permission) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.PermType != 0 {
@@ -324,10 +381,16 @@ func (m *Permission) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovAuth(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *Role) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -340,18 +403,14 @@ func (m *Role) Size() (n int) {
 			n += 1 + l + sovAuth(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func sovAuth(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozAuth(x uint64) (n int) {
 	return sovAuth(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -441,7 +500,7 @@ func (m *User) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -469,7 +528,7 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -478,6 +537,9 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAuth
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -500,7 +562,7 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -509,6 +571,9 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAuth
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -531,7 +596,7 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -541,6 +606,9 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAuth
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -588,9 +656,13 @@ func (m *User) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthAuth
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -615,7 +687,7 @@ func (m *Permission) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -643,7 +715,7 @@ func (m *Permission) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.PermType |= (Permission_Type(b) & 0x7F) << shift
+				m.PermType |= Permission_Type(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -662,7 +734,7 @@ func (m *Permission) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -671,6 +743,9 @@ func (m *Permission) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAuth
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -693,7 +768,7 @@ func (m *Permission) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -702,6 +777,9 @@ func (m *Permission) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAuth
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -719,9 +797,13 @@ func (m *Permission) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthAuth
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -746,7 +828,7 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -774,7 +856,7 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -783,6 +865,9 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAuth
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -805,7 +890,7 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -814,6 +899,9 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAuth
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -831,9 +919,13 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthAuth
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthAuth
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -897,8 +989,11 @@ func skipAuth(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			iNdEx += length
 			if length < 0 {
+				return 0, ErrInvalidLengthAuth
+			}
+			iNdEx += length
+			if iNdEx < 0 {
 				return 0, ErrInvalidLengthAuth
 			}
 			return iNdEx, nil
@@ -929,6 +1024,9 @@ func skipAuth(dAtA []byte) (n int, err error) {
 					return 0, err
 				}
 				iNdEx = start + next
+				if iNdEx < 0 {
+					return 0, ErrInvalidLengthAuth
+				}
 			}
 			return iNdEx, nil
 		case 4:

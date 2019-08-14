@@ -4,10 +4,9 @@
 package etcdserverpb
 
 import (
-	"fmt"
-
-	proto "github.com/golang/protobuf/proto"
-
+	context "context"
+	fmt "fmt"
+	io "io"
 	math "math"
 
 	_ "github.com/gogo/protobuf/gogoproto"
@@ -19,14 +18,20 @@ import (
 	context "golang.org/x/net/context"
 
 	grpc "google.golang.org/grpc"
-
-	io "io"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type AlarmType int32
 
@@ -41,6 +46,7 @@ var AlarmType_name = map[int32]string{
 	1: "NOSPACE",
 	2: "CORRUPT",
 }
+
 var AlarmType_value = map[string]int32{
 	"NONE":    0,
 	"NOSPACE": 1,
@@ -50,7 +56,10 @@ var AlarmType_value = map[string]int32{
 func (x AlarmType) String() string {
 	return proto.EnumName(AlarmType_name, int32(x))
 }
-func (AlarmType) EnumDescriptor() ([]byte, []int) { return fileDescriptorRpc, []int{0} }
+
+func (AlarmType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{0}
+}
 
 type RangeRequest_SortOrder int32
 
@@ -65,6 +74,7 @@ var RangeRequest_SortOrder_name = map[int32]string{
 	1: "ASCEND",
 	2: "DESCEND",
 }
+
 var RangeRequest_SortOrder_value = map[string]int32{
 	"NONE":    0,
 	"ASCEND":  1,
@@ -74,7 +84,10 @@ var RangeRequest_SortOrder_value = map[string]int32{
 func (x RangeRequest_SortOrder) String() string {
 	return proto.EnumName(RangeRequest_SortOrder_name, int32(x))
 }
-func (RangeRequest_SortOrder) EnumDescriptor() ([]byte, []int) { return fileDescriptorRpc, []int{1, 0} }
+
+func (RangeRequest_SortOrder) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{1, 0}
+}
 
 type RangeRequest_SortTarget int32
 
@@ -93,6 +106,7 @@ var RangeRequest_SortTarget_name = map[int32]string{
 	3: "MOD",
 	4: "VALUE",
 }
+
 var RangeRequest_SortTarget_value = map[string]int32{
 	"KEY":     0,
 	"VERSION": 1,
@@ -104,7 +118,10 @@ var RangeRequest_SortTarget_value = map[string]int32{
 func (x RangeRequest_SortTarget) String() string {
 	return proto.EnumName(RangeRequest_SortTarget_name, int32(x))
 }
-func (RangeRequest_SortTarget) EnumDescriptor() ([]byte, []int) { return fileDescriptorRpc, []int{1, 1} }
+
+func (RangeRequest_SortTarget) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{1, 1}
+}
 
 type Compare_CompareResult int32
 
@@ -121,6 +138,7 @@ var Compare_CompareResult_name = map[int32]string{
 	2: "LESS",
 	3: "NOT_EQUAL",
 }
+
 var Compare_CompareResult_value = map[string]int32{
 	"EQUAL":     0,
 	"GREATER":   1,
@@ -131,7 +149,10 @@ var Compare_CompareResult_value = map[string]int32{
 func (x Compare_CompareResult) String() string {
 	return proto.EnumName(Compare_CompareResult_name, int32(x))
 }
-func (Compare_CompareResult) EnumDescriptor() ([]byte, []int) { return fileDescriptorRpc, []int{9, 0} }
+
+func (Compare_CompareResult) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{9, 0}
+}
 
 type Compare_CompareTarget int32
 
@@ -150,6 +171,7 @@ var Compare_CompareTarget_name = map[int32]string{
 	3: "VALUE",
 	4: "LEASE",
 }
+
 var Compare_CompareTarget_value = map[string]int32{
 	"VERSION": 0,
 	"CREATE":  1,
@@ -161,7 +183,10 @@ var Compare_CompareTarget_value = map[string]int32{
 func (x Compare_CompareTarget) String() string {
 	return proto.EnumName(Compare_CompareTarget_name, int32(x))
 }
-func (Compare_CompareTarget) EnumDescriptor() ([]byte, []int) { return fileDescriptorRpc, []int{9, 1} }
+
+func (Compare_CompareTarget) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{9, 1}
+}
 
 type WatchCreateRequest_FilterType int32
 
@@ -176,6 +201,7 @@ var WatchCreateRequest_FilterType_name = map[int32]string{
 	0: "NOPUT",
 	1: "NODELETE",
 }
+
 var WatchCreateRequest_FilterType_value = map[string]int32{
 	"NOPUT":    0,
 	"NODELETE": 1,
@@ -184,8 +210,9 @@ var WatchCreateRequest_FilterType_value = map[string]int32{
 func (x WatchCreateRequest_FilterType) String() string {
 	return proto.EnumName(WatchCreateRequest_FilterType_name, int32(x))
 }
+
 func (WatchCreateRequest_FilterType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptorRpc, []int{21, 0}
+	return fileDescriptor_77a6da22d6a3feb1, []int{21, 0}
 }
 
 type AlarmRequest_AlarmAction int32
@@ -201,6 +228,7 @@ var AlarmRequest_AlarmAction_name = map[int32]string{
 	1: "ACTIVATE",
 	2: "DEACTIVATE",
 }
+
 var AlarmRequest_AlarmAction_value = map[string]int32{
 	"GET":        0,
 	"ACTIVATE":   1,
@@ -210,6 +238,7 @@ var AlarmRequest_AlarmAction_value = map[string]int32{
 func (x AlarmRequest_AlarmAction) String() string {
 	return proto.EnumName(AlarmRequest_AlarmAction_name, int32(x))
 }
+
 func (AlarmRequest_AlarmAction) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptorRpc, []int{54, 0}
 }
@@ -225,13 +254,44 @@ type ResponseHeader struct {
 	// header.revision number.
 	Revision int64 `protobuf:"varint,3,opt,name=revision,proto3" json:"revision,omitempty"`
 	// raft_term is the raft term when the request was applied.
-	RaftTerm uint64 `protobuf:"varint,4,opt,name=raft_term,json=raftTerm,proto3" json:"raft_term,omitempty"`
+	RaftTerm             uint64   `protobuf:"varint,4,opt,name=raft_term,json=raftTerm,proto3" json:"raft_term,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ResponseHeader) Reset()                    { *m = ResponseHeader{} }
-func (m *ResponseHeader) String() string            { return proto.CompactTextString(m) }
-func (*ResponseHeader) ProtoMessage()               {}
-func (*ResponseHeader) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{0} }
+func (m *ResponseHeader) Reset()         { *m = ResponseHeader{} }
+func (m *ResponseHeader) String() string { return proto.CompactTextString(m) }
+func (*ResponseHeader) ProtoMessage()    {}
+func (*ResponseHeader) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{0}
+}
+func (m *ResponseHeader) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ResponseHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ResponseHeader.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ResponseHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseHeader.Merge(m, src)
+}
+func (m *ResponseHeader) XXX_Size() int {
+	return m.Size()
+}
+func (m *ResponseHeader) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResponseHeader.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResponseHeader proto.InternalMessageInfo
 
 func (m *ResponseHeader) GetClusterId() uint64 {
 	if m != nil {
@@ -303,13 +363,44 @@ type RangeRequest struct {
 	MinCreateRevision int64 `protobuf:"varint,12,opt,name=min_create_revision,json=minCreateRevision,proto3" json:"min_create_revision,omitempty"`
 	// max_create_revision is the upper bound for returned key create revisions; all keys with
 	// greater create revisions will be filtered away.
-	MaxCreateRevision int64 `protobuf:"varint,13,opt,name=max_create_revision,json=maxCreateRevision,proto3" json:"max_create_revision,omitempty"`
+	MaxCreateRevision    int64    `protobuf:"varint,13,opt,name=max_create_revision,json=maxCreateRevision,proto3" json:"max_create_revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RangeRequest) Reset()                    { *m = RangeRequest{} }
-func (m *RangeRequest) String() string            { return proto.CompactTextString(m) }
-func (*RangeRequest) ProtoMessage()               {}
-func (*RangeRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{1} }
+func (m *RangeRequest) Reset()         { *m = RangeRequest{} }
+func (m *RangeRequest) String() string { return proto.CompactTextString(m) }
+func (*RangeRequest) ProtoMessage()    {}
+func (*RangeRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{1}
+}
+func (m *RangeRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RangeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RangeRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RangeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RangeRequest.Merge(m, src)
+}
+func (m *RangeRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *RangeRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RangeRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RangeRequest proto.InternalMessageInfo
 
 func (m *RangeRequest) GetKey() []byte {
 	if m != nil {
@@ -403,20 +494,51 @@ func (m *RangeRequest) GetMaxCreateRevision() int64 {
 }
 
 type RangeResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// kvs is the list of key-value pairs matched by the range request.
 	// kvs is empty when count is requested.
-	Kvs []*mvccpb.KeyValue `protobuf:"bytes,2,rep,name=kvs" json:"kvs,omitempty"`
+	Kvs []*mvccpb.KeyValue `protobuf:"bytes,2,rep,name=kvs,proto3" json:"kvs,omitempty"`
 	// more indicates if there are more keys to return in the requested range.
 	More bool `protobuf:"varint,3,opt,name=more,proto3" json:"more,omitempty"`
 	// count is set to the number of keys within the range when requested.
-	Count int64 `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
+	Count                int64    `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RangeResponse) Reset()                    { *m = RangeResponse{} }
-func (m *RangeResponse) String() string            { return proto.CompactTextString(m) }
-func (*RangeResponse) ProtoMessage()               {}
-func (*RangeResponse) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{2} }
+func (m *RangeResponse) Reset()         { *m = RangeResponse{} }
+func (m *RangeResponse) String() string { return proto.CompactTextString(m) }
+func (*RangeResponse) ProtoMessage()    {}
+func (*RangeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{2}
+}
+func (m *RangeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RangeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RangeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RangeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RangeResponse.Merge(m, src)
+}
+func (m *RangeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *RangeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_RangeResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RangeResponse proto.InternalMessageInfo
 
 func (m *RangeResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -462,13 +584,44 @@ type PutRequest struct {
 	IgnoreValue bool `protobuf:"varint,5,opt,name=ignore_value,json=ignoreValue,proto3" json:"ignore_value,omitempty"`
 	// If ignore_lease is set, etcd updates the key using its current lease.
 	// Returns an error if the key does not exist.
-	IgnoreLease bool `protobuf:"varint,6,opt,name=ignore_lease,json=ignoreLease,proto3" json:"ignore_lease,omitempty"`
+	IgnoreLease          bool     `protobuf:"varint,6,opt,name=ignore_lease,json=ignoreLease,proto3" json:"ignore_lease,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *PutRequest) Reset()                    { *m = PutRequest{} }
-func (m *PutRequest) String() string            { return proto.CompactTextString(m) }
-func (*PutRequest) ProtoMessage()               {}
-func (*PutRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{3} }
+func (m *PutRequest) Reset()         { *m = PutRequest{} }
+func (m *PutRequest) String() string { return proto.CompactTextString(m) }
+func (*PutRequest) ProtoMessage()    {}
+func (*PutRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{3}
+}
+func (m *PutRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PutRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PutRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PutRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PutRequest.Merge(m, src)
+}
+func (m *PutRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *PutRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_PutRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PutRequest proto.InternalMessageInfo
 
 func (m *PutRequest) GetKey() []byte {
 	if m != nil {
@@ -513,15 +666,46 @@ func (m *PutRequest) GetIgnoreLease() bool {
 }
 
 type PutResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// if prev_kv is set in the request, the previous key-value pair will be returned.
-	PrevKv *mvccpb.KeyValue `protobuf:"bytes,2,opt,name=prev_kv,json=prevKv" json:"prev_kv,omitempty"`
+	PrevKv               *mvccpb.KeyValue `protobuf:"bytes,2,opt,name=prev_kv,json=prevKv,proto3" json:"prev_kv,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
-func (m *PutResponse) Reset()                    { *m = PutResponse{} }
-func (m *PutResponse) String() string            { return proto.CompactTextString(m) }
-func (*PutResponse) ProtoMessage()               {}
-func (*PutResponse) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{4} }
+func (m *PutResponse) Reset()         { *m = PutResponse{} }
+func (m *PutResponse) String() string { return proto.CompactTextString(m) }
+func (*PutResponse) ProtoMessage()    {}
+func (*PutResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{4}
+}
+func (m *PutResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PutResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PutResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PutResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PutResponse.Merge(m, src)
+}
+func (m *PutResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *PutResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PutResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PutResponse proto.InternalMessageInfo
 
 func (m *PutResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -548,13 +732,44 @@ type DeleteRangeRequest struct {
 	RangeEnd []byte `protobuf:"bytes,2,opt,name=range_end,json=rangeEnd,proto3" json:"range_end,omitempty"`
 	// If prev_kv is set, etcd gets the previous key-value pairs before deleting it.
 	// The previous key-value pairs will be returned in the delete response.
-	PrevKv bool `protobuf:"varint,3,opt,name=prev_kv,json=prevKv,proto3" json:"prev_kv,omitempty"`
+	PrevKv               bool     `protobuf:"varint,3,opt,name=prev_kv,json=prevKv,proto3" json:"prev_kv,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *DeleteRangeRequest) Reset()                    { *m = DeleteRangeRequest{} }
-func (m *DeleteRangeRequest) String() string            { return proto.CompactTextString(m) }
-func (*DeleteRangeRequest) ProtoMessage()               {}
-func (*DeleteRangeRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{5} }
+func (m *DeleteRangeRequest) Reset()         { *m = DeleteRangeRequest{} }
+func (m *DeleteRangeRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteRangeRequest) ProtoMessage()    {}
+func (*DeleteRangeRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{5}
+}
+func (m *DeleteRangeRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeleteRangeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeleteRangeRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeleteRangeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteRangeRequest.Merge(m, src)
+}
+func (m *DeleteRangeRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeleteRangeRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteRangeRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeleteRangeRequest proto.InternalMessageInfo
 
 func (m *DeleteRangeRequest) GetKey() []byte {
 	if m != nil {
@@ -578,17 +793,48 @@ func (m *DeleteRangeRequest) GetPrevKv() bool {
 }
 
 type DeleteRangeResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// deleted is the number of keys deleted by the delete range request.
 	Deleted int64 `protobuf:"varint,2,opt,name=deleted,proto3" json:"deleted,omitempty"`
 	// if prev_kv is set in the request, the previous key-value pairs will be returned.
-	PrevKvs []*mvccpb.KeyValue `protobuf:"bytes,3,rep,name=prev_kvs,json=prevKvs" json:"prev_kvs,omitempty"`
+	PrevKvs              []*mvccpb.KeyValue `protobuf:"bytes,3,rep,name=prev_kvs,json=prevKvs,proto3" json:"prev_kvs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *DeleteRangeResponse) Reset()                    { *m = DeleteRangeResponse{} }
-func (m *DeleteRangeResponse) String() string            { return proto.CompactTextString(m) }
-func (*DeleteRangeResponse) ProtoMessage()               {}
-func (*DeleteRangeResponse) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{6} }
+func (m *DeleteRangeResponse) Reset()         { *m = DeleteRangeResponse{} }
+func (m *DeleteRangeResponse) String() string { return proto.CompactTextString(m) }
+func (*DeleteRangeResponse) ProtoMessage()    {}
+func (*DeleteRangeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{6}
+}
+func (m *DeleteRangeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeleteRangeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeleteRangeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeleteRangeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteRangeResponse.Merge(m, src)
+}
+func (m *DeleteRangeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeleteRangeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteRangeResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeleteRangeResponse proto.InternalMessageInfo
 
 func (m *DeleteRangeResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -619,13 +865,44 @@ type RequestOp struct {
 	//	*RequestOp_RequestPut
 	//	*RequestOp_RequestDeleteRange
 	//	*RequestOp_RequestTxn
-	Request isRequestOp_Request `protobuf_oneof:"request"`
+	Request              isRequestOp_Request `protobuf_oneof:"request"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *RequestOp) Reset()                    { *m = RequestOp{} }
-func (m *RequestOp) String() string            { return proto.CompactTextString(m) }
-func (*RequestOp) ProtoMessage()               {}
-func (*RequestOp) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{7} }
+func (m *RequestOp) Reset()         { *m = RequestOp{} }
+func (m *RequestOp) String() string { return proto.CompactTextString(m) }
+func (*RequestOp) ProtoMessage()    {}
+func (*RequestOp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{7}
+}
+func (m *RequestOp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RequestOp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RequestOp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RequestOp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestOp.Merge(m, src)
+}
+func (m *RequestOp) XXX_Size() int {
+	return m.Size()
+}
+func (m *RequestOp) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestOp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestOp proto.InternalMessageInfo
 
 type isRequestOp_Request interface {
 	isRequestOp_Request()
@@ -634,16 +911,16 @@ type isRequestOp_Request interface {
 }
 
 type RequestOp_RequestRange struct {
-	RequestRange *RangeRequest `protobuf:"bytes,1,opt,name=request_range,json=requestRange,oneof"`
+	RequestRange *RangeRequest `protobuf:"bytes,1,opt,name=request_range,json=requestRange,proto3,oneof"`
 }
 type RequestOp_RequestPut struct {
-	RequestPut *PutRequest `protobuf:"bytes,2,opt,name=request_put,json=requestPut,oneof"`
+	RequestPut *PutRequest `protobuf:"bytes,2,opt,name=request_put,json=requestPut,proto3,oneof"`
 }
 type RequestOp_RequestDeleteRange struct {
-	RequestDeleteRange *DeleteRangeRequest `protobuf:"bytes,3,opt,name=request_delete_range,json=requestDeleteRange,oneof"`
+	RequestDeleteRange *DeleteRangeRequest `protobuf:"bytes,3,opt,name=request_delete_range,json=requestDeleteRange,proto3,oneof"`
 }
 type RequestOp_RequestTxn struct {
-	RequestTxn *TxnRequest `protobuf:"bytes,4,opt,name=request_txn,json=requestTxn,oneof"`
+	RequestTxn *TxnRequest `protobuf:"bytes,4,opt,name=request_txn,json=requestTxn,proto3,oneof"`
 }
 
 func (*RequestOp_RequestRange) isRequestOp_Request()       {}
@@ -773,22 +1050,22 @@ func _RequestOp_OneofSizer(msg proto.Message) (n int) {
 	switch x := m.Request.(type) {
 	case *RequestOp_RequestRange:
 		s := proto.Size(x.RequestRange)
-		n += proto.SizeVarint(1<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *RequestOp_RequestPut:
 		s := proto.Size(x.RequestPut)
-		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *RequestOp_RequestDeleteRange:
 		s := proto.Size(x.RequestDeleteRange)
-		n += proto.SizeVarint(3<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *RequestOp_RequestTxn:
 		s := proto.Size(x.RequestTxn)
-		n += proto.SizeVarint(4<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case nil:
@@ -806,13 +1083,44 @@ type ResponseOp struct {
 	//	*ResponseOp_ResponsePut
 	//	*ResponseOp_ResponseDeleteRange
 	//	*ResponseOp_ResponseTxn
-	Response isResponseOp_Response `protobuf_oneof:"response"`
+	Response             isResponseOp_Response `protobuf_oneof:"response"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
-func (m *ResponseOp) Reset()                    { *m = ResponseOp{} }
-func (m *ResponseOp) String() string            { return proto.CompactTextString(m) }
-func (*ResponseOp) ProtoMessage()               {}
-func (*ResponseOp) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{8} }
+func (m *ResponseOp) Reset()         { *m = ResponseOp{} }
+func (m *ResponseOp) String() string { return proto.CompactTextString(m) }
+func (*ResponseOp) ProtoMessage()    {}
+func (*ResponseOp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{8}
+}
+func (m *ResponseOp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ResponseOp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ResponseOp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ResponseOp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseOp.Merge(m, src)
+}
+func (m *ResponseOp) XXX_Size() int {
+	return m.Size()
+}
+func (m *ResponseOp) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResponseOp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResponseOp proto.InternalMessageInfo
 
 type isResponseOp_Response interface {
 	isResponseOp_Response()
@@ -821,16 +1129,16 @@ type isResponseOp_Response interface {
 }
 
 type ResponseOp_ResponseRange struct {
-	ResponseRange *RangeResponse `protobuf:"bytes,1,opt,name=response_range,json=responseRange,oneof"`
+	ResponseRange *RangeResponse `protobuf:"bytes,1,opt,name=response_range,json=responseRange,proto3,oneof"`
 }
 type ResponseOp_ResponsePut struct {
-	ResponsePut *PutResponse `protobuf:"bytes,2,opt,name=response_put,json=responsePut,oneof"`
+	ResponsePut *PutResponse `protobuf:"bytes,2,opt,name=response_put,json=responsePut,proto3,oneof"`
 }
 type ResponseOp_ResponseDeleteRange struct {
-	ResponseDeleteRange *DeleteRangeResponse `protobuf:"bytes,3,opt,name=response_delete_range,json=responseDeleteRange,oneof"`
+	ResponseDeleteRange *DeleteRangeResponse `protobuf:"bytes,3,opt,name=response_delete_range,json=responseDeleteRange,proto3,oneof"`
 }
 type ResponseOp_ResponseTxn struct {
-	ResponseTxn *TxnResponse `protobuf:"bytes,4,opt,name=response_txn,json=responseTxn,oneof"`
+	ResponseTxn *TxnResponse `protobuf:"bytes,4,opt,name=response_txn,json=responseTxn,proto3,oneof"`
 }
 
 func (*ResponseOp_ResponseRange) isResponseOp_Response()       {}
@@ -960,22 +1268,22 @@ func _ResponseOp_OneofSizer(msg proto.Message) (n int) {
 	switch x := m.Response.(type) {
 	case *ResponseOp_ResponseRange:
 		s := proto.Size(x.ResponseRange)
-		n += proto.SizeVarint(1<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *ResponseOp_ResponsePut:
 		s := proto.Size(x.ResponsePut)
-		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *ResponseOp_ResponseDeleteRange:
 		s := proto.Size(x.ResponseDeleteRange)
-		n += proto.SizeVarint(3<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *ResponseOp_ResponseTxn:
 		s := proto.Size(x.ResponseTxn)
-		n += proto.SizeVarint(4<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case nil:
@@ -1001,13 +1309,44 @@ type Compare struct {
 	TargetUnion isCompare_TargetUnion `protobuf_oneof:"target_union"`
 	// range_end compares the given target to all keys in the range [key, range_end).
 	// See RangeRequest for more details on key ranges.
-	RangeEnd []byte `protobuf:"bytes,64,opt,name=range_end,json=rangeEnd,proto3" json:"range_end,omitempty"`
+	RangeEnd             []byte   `protobuf:"bytes,64,opt,name=range_end,json=rangeEnd,proto3" json:"range_end,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Compare) Reset()                    { *m = Compare{} }
-func (m *Compare) String() string            { return proto.CompactTextString(m) }
-func (*Compare) ProtoMessage()               {}
-func (*Compare) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{9} }
+func (m *Compare) Reset()         { *m = Compare{} }
+func (m *Compare) String() string { return proto.CompactTextString(m) }
+func (*Compare) ProtoMessage()    {}
+func (*Compare) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{9}
+}
+func (m *Compare) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Compare) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Compare.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Compare) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Compare.Merge(m, src)
+}
+func (m *Compare) XXX_Size() int {
+	return m.Size()
+}
+func (m *Compare) XXX_DiscardUnknown() {
+	xxx_messageInfo_Compare.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Compare proto.InternalMessageInfo
 
 type isCompare_TargetUnion interface {
 	isCompare_TargetUnion()
@@ -1192,20 +1531,20 @@ func _Compare_OneofSizer(msg proto.Message) (n int) {
 	// target_union
 	switch x := m.TargetUnion.(type) {
 	case *Compare_Version:
-		n += proto.SizeVarint(4<<3 | proto.WireVarint)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(x.Version))
 	case *Compare_CreateRevision:
-		n += proto.SizeVarint(5<<3 | proto.WireVarint)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(x.CreateRevision))
 	case *Compare_ModRevision:
-		n += proto.SizeVarint(6<<3 | proto.WireVarint)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(x.ModRevision))
 	case *Compare_Value:
-		n += proto.SizeVarint(7<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(len(x.Value)))
 		n += len(x.Value)
 	case *Compare_Lease:
-		n += proto.SizeVarint(8<<3 | proto.WireVarint)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(x.Lease))
 	case nil:
 	default:
@@ -1235,17 +1574,48 @@ type TxnRequest struct {
 	// and the response will contain their respective responses in order.
 	// If the comparisons fail, then the failure requests will be processed in order,
 	// and the response will contain their respective responses in order.
-	Compare []*Compare `protobuf:"bytes,1,rep,name=compare" json:"compare,omitempty"`
+	Compare []*Compare `protobuf:"bytes,1,rep,name=compare,proto3" json:"compare,omitempty"`
 	// success is a list of requests which will be applied when compare evaluates to true.
-	Success []*RequestOp `protobuf:"bytes,2,rep,name=success" json:"success,omitempty"`
+	Success []*RequestOp `protobuf:"bytes,2,rep,name=success,proto3" json:"success,omitempty"`
 	// failure is a list of requests which will be applied when compare evaluates to false.
-	Failure []*RequestOp `protobuf:"bytes,3,rep,name=failure" json:"failure,omitempty"`
+	Failure              []*RequestOp `protobuf:"bytes,3,rep,name=failure,proto3" json:"failure,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *TxnRequest) Reset()                    { *m = TxnRequest{} }
-func (m *TxnRequest) String() string            { return proto.CompactTextString(m) }
-func (*TxnRequest) ProtoMessage()               {}
-func (*TxnRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{10} }
+func (m *TxnRequest) Reset()         { *m = TxnRequest{} }
+func (m *TxnRequest) String() string { return proto.CompactTextString(m) }
+func (*TxnRequest) ProtoMessage()    {}
+func (*TxnRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{10}
+}
+func (m *TxnRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TxnRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TxnRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TxnRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TxnRequest.Merge(m, src)
+}
+func (m *TxnRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *TxnRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TxnRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TxnRequest proto.InternalMessageInfo
 
 func (m *TxnRequest) GetCompare() []*Compare {
 	if m != nil {
@@ -1269,18 +1639,49 @@ func (m *TxnRequest) GetFailure() []*RequestOp {
 }
 
 type TxnResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// succeeded is set to true if the compare evaluated to true or false otherwise.
 	Succeeded bool `protobuf:"varint,2,opt,name=succeeded,proto3" json:"succeeded,omitempty"`
 	// responses is a list of responses corresponding to the results from applying
 	// success if succeeded is true or failure if succeeded is false.
-	Responses []*ResponseOp `protobuf:"bytes,3,rep,name=responses" json:"responses,omitempty"`
+	Responses            []*ResponseOp `protobuf:"bytes,3,rep,name=responses,proto3" json:"responses,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
-func (m *TxnResponse) Reset()                    { *m = TxnResponse{} }
-func (m *TxnResponse) String() string            { return proto.CompactTextString(m) }
-func (*TxnResponse) ProtoMessage()               {}
-func (*TxnResponse) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{11} }
+func (m *TxnResponse) Reset()         { *m = TxnResponse{} }
+func (m *TxnResponse) String() string { return proto.CompactTextString(m) }
+func (*TxnResponse) ProtoMessage()    {}
+func (*TxnResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{11}
+}
+func (m *TxnResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TxnResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TxnResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TxnResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TxnResponse.Merge(m, src)
+}
+func (m *TxnResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *TxnResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_TxnResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TxnResponse proto.InternalMessageInfo
 
 func (m *TxnResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -1311,13 +1712,44 @@ type CompactionRequest struct {
 	// physical is set so the RPC will wait until the compaction is physically
 	// applied to the local database such that compacted entries are totally
 	// removed from the backend database.
-	Physical bool `protobuf:"varint,2,opt,name=physical,proto3" json:"physical,omitempty"`
+	Physical             bool     `protobuf:"varint,2,opt,name=physical,proto3" json:"physical,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CompactionRequest) Reset()                    { *m = CompactionRequest{} }
-func (m *CompactionRequest) String() string            { return proto.CompactTextString(m) }
-func (*CompactionRequest) ProtoMessage()               {}
-func (*CompactionRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{12} }
+func (m *CompactionRequest) Reset()         { *m = CompactionRequest{} }
+func (m *CompactionRequest) String() string { return proto.CompactTextString(m) }
+func (*CompactionRequest) ProtoMessage()    {}
+func (*CompactionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{12}
+}
+func (m *CompactionRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CompactionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CompactionRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CompactionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CompactionRequest.Merge(m, src)
+}
+func (m *CompactionRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *CompactionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CompactionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CompactionRequest proto.InternalMessageInfo
 
 func (m *CompactionRequest) GetRevision() int64 {
 	if m != nil {
@@ -1334,13 +1766,44 @@ func (m *CompactionRequest) GetPhysical() bool {
 }
 
 type CompactionResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *CompactionResponse) Reset()                    { *m = CompactionResponse{} }
-func (m *CompactionResponse) String() string            { return proto.CompactTextString(m) }
-func (*CompactionResponse) ProtoMessage()               {}
-func (*CompactionResponse) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{13} }
+func (m *CompactionResponse) Reset()         { *m = CompactionResponse{} }
+func (m *CompactionResponse) String() string { return proto.CompactTextString(m) }
+func (*CompactionResponse) ProtoMessage()    {}
+func (*CompactionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{13}
+}
+func (m *CompactionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CompactionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CompactionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CompactionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CompactionResponse.Merge(m, src)
+}
+func (m *CompactionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *CompactionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CompactionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CompactionResponse proto.InternalMessageInfo
 
 func (m *CompactionResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -1350,22 +1813,84 @@ func (m *CompactionResponse) GetHeader() *ResponseHeader {
 }
 
 type HashRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *HashRequest) Reset()                    { *m = HashRequest{} }
-func (m *HashRequest) String() string            { return proto.CompactTextString(m) }
-func (*HashRequest) ProtoMessage()               {}
-func (*HashRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{14} }
+func (m *HashRequest) Reset()         { *m = HashRequest{} }
+func (m *HashRequest) String() string { return proto.CompactTextString(m) }
+func (*HashRequest) ProtoMessage()    {}
+func (*HashRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{14}
+}
+func (m *HashRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *HashRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_HashRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *HashRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HashRequest.Merge(m, src)
+}
+func (m *HashRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *HashRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_HashRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_HashRequest proto.InternalMessageInfo
 
 type HashKVRequest struct {
 	// revision is the key-value store revision for the hash operation.
-	Revision int64 `protobuf:"varint,1,opt,name=revision,proto3" json:"revision,omitempty"`
+	Revision             int64    `protobuf:"varint,1,opt,name=revision,proto3" json:"revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *HashKVRequest) Reset()                    { *m = HashKVRequest{} }
-func (m *HashKVRequest) String() string            { return proto.CompactTextString(m) }
-func (*HashKVRequest) ProtoMessage()               {}
-func (*HashKVRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{15} }
+func (m *HashKVRequest) Reset()         { *m = HashKVRequest{} }
+func (m *HashKVRequest) String() string { return proto.CompactTextString(m) }
+func (*HashKVRequest) ProtoMessage()    {}
+func (*HashKVRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{15}
+}
+func (m *HashKVRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *HashKVRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_HashKVRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *HashKVRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HashKVRequest.Merge(m, src)
+}
+func (m *HashKVRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *HashKVRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_HashKVRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_HashKVRequest proto.InternalMessageInfo
 
 func (m *HashKVRequest) GetRevision() int64 {
 	if m != nil {
@@ -1375,17 +1900,48 @@ func (m *HashKVRequest) GetRevision() int64 {
 }
 
 type HashKVResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// hash is the hash value computed from the responding member's MVCC keys up to a given revision.
 	Hash uint32 `protobuf:"varint,2,opt,name=hash,proto3" json:"hash,omitempty"`
 	// compact_revision is the compacted revision of key-value store when hash begins.
-	CompactRevision int64 `protobuf:"varint,3,opt,name=compact_revision,json=compactRevision,proto3" json:"compact_revision,omitempty"`
+	CompactRevision      int64    `protobuf:"varint,3,opt,name=compact_revision,json=compactRevision,proto3" json:"compact_revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *HashKVResponse) Reset()                    { *m = HashKVResponse{} }
-func (m *HashKVResponse) String() string            { return proto.CompactTextString(m) }
-func (*HashKVResponse) ProtoMessage()               {}
-func (*HashKVResponse) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{16} }
+func (m *HashKVResponse) Reset()         { *m = HashKVResponse{} }
+func (m *HashKVResponse) String() string { return proto.CompactTextString(m) }
+func (*HashKVResponse) ProtoMessage()    {}
+func (*HashKVResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{16}
+}
+func (m *HashKVResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *HashKVResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_HashKVResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *HashKVResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HashKVResponse.Merge(m, src)
+}
+func (m *HashKVResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *HashKVResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_HashKVResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_HashKVResponse proto.InternalMessageInfo
 
 func (m *HashKVResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -1409,15 +1965,46 @@ func (m *HashKVResponse) GetCompactRevision() int64 {
 }
 
 type HashResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// hash is the hash value computed from the responding member's KV's backend.
-	Hash uint32 `protobuf:"varint,2,opt,name=hash,proto3" json:"hash,omitempty"`
+	Hash                 uint32   `protobuf:"varint,2,opt,name=hash,proto3" json:"hash,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *HashResponse) Reset()                    { *m = HashResponse{} }
-func (m *HashResponse) String() string            { return proto.CompactTextString(m) }
-func (*HashResponse) ProtoMessage()               {}
-func (*HashResponse) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{17} }
+func (m *HashResponse) Reset()         { *m = HashResponse{} }
+func (m *HashResponse) String() string { return proto.CompactTextString(m) }
+func (*HashResponse) ProtoMessage()    {}
+func (*HashResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{17}
+}
+func (m *HashResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *HashResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_HashResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *HashResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HashResponse.Merge(m, src)
+}
+func (m *HashResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *HashResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_HashResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_HashResponse proto.InternalMessageInfo
 
 func (m *HashResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -1434,27 +2021,89 @@ func (m *HashResponse) GetHash() uint32 {
 }
 
 type SnapshotRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *SnapshotRequest) Reset()                    { *m = SnapshotRequest{} }
-func (m *SnapshotRequest) String() string            { return proto.CompactTextString(m) }
-func (*SnapshotRequest) ProtoMessage()               {}
-func (*SnapshotRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{18} }
+func (m *SnapshotRequest) Reset()         { *m = SnapshotRequest{} }
+func (m *SnapshotRequest) String() string { return proto.CompactTextString(m) }
+func (*SnapshotRequest) ProtoMessage()    {}
+func (*SnapshotRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{18}
+}
+func (m *SnapshotRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SnapshotRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SnapshotRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SnapshotRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SnapshotRequest.Merge(m, src)
+}
+func (m *SnapshotRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SnapshotRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SnapshotRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SnapshotRequest proto.InternalMessageInfo
 
 type SnapshotResponse struct {
 	// header has the current key-value store information. The first header in the snapshot
 	// stream indicates the point in time of the snapshot.
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// remaining_bytes is the number of blob bytes to be sent after this message
 	RemainingBytes uint64 `protobuf:"varint,2,opt,name=remaining_bytes,json=remainingBytes,proto3" json:"remaining_bytes,omitempty"`
 	// blob contains the next chunk of the snapshot in the snapshot stream.
-	Blob []byte `protobuf:"bytes,3,opt,name=blob,proto3" json:"blob,omitempty"`
+	Blob                 []byte   `protobuf:"bytes,3,opt,name=blob,proto3" json:"blob,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *SnapshotResponse) Reset()                    { *m = SnapshotResponse{} }
-func (m *SnapshotResponse) String() string            { return proto.CompactTextString(m) }
-func (*SnapshotResponse) ProtoMessage()               {}
-func (*SnapshotResponse) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{19} }
+func (m *SnapshotResponse) Reset()         { *m = SnapshotResponse{} }
+func (m *SnapshotResponse) String() string { return proto.CompactTextString(m) }
+func (*SnapshotResponse) ProtoMessage()    {}
+func (*SnapshotResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{19}
+}
+func (m *SnapshotResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SnapshotResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SnapshotResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SnapshotResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SnapshotResponse.Merge(m, src)
+}
+func (m *SnapshotResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *SnapshotResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_SnapshotResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SnapshotResponse proto.InternalMessageInfo
 
 func (m *SnapshotResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -1487,10 +2136,7 @@ type WatchRequest struct {
 	RequestUnion isWatchRequest_RequestUnion `protobuf_oneof:"request_union"`
 }
 
-func (m *WatchRequest) Reset()                    { *m = WatchRequest{} }
-func (m *WatchRequest) String() string            { return proto.CompactTextString(m) }
-func (*WatchRequest) ProtoMessage()               {}
-func (*WatchRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{20} }
+var xxx_messageInfo_WatchRequest proto.InternalMessageInfo
 
 type isWatchRequest_RequestUnion interface {
 	isWatchRequest_RequestUnion()
@@ -1499,10 +2145,13 @@ type isWatchRequest_RequestUnion interface {
 }
 
 type WatchRequest_CreateRequest struct {
-	CreateRequest *WatchCreateRequest `protobuf:"bytes,1,opt,name=create_request,json=createRequest,oneof"`
+	CreateRequest *WatchCreateRequest `protobuf:"bytes,1,opt,name=create_request,json=createRequest,proto3,oneof"`
 }
 type WatchRequest_CancelRequest struct {
-	CancelRequest *WatchCancelRequest `protobuf:"bytes,2,opt,name=cancel_request,json=cancelRequest,oneof"`
+	CancelRequest *WatchCancelRequest `protobuf:"bytes,2,opt,name=cancel_request,json=cancelRequest,proto3,oneof"`
+}
+type WatchRequest_ProgressRequest struct {
+	ProgressRequest *WatchProgressRequest `protobuf:"bytes,3,opt,name=progress_request,json=progressRequest,proto3,oneof"`
 }
 type WatchRequest_ProgressRequest struct {
 	ProgressRequest *WatchProgressRequest `protobuf:"bytes,3,opt,name=progress_request,json=progressRequest,oneof"`
@@ -1613,12 +2262,17 @@ func _WatchRequest_OneofSizer(msg proto.Message) (n int) {
 	switch x := m.RequestUnion.(type) {
 	case *WatchRequest_CreateRequest:
 		s := proto.Size(x.CreateRequest)
-		n += proto.SizeVarint(1<<3 | proto.WireBytes)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *WatchRequest_CancelRequest:
 		s := proto.Size(x.CancelRequest)
-		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *WatchRequest_ProgressRequest:
+		s := proto.Size(x.ProgressRequest)
+		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *WatchRequest_ProgressRequest:
@@ -1650,7 +2304,7 @@ type WatchCreateRequest struct {
 	// The etcd server may decide how often it will send notifications based on current load.
 	ProgressNotify bool `protobuf:"varint,4,opt,name=progress_notify,json=progressNotify,proto3" json:"progress_notify,omitempty"`
 	// filters filter the events at server side before it sends back to the watcher.
-	Filters []WatchCreateRequest_FilterType `protobuf:"varint,5,rep,packed,name=filters,enum=etcdserverpb.WatchCreateRequest_FilterType" json:"filters,omitempty"`
+	Filters []WatchCreateRequest_FilterType `protobuf:"varint,5,rep,packed,name=filters,proto3,enum=etcdserverpb.WatchCreateRequest_FilterType" json:"filters,omitempty"`
 	// If prev_kv is set, created watcher gets the previous KV before the event happens.
 	// If the previous KV is already compacted, nothing will be returned.
 	PrevKv bool `protobuf:"varint,6,opt,name=prev_kv,json=prevKv,proto3" json:"prev_kv,omitempty"`
@@ -1664,10 +2318,7 @@ type WatchCreateRequest struct {
 	Fragment bool `protobuf:"varint,8,opt,name=fragment,proto3" json:"fragment,omitempty"`
 }
 
-func (m *WatchCreateRequest) Reset()                    { *m = WatchCreateRequest{} }
-func (m *WatchCreateRequest) String() string            { return proto.CompactTextString(m) }
-func (*WatchCreateRequest) ProtoMessage()               {}
-func (*WatchCreateRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{21} }
+var xxx_messageInfo_WatchCreateRequest proto.InternalMessageInfo
 
 func (m *WatchCreateRequest) GetKey() []byte {
 	if m != nil {
@@ -1727,13 +2378,44 @@ func (m *WatchCreateRequest) GetFragment() bool {
 
 type WatchCancelRequest struct {
 	// watch_id is the watcher id to cancel so that no more events are transmitted.
-	WatchId int64 `protobuf:"varint,1,opt,name=watch_id,json=watchId,proto3" json:"watch_id,omitempty"`
+	WatchId              int64    `protobuf:"varint,1,opt,name=watch_id,json=watchId,proto3" json:"watch_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *WatchCancelRequest) Reset()                    { *m = WatchCancelRequest{} }
-func (m *WatchCancelRequest) String() string            { return proto.CompactTextString(m) }
-func (*WatchCancelRequest) ProtoMessage()               {}
-func (*WatchCancelRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{22} }
+func (m *WatchCancelRequest) Reset()         { *m = WatchCancelRequest{} }
+func (m *WatchCancelRequest) String() string { return proto.CompactTextString(m) }
+func (*WatchCancelRequest) ProtoMessage()    {}
+func (*WatchCancelRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{22}
+}
+func (m *WatchCancelRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *WatchCancelRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_WatchCancelRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *WatchCancelRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchCancelRequest.Merge(m, src)
+}
+func (m *WatchCancelRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *WatchCancelRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WatchCancelRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WatchCancelRequest proto.InternalMessageInfo
 
 func (m *WatchCancelRequest) GetWatchId() int64 {
 	if m != nil {
@@ -1753,7 +2435,7 @@ func (*WatchProgressRequest) ProtoMessage()               {}
 func (*WatchProgressRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{23} }
 
 type WatchResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// watch_id is the ID of the watcher that corresponds to the response.
 	WatchId int64 `protobuf:"varint,2,opt,name=watch_id,json=watchId,proto3" json:"watch_id,omitempty"`
 	// created is set to true if the response is for a create watch request.
@@ -1845,7 +2527,41 @@ type LeaseGrantRequest struct {
 	// TTL is the advisory time-to-live in seconds. Expired lease will return -1.
 	TTL int64 `protobuf:"varint,1,opt,name=TTL,proto3" json:"TTL,omitempty"`
 	// ID is the requested ID for the lease. If ID is set to 0, the lessor chooses an ID.
-	ID int64 `protobuf:"varint,2,opt,name=ID,proto3" json:"ID,omitempty"`
+	ID                   int64    `protobuf:"varint,2,opt,name=ID,proto3" json:"ID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseGrantRequest) Reset()         { *m = LeaseGrantRequest{} }
+func (m *LeaseGrantRequest) String() string { return proto.CompactTextString(m) }
+func (*LeaseGrantRequest) ProtoMessage()    {}
+func (*LeaseGrantRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{25}
+}
+func (m *LeaseGrantRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseGrantRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseGrantRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseGrantRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseGrantRequest.Merge(m, src)
+}
+func (m *LeaseGrantRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseGrantRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseGrantRequest.DiscardUnknown(m)
 }
 
 func (m *LeaseGrantRequest) Reset()                    { *m = LeaseGrantRequest{} }
@@ -1868,12 +2584,46 @@ func (m *LeaseGrantRequest) GetID() int64 {
 }
 
 type LeaseGrantResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// ID is the lease ID for the granted lease.
 	ID int64 `protobuf:"varint,2,opt,name=ID,proto3" json:"ID,omitempty"`
 	// TTL is the server chosen lease time-to-live in seconds.
-	TTL   int64  `protobuf:"varint,3,opt,name=TTL,proto3" json:"TTL,omitempty"`
-	Error string `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	TTL                  int64    `protobuf:"varint,3,opt,name=TTL,proto3" json:"TTL,omitempty"`
+	Error                string   `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseGrantResponse) Reset()         { *m = LeaseGrantResponse{} }
+func (m *LeaseGrantResponse) String() string { return proto.CompactTextString(m) }
+func (*LeaseGrantResponse) ProtoMessage()    {}
+func (*LeaseGrantResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{26}
+}
+func (m *LeaseGrantResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseGrantResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseGrantResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseGrantResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseGrantResponse.Merge(m, src)
+}
+func (m *LeaseGrantResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseGrantResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseGrantResponse.DiscardUnknown(m)
 }
 
 func (m *LeaseGrantResponse) Reset()                    { *m = LeaseGrantResponse{} }
@@ -1911,7 +2661,41 @@ func (m *LeaseGrantResponse) GetError() string {
 
 type LeaseRevokeRequest struct {
 	// ID is the lease ID to revoke. When the ID is revoked, all associated keys will be deleted.
-	ID int64 `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	ID                   int64    `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseRevokeRequest) Reset()         { *m = LeaseRevokeRequest{} }
+func (m *LeaseRevokeRequest) String() string { return proto.CompactTextString(m) }
+func (*LeaseRevokeRequest) ProtoMessage()    {}
+func (*LeaseRevokeRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{27}
+}
+func (m *LeaseRevokeRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseRevokeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseRevokeRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseRevokeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseRevokeRequest.Merge(m, src)
+}
+func (m *LeaseRevokeRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseRevokeRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseRevokeRequest.DiscardUnknown(m)
 }
 
 func (m *LeaseRevokeRequest) Reset()                    { *m = LeaseRevokeRequest{} }
@@ -1927,7 +2711,41 @@ func (m *LeaseRevokeRequest) GetID() int64 {
 }
 
 type LeaseRevokeResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *LeaseRevokeResponse) Reset()         { *m = LeaseRevokeResponse{} }
+func (m *LeaseRevokeResponse) String() string { return proto.CompactTextString(m) }
+func (*LeaseRevokeResponse) ProtoMessage()    {}
+func (*LeaseRevokeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{28}
+}
+func (m *LeaseRevokeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseRevokeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseRevokeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseRevokeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseRevokeResponse.Merge(m, src)
+}
+func (m *LeaseRevokeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseRevokeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseRevokeResponse.DiscardUnknown(m)
 }
 
 func (m *LeaseRevokeResponse) Reset()                    { *m = LeaseRevokeResponse{} }
@@ -2002,7 +2820,41 @@ func (m *LeaseCheckpointResponse) GetHeader() *ResponseHeader {
 
 type LeaseKeepAliveRequest struct {
 	// ID is the lease ID for the lease to keep alive.
-	ID int64 `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	ID                   int64    `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseKeepAliveRequest) Reset()         { *m = LeaseKeepAliveRequest{} }
+func (m *LeaseKeepAliveRequest) String() string { return proto.CompactTextString(m) }
+func (*LeaseKeepAliveRequest) ProtoMessage()    {}
+func (*LeaseKeepAliveRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{29}
+}
+func (m *LeaseKeepAliveRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseKeepAliveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseKeepAliveRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseKeepAliveRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseKeepAliveRequest.Merge(m, src)
+}
+func (m *LeaseKeepAliveRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseKeepAliveRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseKeepAliveRequest.DiscardUnknown(m)
 }
 
 func (m *LeaseKeepAliveRequest) Reset()                    { *m = LeaseKeepAliveRequest{} }
@@ -2018,11 +2870,45 @@ func (m *LeaseKeepAliveRequest) GetID() int64 {
 }
 
 type LeaseKeepAliveResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// ID is the lease ID from the keep alive request.
 	ID int64 `protobuf:"varint,2,opt,name=ID,proto3" json:"ID,omitempty"`
 	// TTL is the new time-to-live for the lease.
-	TTL int64 `protobuf:"varint,3,opt,name=TTL,proto3" json:"TTL,omitempty"`
+	TTL                  int64    `protobuf:"varint,3,opt,name=TTL,proto3" json:"TTL,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseKeepAliveResponse) Reset()         { *m = LeaseKeepAliveResponse{} }
+func (m *LeaseKeepAliveResponse) String() string { return proto.CompactTextString(m) }
+func (*LeaseKeepAliveResponse) ProtoMessage()    {}
+func (*LeaseKeepAliveResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{30}
+}
+func (m *LeaseKeepAliveResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseKeepAliveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseKeepAliveResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseKeepAliveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseKeepAliveResponse.Merge(m, src)
+}
+func (m *LeaseKeepAliveResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseKeepAliveResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseKeepAliveResponse.DiscardUnknown(m)
 }
 
 func (m *LeaseKeepAliveResponse) Reset()                    { *m = LeaseKeepAliveResponse{} }
@@ -2055,7 +2941,41 @@ type LeaseTimeToLiveRequest struct {
 	// ID is the lease ID for the lease.
 	ID int64 `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
 	// keys is true to query all the keys attached to this lease.
-	Keys bool `protobuf:"varint,2,opt,name=keys,proto3" json:"keys,omitempty"`
+	Keys                 bool     `protobuf:"varint,2,opt,name=keys,proto3" json:"keys,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseTimeToLiveRequest) Reset()         { *m = LeaseTimeToLiveRequest{} }
+func (m *LeaseTimeToLiveRequest) String() string { return proto.CompactTextString(m) }
+func (*LeaseTimeToLiveRequest) ProtoMessage()    {}
+func (*LeaseTimeToLiveRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{31}
+}
+func (m *LeaseTimeToLiveRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseTimeToLiveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseTimeToLiveRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseTimeToLiveRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseTimeToLiveRequest.Merge(m, src)
+}
+func (m *LeaseTimeToLiveRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseTimeToLiveRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseTimeToLiveRequest.DiscardUnknown(m)
 }
 
 func (m *LeaseTimeToLiveRequest) Reset()                    { *m = LeaseTimeToLiveRequest{} }
@@ -2078,7 +2998,7 @@ func (m *LeaseTimeToLiveRequest) GetKeys() bool {
 }
 
 type LeaseTimeToLiveResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// ID is the lease ID from the keep alive request.
 	ID int64 `protobuf:"varint,2,opt,name=ID,proto3" json:"ID,omitempty"`
 	// TTL is the remaining TTL in seconds for the lease; the lease will expire in under TTL+1 seconds.
@@ -2086,7 +3006,41 @@ type LeaseTimeToLiveResponse struct {
 	// GrantedTTL is the initial granted time in seconds upon lease creation/renewal.
 	GrantedTTL int64 `protobuf:"varint,4,opt,name=grantedTTL,proto3" json:"grantedTTL,omitempty"`
 	// Keys is the list of keys attached to this lease.
-	Keys [][]byte `protobuf:"bytes,5,rep,name=keys" json:"keys,omitempty"`
+	Keys                 [][]byte `protobuf:"bytes,5,rep,name=keys,proto3" json:"keys,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseTimeToLiveResponse) Reset()         { *m = LeaseTimeToLiveResponse{} }
+func (m *LeaseTimeToLiveResponse) String() string { return proto.CompactTextString(m) }
+func (*LeaseTimeToLiveResponse) ProtoMessage()    {}
+func (*LeaseTimeToLiveResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{32}
+}
+func (m *LeaseTimeToLiveResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseTimeToLiveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseTimeToLiveResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseTimeToLiveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseTimeToLiveResponse.Merge(m, src)
+}
+func (m *LeaseTimeToLiveResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseTimeToLiveResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseTimeToLiveResponse.DiscardUnknown(m)
 }
 
 func (m *LeaseTimeToLiveResponse) Reset()                    { *m = LeaseTimeToLiveResponse{} }
@@ -2130,6 +3084,40 @@ func (m *LeaseTimeToLiveResponse) GetKeys() [][]byte {
 }
 
 type LeaseLeasesRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseLeasesRequest) Reset()         { *m = LeaseLeasesRequest{} }
+func (m *LeaseLeasesRequest) String() string { return proto.CompactTextString(m) }
+func (*LeaseLeasesRequest) ProtoMessage()    {}
+func (*LeaseLeasesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{33}
+}
+func (m *LeaseLeasesRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseLeasesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseLeasesRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseLeasesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseLeasesRequest.Merge(m, src)
+}
+func (m *LeaseLeasesRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseLeasesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseLeasesRequest.DiscardUnknown(m)
 }
 
 func (m *LeaseLeasesRequest) Reset()                    { *m = LeaseLeasesRequest{} }
@@ -2138,7 +3126,41 @@ func (*LeaseLeasesRequest) ProtoMessage()               {}
 func (*LeaseLeasesRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{36} }
 
 type LeaseStatus struct {
-	ID int64 `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	ID                   int64    `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeaseStatus) Reset()         { *m = LeaseStatus{} }
+func (m *LeaseStatus) String() string { return proto.CompactTextString(m) }
+func (*LeaseStatus) ProtoMessage()    {}
+func (*LeaseStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{34}
+}
+func (m *LeaseStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseStatus.Merge(m, src)
+}
+func (m *LeaseStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseStatus.DiscardUnknown(m)
 }
 
 func (m *LeaseStatus) Reset()                    { *m = LeaseStatus{} }
@@ -2154,8 +3176,42 @@ func (m *LeaseStatus) GetID() int64 {
 }
 
 type LeaseLeasesResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
-	Leases []*LeaseStatus  `protobuf:"bytes,2,rep,name=leases" json:"leases,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Leases               []*LeaseStatus  `protobuf:"bytes,2,rep,name=leases,proto3" json:"leases,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *LeaseLeasesResponse) Reset()         { *m = LeaseLeasesResponse{} }
+func (m *LeaseLeasesResponse) String() string { return proto.CompactTextString(m) }
+func (*LeaseLeasesResponse) ProtoMessage()    {}
+func (*LeaseLeasesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{35}
+}
+func (m *LeaseLeasesResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LeaseLeasesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LeaseLeasesResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LeaseLeasesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaseLeasesResponse.Merge(m, src)
+}
+func (m *LeaseLeasesResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *LeaseLeasesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeaseLeasesResponse.DiscardUnknown(m)
 }
 
 func (m *LeaseLeasesResponse) Reset()                    { *m = LeaseLeasesResponse{} }
@@ -2183,7 +3239,7 @@ type Member struct {
 	// name is the human-readable name of the member. If the member is not started, the name will be an empty string.
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// peerURLs is the list of URLs the member exposes to the cluster for communication.
-	PeerURLs []string `protobuf:"bytes,3,rep,name=peerURLs" json:"peerURLs,omitempty"`
+	PeerURLs []string `protobuf:"bytes,3,rep,name=peerURLs,proto3" json:"peerURLs,omitempty"`
 	// clientURLs is the list of URLs the member exposes to clients for communication. If the member is not started, clientURLs will be empty.
 	ClientURLs []string `protobuf:"bytes,4,rep,name=clientURLs" json:"clientURLs,omitempty"`
 	// isLearner indicates if the member is raft learner.
@@ -2257,11 +3313,45 @@ func (m *MemberAddRequest) GetIsLearner() bool {
 }
 
 type MemberAddResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// member is the member information for the added member.
-	Member *Member `protobuf:"bytes,2,opt,name=member" json:"member,omitempty"`
+	Member *Member `protobuf:"bytes,2,opt,name=member,proto3" json:"member,omitempty"`
 	// members is a list of all members after adding the new member.
-	Members []*Member `protobuf:"bytes,3,rep,name=members" json:"members,omitempty"`
+	Members              []*Member `protobuf:"bytes,3,rep,name=members,proto3" json:"members,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *MemberAddResponse) Reset()         { *m = MemberAddResponse{} }
+func (m *MemberAddResponse) String() string { return proto.CompactTextString(m) }
+func (*MemberAddResponse) ProtoMessage()    {}
+func (*MemberAddResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{38}
+}
+func (m *MemberAddResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MemberAddResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MemberAddResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MemberAddResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MemberAddResponse.Merge(m, src)
+}
+func (m *MemberAddResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MemberAddResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MemberAddResponse.DiscardUnknown(m)
 }
 
 func (m *MemberAddResponse) Reset()                    { *m = MemberAddResponse{} }
@@ -2292,7 +3382,41 @@ func (m *MemberAddResponse) GetMembers() []*Member {
 
 type MemberRemoveRequest struct {
 	// ID is the member ID of the member to remove.
-	ID uint64 `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	ID                   uint64   `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MemberRemoveRequest) Reset()         { *m = MemberRemoveRequest{} }
+func (m *MemberRemoveRequest) String() string { return proto.CompactTextString(m) }
+func (*MemberRemoveRequest) ProtoMessage()    {}
+func (*MemberRemoveRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{39}
+}
+func (m *MemberRemoveRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MemberRemoveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MemberRemoveRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MemberRemoveRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MemberRemoveRequest.Merge(m, src)
+}
+func (m *MemberRemoveRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *MemberRemoveRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_MemberRemoveRequest.DiscardUnknown(m)
 }
 
 func (m *MemberRemoveRequest) Reset()                    { *m = MemberRemoveRequest{} }
@@ -2308,9 +3432,43 @@ func (m *MemberRemoveRequest) GetID() uint64 {
 }
 
 type MemberRemoveResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// members is a list of all members after removing the member.
-	Members []*Member `protobuf:"bytes,2,rep,name=members" json:"members,omitempty"`
+	Members              []*Member `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *MemberRemoveResponse) Reset()         { *m = MemberRemoveResponse{} }
+func (m *MemberRemoveResponse) String() string { return proto.CompactTextString(m) }
+func (*MemberRemoveResponse) ProtoMessage()    {}
+func (*MemberRemoveResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{40}
+}
+func (m *MemberRemoveResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MemberRemoveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MemberRemoveResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MemberRemoveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MemberRemoveResponse.Merge(m, src)
+}
+func (m *MemberRemoveResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MemberRemoveResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MemberRemoveResponse.DiscardUnknown(m)
 }
 
 func (m *MemberRemoveResponse) Reset()                    { *m = MemberRemoveResponse{} }
@@ -2336,7 +3494,41 @@ type MemberUpdateRequest struct {
 	// ID is the member ID of the member to update.
 	ID uint64 `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
 	// peerURLs is the new list of URLs the member will use to communicate with the cluster.
-	PeerURLs []string `protobuf:"bytes,2,rep,name=peerURLs" json:"peerURLs,omitempty"`
+	PeerURLs             []string `protobuf:"bytes,2,rep,name=peerURLs,proto3" json:"peerURLs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MemberUpdateRequest) Reset()         { *m = MemberUpdateRequest{} }
+func (m *MemberUpdateRequest) String() string { return proto.CompactTextString(m) }
+func (*MemberUpdateRequest) ProtoMessage()    {}
+func (*MemberUpdateRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{41}
+}
+func (m *MemberUpdateRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MemberUpdateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MemberUpdateRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MemberUpdateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MemberUpdateRequest.Merge(m, src)
+}
+func (m *MemberUpdateRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *MemberUpdateRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_MemberUpdateRequest.DiscardUnknown(m)
 }
 
 func (m *MemberUpdateRequest) Reset()                    { *m = MemberUpdateRequest{} }
@@ -2359,9 +3551,43 @@ func (m *MemberUpdateRequest) GetPeerURLs() []string {
 }
 
 type MemberUpdateResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// members is a list of all members after updating the member.
-	Members []*Member `protobuf:"bytes,2,rep,name=members" json:"members,omitempty"`
+	Members              []*Member `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *MemberUpdateResponse) Reset()         { *m = MemberUpdateResponse{} }
+func (m *MemberUpdateResponse) String() string { return proto.CompactTextString(m) }
+func (*MemberUpdateResponse) ProtoMessage()    {}
+func (*MemberUpdateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{42}
+}
+func (m *MemberUpdateResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MemberUpdateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MemberUpdateResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MemberUpdateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MemberUpdateResponse.Merge(m, src)
+}
+func (m *MemberUpdateResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MemberUpdateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MemberUpdateResponse.DiscardUnknown(m)
 }
 
 func (m *MemberUpdateResponse) Reset()                    { *m = MemberUpdateResponse{} }
@@ -2384,6 +3610,40 @@ func (m *MemberUpdateResponse) GetMembers() []*Member {
 }
 
 type MemberListRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MemberListRequest) Reset()         { *m = MemberListRequest{} }
+func (m *MemberListRequest) String() string { return proto.CompactTextString(m) }
+func (*MemberListRequest) ProtoMessage()    {}
+func (*MemberListRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{43}
+}
+func (m *MemberListRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MemberListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MemberListRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MemberListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MemberListRequest.Merge(m, src)
+}
+func (m *MemberListRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *MemberListRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_MemberListRequest.DiscardUnknown(m)
 }
 
 func (m *MemberListRequest) Reset()                    { *m = MemberListRequest{} }
@@ -2392,9 +3652,43 @@ func (*MemberListRequest) ProtoMessage()               {}
 func (*MemberListRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{46} }
 
 type MemberListResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// members is a list of all members associated with the cluster.
-	Members []*Member `protobuf:"bytes,2,rep,name=members" json:"members,omitempty"`
+	Members              []*Member `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *MemberListResponse) Reset()         { *m = MemberListResponse{} }
+func (m *MemberListResponse) String() string { return proto.CompactTextString(m) }
+func (*MemberListResponse) ProtoMessage()    {}
+func (*MemberListResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{44}
+}
+func (m *MemberListResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MemberListResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MemberListResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MemberListResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MemberListResponse.Merge(m, src)
+}
+func (m *MemberListResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MemberListResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MemberListResponse.DiscardUnknown(m)
 }
 
 func (m *MemberListResponse) Reset()                    { *m = MemberListResponse{} }
@@ -2459,6 +3753,40 @@ func (m *MemberPromoteResponse) GetMembers() []*Member {
 }
 
 type DefragmentRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DefragmentRequest) Reset()         { *m = DefragmentRequest{} }
+func (m *DefragmentRequest) String() string { return proto.CompactTextString(m) }
+func (*DefragmentRequest) ProtoMessage()    {}
+func (*DefragmentRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{45}
+}
+func (m *DefragmentRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DefragmentRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DefragmentRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DefragmentRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DefragmentRequest.Merge(m, src)
+}
+func (m *DefragmentRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *DefragmentRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DefragmentRequest.DiscardUnknown(m)
 }
 
 func (m *DefragmentRequest) Reset()                    { *m = DefragmentRequest{} }
@@ -2467,7 +3795,41 @@ func (*DefragmentRequest) ProtoMessage()               {}
 func (*DefragmentRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{50} }
 
 type DefragmentResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *DefragmentResponse) Reset()         { *m = DefragmentResponse{} }
+func (m *DefragmentResponse) String() string { return proto.CompactTextString(m) }
+func (*DefragmentResponse) ProtoMessage()    {}
+func (*DefragmentResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{46}
+}
+func (m *DefragmentResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DefragmentResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DefragmentResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DefragmentResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DefragmentResponse.Merge(m, src)
+}
+func (m *DefragmentResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *DefragmentResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DefragmentResponse.DiscardUnknown(m)
 }
 
 func (m *DefragmentResponse) Reset()                    { *m = DefragmentResponse{} }
@@ -2484,7 +3846,41 @@ func (m *DefragmentResponse) GetHeader() *ResponseHeader {
 
 type MoveLeaderRequest struct {
 	// targetID is the node ID for the new leader.
-	TargetID uint64 `protobuf:"varint,1,opt,name=targetID,proto3" json:"targetID,omitempty"`
+	TargetID             uint64   `protobuf:"varint,1,opt,name=targetID,proto3" json:"targetID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MoveLeaderRequest) Reset()         { *m = MoveLeaderRequest{} }
+func (m *MoveLeaderRequest) String() string { return proto.CompactTextString(m) }
+func (*MoveLeaderRequest) ProtoMessage()    {}
+func (*MoveLeaderRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{47}
+}
+func (m *MoveLeaderRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MoveLeaderRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MoveLeaderRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MoveLeaderRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MoveLeaderRequest.Merge(m, src)
+}
+func (m *MoveLeaderRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *MoveLeaderRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_MoveLeaderRequest.DiscardUnknown(m)
 }
 
 func (m *MoveLeaderRequest) Reset()                    { *m = MoveLeaderRequest{} }
@@ -2500,7 +3896,41 @@ func (m *MoveLeaderRequest) GetTargetID() uint64 {
 }
 
 type MoveLeaderResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *MoveLeaderResponse) Reset()         { *m = MoveLeaderResponse{} }
+func (m *MoveLeaderResponse) String() string { return proto.CompactTextString(m) }
+func (*MoveLeaderResponse) ProtoMessage()    {}
+func (*MoveLeaderResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{48}
+}
+func (m *MoveLeaderResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MoveLeaderResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MoveLeaderResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MoveLeaderResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MoveLeaderResponse.Merge(m, src)
+}
+func (m *MoveLeaderResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MoveLeaderResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MoveLeaderResponse.DiscardUnknown(m)
 }
 
 func (m *MoveLeaderResponse) Reset()                    { *m = MoveLeaderResponse{} }
@@ -2524,7 +3954,41 @@ type AlarmRequest struct {
 	// alarm request covers all members.
 	MemberID uint64 `protobuf:"varint,2,opt,name=memberID,proto3" json:"memberID,omitempty"`
 	// alarm is the type of alarm to consider for this request.
-	Alarm AlarmType `protobuf:"varint,3,opt,name=alarm,proto3,enum=etcdserverpb.AlarmType" json:"alarm,omitempty"`
+	Alarm                AlarmType `protobuf:"varint,3,opt,name=alarm,proto3,enum=etcdserverpb.AlarmType" json:"alarm,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *AlarmRequest) Reset()         { *m = AlarmRequest{} }
+func (m *AlarmRequest) String() string { return proto.CompactTextString(m) }
+func (*AlarmRequest) ProtoMessage()    {}
+func (*AlarmRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{49}
+}
+func (m *AlarmRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AlarmRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AlarmRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AlarmRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AlarmRequest.Merge(m, src)
+}
+func (m *AlarmRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AlarmRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AlarmRequest.DiscardUnknown(m)
 }
 
 func (m *AlarmRequest) Reset()                    { *m = AlarmRequest{} }
@@ -2557,7 +4021,41 @@ type AlarmMember struct {
 	// memberID is the ID of the member associated with the raised alarm.
 	MemberID uint64 `protobuf:"varint,1,opt,name=memberID,proto3" json:"memberID,omitempty"`
 	// alarm is the type of alarm which has been raised.
-	Alarm AlarmType `protobuf:"varint,2,opt,name=alarm,proto3,enum=etcdserverpb.AlarmType" json:"alarm,omitempty"`
+	Alarm                AlarmType `protobuf:"varint,2,opt,name=alarm,proto3,enum=etcdserverpb.AlarmType" json:"alarm,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *AlarmMember) Reset()         { *m = AlarmMember{} }
+func (m *AlarmMember) String() string { return proto.CompactTextString(m) }
+func (*AlarmMember) ProtoMessage()    {}
+func (*AlarmMember) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{50}
+}
+func (m *AlarmMember) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AlarmMember) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AlarmMember.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AlarmMember) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AlarmMember.Merge(m, src)
+}
+func (m *AlarmMember) XXX_Size() int {
+	return m.Size()
+}
+func (m *AlarmMember) XXX_DiscardUnknown() {
+	xxx_messageInfo_AlarmMember.DiscardUnknown(m)
 }
 
 func (m *AlarmMember) Reset()                    { *m = AlarmMember{} }
@@ -2580,9 +4078,43 @@ func (m *AlarmMember) GetAlarm() AlarmType {
 }
 
 type AlarmResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// alarms is a list of alarms associated with the alarm request.
-	Alarms []*AlarmMember `protobuf:"bytes,2,rep,name=alarms" json:"alarms,omitempty"`
+	Alarms               []*AlarmMember `protobuf:"bytes,2,rep,name=alarms,proto3" json:"alarms,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *AlarmResponse) Reset()         { *m = AlarmResponse{} }
+func (m *AlarmResponse) String() string { return proto.CompactTextString(m) }
+func (*AlarmResponse) ProtoMessage()    {}
+func (*AlarmResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{51}
+}
+func (m *AlarmResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AlarmResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AlarmResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AlarmResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AlarmResponse.Merge(m, src)
+}
+func (m *AlarmResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AlarmResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AlarmResponse.DiscardUnknown(m)
 }
 
 func (m *AlarmResponse) Reset()                    { *m = AlarmResponse{} }
@@ -2605,6 +4137,40 @@ func (m *AlarmResponse) GetAlarms() []*AlarmMember {
 }
 
 type StatusRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *StatusRequest) Reset()         { *m = StatusRequest{} }
+func (m *StatusRequest) String() string { return proto.CompactTextString(m) }
+func (*StatusRequest) ProtoMessage()    {}
+func (*StatusRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{52}
+}
+func (m *StatusRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StatusRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StatusRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StatusRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StatusRequest.Merge(m, src)
+}
+func (m *StatusRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *StatusRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_StatusRequest.DiscardUnknown(m)
 }
 
 func (m *StatusRequest) Reset()                    { *m = StatusRequest{} }
@@ -2613,7 +4179,7 @@ func (*StatusRequest) ProtoMessage()               {}
 func (*StatusRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{57} }
 
 type StatusResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// version is the cluster protocol version used by the responding member.
 	Version string `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
 	// dbSize is the size of the backend database physically allocated, in bytes, of the responding member.
@@ -2710,6 +4276,40 @@ func (m *StatusResponse) GetIsLearner() bool {
 }
 
 type AuthEnableRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthEnableRequest) Reset()         { *m = AuthEnableRequest{} }
+func (m *AuthEnableRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthEnableRequest) ProtoMessage()    {}
+func (*AuthEnableRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{54}
+}
+func (m *AuthEnableRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthEnableRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthEnableRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthEnableRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthEnableRequest.Merge(m, src)
+}
+func (m *AuthEnableRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthEnableRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthEnableRequest.DiscardUnknown(m)
 }
 
 func (m *AuthEnableRequest) Reset()                    { *m = AuthEnableRequest{} }
@@ -2718,6 +4318,40 @@ func (*AuthEnableRequest) ProtoMessage()               {}
 func (*AuthEnableRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{59} }
 
 type AuthDisableRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthDisableRequest) Reset()         { *m = AuthDisableRequest{} }
+func (m *AuthDisableRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthDisableRequest) ProtoMessage()    {}
+func (*AuthDisableRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{55}
+}
+func (m *AuthDisableRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthDisableRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthDisableRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthDisableRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthDisableRequest.Merge(m, src)
+}
+func (m *AuthDisableRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthDisableRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthDisableRequest.DiscardUnknown(m)
 }
 
 func (m *AuthDisableRequest) Reset()                    { *m = AuthDisableRequest{} }
@@ -2726,8 +4360,42 @@ func (*AuthDisableRequest) ProtoMessage()               {}
 func (*AuthDisableRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{60} }
 
 type AuthenticateRequest struct {
-	Name     string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthenticateRequest) Reset()         { *m = AuthenticateRequest{} }
+func (m *AuthenticateRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthenticateRequest) ProtoMessage()    {}
+func (*AuthenticateRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{56}
+}
+func (m *AuthenticateRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthenticateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthenticateRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthenticateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthenticateRequest.Merge(m, src)
+}
+func (m *AuthenticateRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthenticateRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthenticateRequest.DiscardUnknown(m)
 }
 
 func (m *AuthenticateRequest) Reset()                    { *m = AuthenticateRequest{} }
@@ -2782,7 +4450,41 @@ func (m *AuthUserAddRequest) GetOptions() *authpb.UserAddOptions {
 }
 
 type AuthUserGetRequest struct {
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthUserGetRequest) Reset()         { *m = AuthUserGetRequest{} }
+func (m *AuthUserGetRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthUserGetRequest) ProtoMessage()    {}
+func (*AuthUserGetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{58}
+}
+func (m *AuthUserGetRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserGetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserGetRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserGetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserGetRequest.Merge(m, src)
+}
+func (m *AuthUserGetRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserGetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserGetRequest.DiscardUnknown(m)
 }
 
 func (m *AuthUserGetRequest) Reset()                    { *m = AuthUserGetRequest{} }
@@ -2799,7 +4501,41 @@ func (m *AuthUserGetRequest) GetName() string {
 
 type AuthUserDeleteRequest struct {
 	// name is the name of the user to delete.
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthUserDeleteRequest) Reset()         { *m = AuthUserDeleteRequest{} }
+func (m *AuthUserDeleteRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthUserDeleteRequest) ProtoMessage()    {}
+func (*AuthUserDeleteRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{59}
+}
+func (m *AuthUserDeleteRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserDeleteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserDeleteRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserDeleteRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserDeleteRequest.Merge(m, src)
+}
+func (m *AuthUserDeleteRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserDeleteRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserDeleteRequest.DiscardUnknown(m)
 }
 
 func (m *AuthUserDeleteRequest) Reset()                    { *m = AuthUserDeleteRequest{} }
@@ -2818,7 +4554,10 @@ type AuthUserChangePasswordRequest struct {
 	// name is the name of the user whose password is being changed.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// password is the new password for the user.
-	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *AuthUserChangePasswordRequest) Reset()         { *m = AuthUserChangePasswordRequest{} }
@@ -2827,6 +4566,8 @@ func (*AuthUserChangePasswordRequest) ProtoMessage()    {}
 func (*AuthUserChangePasswordRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptorRpc, []int{65}
 }
+
+var xxx_messageInfo_AuthUserChangePasswordRequest proto.InternalMessageInfo
 
 func (m *AuthUserChangePasswordRequest) GetName() string {
 	if m != nil {
@@ -2846,7 +4587,41 @@ type AuthUserGrantRoleRequest struct {
 	// user is the name of the user which should be granted a given role.
 	User string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	// role is the name of the role to grant to the user.
-	Role string `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
+	Role                 string   `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthUserGrantRoleRequest) Reset()         { *m = AuthUserGrantRoleRequest{} }
+func (m *AuthUserGrantRoleRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthUserGrantRoleRequest) ProtoMessage()    {}
+func (*AuthUserGrantRoleRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{61}
+}
+func (m *AuthUserGrantRoleRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserGrantRoleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserGrantRoleRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserGrantRoleRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserGrantRoleRequest.Merge(m, src)
+}
+func (m *AuthUserGrantRoleRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserGrantRoleRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserGrantRoleRequest.DiscardUnknown(m)
 }
 
 func (m *AuthUserGrantRoleRequest) Reset()                    { *m = AuthUserGrantRoleRequest{} }
@@ -2869,8 +4644,42 @@ func (m *AuthUserGrantRoleRequest) GetRole() string {
 }
 
 type AuthUserRevokeRoleRequest struct {
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Role string `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Role                 string   `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthUserRevokeRoleRequest) Reset()         { *m = AuthUserRevokeRoleRequest{} }
+func (m *AuthUserRevokeRoleRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthUserRevokeRoleRequest) ProtoMessage()    {}
+func (*AuthUserRevokeRoleRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{62}
+}
+func (m *AuthUserRevokeRoleRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserRevokeRoleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserRevokeRoleRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserRevokeRoleRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserRevokeRoleRequest.Merge(m, src)
+}
+func (m *AuthUserRevokeRoleRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserRevokeRoleRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserRevokeRoleRequest.DiscardUnknown(m)
 }
 
 func (m *AuthUserRevokeRoleRequest) Reset()                    { *m = AuthUserRevokeRoleRequest{} }
@@ -2894,7 +4703,41 @@ func (m *AuthUserRevokeRoleRequest) GetRole() string {
 
 type AuthRoleAddRequest struct {
 	// name is the name of the role to add to the authentication system.
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthRoleAddRequest) Reset()         { *m = AuthRoleAddRequest{} }
+func (m *AuthRoleAddRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthRoleAddRequest) ProtoMessage()    {}
+func (*AuthRoleAddRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{63}
+}
+func (m *AuthRoleAddRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleAddRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleAddRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleAddRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleAddRequest.Merge(m, src)
+}
+func (m *AuthRoleAddRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleAddRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleAddRequest.DiscardUnknown(m)
 }
 
 func (m *AuthRoleAddRequest) Reset()                    { *m = AuthRoleAddRequest{} }
@@ -2910,7 +4753,41 @@ func (m *AuthRoleAddRequest) GetName() string {
 }
 
 type AuthRoleGetRequest struct {
-	Role string `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	Role                 string   `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthRoleGetRequest) Reset()         { *m = AuthRoleGetRequest{} }
+func (m *AuthRoleGetRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthRoleGetRequest) ProtoMessage()    {}
+func (*AuthRoleGetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{64}
+}
+func (m *AuthRoleGetRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleGetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleGetRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleGetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleGetRequest.Merge(m, src)
+}
+func (m *AuthRoleGetRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleGetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleGetRequest.DiscardUnknown(m)
 }
 
 func (m *AuthRoleGetRequest) Reset()                    { *m = AuthRoleGetRequest{} }
@@ -2926,6 +4803,40 @@ func (m *AuthRoleGetRequest) GetRole() string {
 }
 
 type AuthUserListRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthUserListRequest) Reset()         { *m = AuthUserListRequest{} }
+func (m *AuthUserListRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthUserListRequest) ProtoMessage()    {}
+func (*AuthUserListRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{65}
+}
+func (m *AuthUserListRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserListRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserListRequest.Merge(m, src)
+}
+func (m *AuthUserListRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserListRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserListRequest.DiscardUnknown(m)
 }
 
 func (m *AuthUserListRequest) Reset()                    { *m = AuthUserListRequest{} }
@@ -2934,6 +4845,40 @@ func (*AuthUserListRequest) ProtoMessage()               {}
 func (*AuthUserListRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{70} }
 
 type AuthRoleListRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthRoleListRequest) Reset()         { *m = AuthRoleListRequest{} }
+func (m *AuthRoleListRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthRoleListRequest) ProtoMessage()    {}
+func (*AuthRoleListRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{66}
+}
+func (m *AuthRoleListRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleListRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleListRequest.Merge(m, src)
+}
+func (m *AuthRoleListRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleListRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleListRequest.DiscardUnknown(m)
 }
 
 func (m *AuthRoleListRequest) Reset()                    { *m = AuthRoleListRequest{} }
@@ -2942,7 +4887,41 @@ func (*AuthRoleListRequest) ProtoMessage()               {}
 func (*AuthRoleListRequest) Descriptor() ([]byte, []int) { return fileDescriptorRpc, []int{71} }
 
 type AuthRoleDeleteRequest struct {
-	Role string `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	Role                 string   `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthRoleDeleteRequest) Reset()         { *m = AuthRoleDeleteRequest{} }
+func (m *AuthRoleDeleteRequest) String() string { return proto.CompactTextString(m) }
+func (*AuthRoleDeleteRequest) ProtoMessage()    {}
+func (*AuthRoleDeleteRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{67}
+}
+func (m *AuthRoleDeleteRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleDeleteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleDeleteRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleDeleteRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleDeleteRequest.Merge(m, src)
+}
+func (m *AuthRoleDeleteRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleDeleteRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleDeleteRequest.DiscardUnknown(m)
 }
 
 func (m *AuthRoleDeleteRequest) Reset()                    { *m = AuthRoleDeleteRequest{} }
@@ -2961,7 +4940,10 @@ type AuthRoleGrantPermissionRequest struct {
 	// name is the name of the role which will be granted the permission.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// perm is the permission to grant to the role.
-	Perm *authpb.Permission `protobuf:"bytes,2,opt,name=perm" json:"perm,omitempty"`
+	Perm                 *authpb.Permission `protobuf:"bytes,2,opt,name=perm,proto3" json:"perm,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
 func (m *AuthRoleGrantPermissionRequest) Reset()         { *m = AuthRoleGrantPermissionRequest{} }
@@ -2970,6 +4952,11 @@ func (*AuthRoleGrantPermissionRequest) ProtoMessage()    {}
 func (*AuthRoleGrantPermissionRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptorRpc, []int{73}
 }
+func (m *AuthRoleGrantPermissionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleGrantPermissionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AuthRoleGrantPermissionRequest proto.InternalMessageInfo
 
 func (m *AuthRoleGrantPermissionRequest) GetName() string {
 	if m != nil {
@@ -2997,6 +4984,32 @@ func (*AuthRoleRevokePermissionRequest) ProtoMessage()    {}
 func (*AuthRoleRevokePermissionRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptorRpc, []int{74}
 }
+func (m *AuthRoleRevokePermissionRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleRevokePermissionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleRevokePermissionRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleRevokePermissionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleRevokePermissionRequest.Merge(m, src)
+}
+func (m *AuthRoleRevokePermissionRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleRevokePermissionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleRevokePermissionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AuthRoleRevokePermissionRequest proto.InternalMessageInfo
 
 func (m *AuthRoleRevokePermissionRequest) GetRole() string {
 	if m != nil {
@@ -3020,7 +5033,41 @@ func (m *AuthRoleRevokePermissionRequest) GetRangeEnd() []byte {
 }
 
 type AuthEnableResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthEnableResponse) Reset()         { *m = AuthEnableResponse{} }
+func (m *AuthEnableResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthEnableResponse) ProtoMessage()    {}
+func (*AuthEnableResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{70}
+}
+func (m *AuthEnableResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthEnableResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthEnableResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthEnableResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthEnableResponse.Merge(m, src)
+}
+func (m *AuthEnableResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthEnableResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthEnableResponse.DiscardUnknown(m)
 }
 
 func (m *AuthEnableResponse) Reset()                    { *m = AuthEnableResponse{} }
@@ -3036,7 +5083,41 @@ func (m *AuthEnableResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthDisableResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthDisableResponse) Reset()         { *m = AuthDisableResponse{} }
+func (m *AuthDisableResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthDisableResponse) ProtoMessage()    {}
+func (*AuthDisableResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{71}
+}
+func (m *AuthDisableResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthDisableResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthDisableResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthDisableResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthDisableResponse.Merge(m, src)
+}
+func (m *AuthDisableResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthDisableResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthDisableResponse.DiscardUnknown(m)
 }
 
 func (m *AuthDisableResponse) Reset()                    { *m = AuthDisableResponse{} }
@@ -3052,9 +5133,43 @@ func (m *AuthDisableResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthenticateResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// token is an authorized token that can be used in succeeding RPCs
-	Token string `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AuthenticateResponse) Reset()         { *m = AuthenticateResponse{} }
+func (m *AuthenticateResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthenticateResponse) ProtoMessage()    {}
+func (*AuthenticateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{72}
+}
+func (m *AuthenticateResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthenticateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthenticateResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthenticateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthenticateResponse.Merge(m, src)
+}
+func (m *AuthenticateResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthenticateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthenticateResponse.DiscardUnknown(m)
 }
 
 func (m *AuthenticateResponse) Reset()                    { *m = AuthenticateResponse{} }
@@ -3077,7 +5192,41 @@ func (m *AuthenticateResponse) GetToken() string {
 }
 
 type AuthUserAddResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthUserAddResponse) Reset()         { *m = AuthUserAddResponse{} }
+func (m *AuthUserAddResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthUserAddResponse) ProtoMessage()    {}
+func (*AuthUserAddResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{73}
+}
+func (m *AuthUserAddResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserAddResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserAddResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserAddResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserAddResponse.Merge(m, src)
+}
+func (m *AuthUserAddResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserAddResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserAddResponse.DiscardUnknown(m)
 }
 
 func (m *AuthUserAddResponse) Reset()                    { *m = AuthUserAddResponse{} }
@@ -3093,8 +5242,42 @@ func (m *AuthUserAddResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthUserGetResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
-	Roles  []string        `protobuf:"bytes,2,rep,name=roles" json:"roles,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Roles                []string        `protobuf:"bytes,2,rep,name=roles,proto3" json:"roles,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthUserGetResponse) Reset()         { *m = AuthUserGetResponse{} }
+func (m *AuthUserGetResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthUserGetResponse) ProtoMessage()    {}
+func (*AuthUserGetResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{74}
+}
+func (m *AuthUserGetResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserGetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserGetResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserGetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserGetResponse.Merge(m, src)
+}
+func (m *AuthUserGetResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserGetResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserGetResponse.DiscardUnknown(m)
 }
 
 func (m *AuthUserGetResponse) Reset()                    { *m = AuthUserGetResponse{} }
@@ -3117,7 +5300,41 @@ func (m *AuthUserGetResponse) GetRoles() []string {
 }
 
 type AuthUserDeleteResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthUserDeleteResponse) Reset()         { *m = AuthUserDeleteResponse{} }
+func (m *AuthUserDeleteResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthUserDeleteResponse) ProtoMessage()    {}
+func (*AuthUserDeleteResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{75}
+}
+func (m *AuthUserDeleteResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserDeleteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserDeleteResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserDeleteResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserDeleteResponse.Merge(m, src)
+}
+func (m *AuthUserDeleteResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserDeleteResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserDeleteResponse.DiscardUnknown(m)
 }
 
 func (m *AuthUserDeleteResponse) Reset()                    { *m = AuthUserDeleteResponse{} }
@@ -3133,7 +5350,10 @@ func (m *AuthUserDeleteResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthUserChangePasswordResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *AuthUserChangePasswordResponse) Reset()         { *m = AuthUserChangePasswordResponse{} }
@@ -3142,6 +5362,17 @@ func (*AuthUserChangePasswordResponse) ProtoMessage()    {}
 func (*AuthUserChangePasswordResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptorRpc, []int{81}
 }
+func (m *AuthUserChangePasswordResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserChangePasswordResponse.Merge(m, src)
+}
+func (m *AuthUserChangePasswordResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserChangePasswordResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserChangePasswordResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AuthUserChangePasswordResponse proto.InternalMessageInfo
 
 func (m *AuthUserChangePasswordResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -3151,7 +5382,41 @@ func (m *AuthUserChangePasswordResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthUserGrantRoleResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthUserGrantRoleResponse) Reset()         { *m = AuthUserGrantRoleResponse{} }
+func (m *AuthUserGrantRoleResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthUserGrantRoleResponse) ProtoMessage()    {}
+func (*AuthUserGrantRoleResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{77}
+}
+func (m *AuthUserGrantRoleResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserGrantRoleResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserGrantRoleResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserGrantRoleResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserGrantRoleResponse.Merge(m, src)
+}
+func (m *AuthUserGrantRoleResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserGrantRoleResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserGrantRoleResponse.DiscardUnknown(m)
 }
 
 func (m *AuthUserGrantRoleResponse) Reset()                    { *m = AuthUserGrantRoleResponse{} }
@@ -3167,7 +5432,41 @@ func (m *AuthUserGrantRoleResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthUserRevokeRoleResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthUserRevokeRoleResponse) Reset()         { *m = AuthUserRevokeRoleResponse{} }
+func (m *AuthUserRevokeRoleResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthUserRevokeRoleResponse) ProtoMessage()    {}
+func (*AuthUserRevokeRoleResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{78}
+}
+func (m *AuthUserRevokeRoleResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserRevokeRoleResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserRevokeRoleResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserRevokeRoleResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserRevokeRoleResponse.Merge(m, src)
+}
+func (m *AuthUserRevokeRoleResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserRevokeRoleResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserRevokeRoleResponse.DiscardUnknown(m)
 }
 
 func (m *AuthUserRevokeRoleResponse) Reset()                    { *m = AuthUserRevokeRoleResponse{} }
@@ -3183,7 +5482,41 @@ func (m *AuthUserRevokeRoleResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthRoleAddResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthRoleAddResponse) Reset()         { *m = AuthRoleAddResponse{} }
+func (m *AuthRoleAddResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthRoleAddResponse) ProtoMessage()    {}
+func (*AuthRoleAddResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{79}
+}
+func (m *AuthRoleAddResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleAddResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleAddResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleAddResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleAddResponse.Merge(m, src)
+}
+func (m *AuthRoleAddResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleAddResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleAddResponse.DiscardUnknown(m)
 }
 
 func (m *AuthRoleAddResponse) Reset()                    { *m = AuthRoleAddResponse{} }
@@ -3199,8 +5532,42 @@ func (m *AuthRoleAddResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthRoleGetResponse struct {
-	Header *ResponseHeader      `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
-	Perm   []*authpb.Permission `protobuf:"bytes,2,rep,name=perm" json:"perm,omitempty"`
+	Header               *ResponseHeader      `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Perm                 []*authpb.Permission `protobuf:"bytes,2,rep,name=perm,proto3" json:"perm,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *AuthRoleGetResponse) Reset()         { *m = AuthRoleGetResponse{} }
+func (m *AuthRoleGetResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthRoleGetResponse) ProtoMessage()    {}
+func (*AuthRoleGetResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{80}
+}
+func (m *AuthRoleGetResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleGetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleGetResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleGetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleGetResponse.Merge(m, src)
+}
+func (m *AuthRoleGetResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleGetResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleGetResponse.DiscardUnknown(m)
 }
 
 func (m *AuthRoleGetResponse) Reset()                    { *m = AuthRoleGetResponse{} }
@@ -3223,8 +5590,42 @@ func (m *AuthRoleGetResponse) GetPerm() []*authpb.Permission {
 }
 
 type AuthRoleListResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
-	Roles  []string        `protobuf:"bytes,2,rep,name=roles" json:"roles,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Roles                []string        `protobuf:"bytes,2,rep,name=roles,proto3" json:"roles,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthRoleListResponse) Reset()         { *m = AuthRoleListResponse{} }
+func (m *AuthRoleListResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthRoleListResponse) ProtoMessage()    {}
+func (*AuthRoleListResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{81}
+}
+func (m *AuthRoleListResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleListResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleListResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleListResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleListResponse.Merge(m, src)
+}
+func (m *AuthRoleListResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleListResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleListResponse.DiscardUnknown(m)
 }
 
 func (m *AuthRoleListResponse) Reset()                    { *m = AuthRoleListResponse{} }
@@ -3247,8 +5648,42 @@ func (m *AuthRoleListResponse) GetRoles() []string {
 }
 
 type AuthUserListResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
-	Users  []string        `protobuf:"bytes,2,rep,name=users" json:"users,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Users                []string        `protobuf:"bytes,2,rep,name=users,proto3" json:"users,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthUserListResponse) Reset()         { *m = AuthUserListResponse{} }
+func (m *AuthUserListResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthUserListResponse) ProtoMessage()    {}
+func (*AuthUserListResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{82}
+}
+func (m *AuthUserListResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthUserListResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthUserListResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthUserListResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthUserListResponse.Merge(m, src)
+}
+func (m *AuthUserListResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthUserListResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthUserListResponse.DiscardUnknown(m)
 }
 
 func (m *AuthUserListResponse) Reset()                    { *m = AuthUserListResponse{} }
@@ -3271,7 +5706,41 @@ func (m *AuthUserListResponse) GetUsers() []string {
 }
 
 type AuthRoleDeleteResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *AuthRoleDeleteResponse) Reset()         { *m = AuthRoleDeleteResponse{} }
+func (m *AuthRoleDeleteResponse) String() string { return proto.CompactTextString(m) }
+func (*AuthRoleDeleteResponse) ProtoMessage()    {}
+func (*AuthRoleDeleteResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_77a6da22d6a3feb1, []int{83}
+}
+func (m *AuthRoleDeleteResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AuthRoleDeleteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleDeleteResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleDeleteResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleDeleteResponse.Merge(m, src)
+}
+func (m *AuthRoleDeleteResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleDeleteResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleDeleteResponse.DiscardUnknown(m)
 }
 
 func (m *AuthRoleDeleteResponse) Reset()                    { *m = AuthRoleDeleteResponse{} }
@@ -3287,7 +5756,10 @@ func (m *AuthRoleDeleteResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthRoleGrantPermissionResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *AuthRoleGrantPermissionResponse) Reset()         { *m = AuthRoleGrantPermissionResponse{} }
@@ -3297,6 +5769,8 @@ func (*AuthRoleGrantPermissionResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptorRpc, []int{89}
 }
 
+var xxx_messageInfo_AuthRoleGrantPermissionResponse proto.InternalMessageInfo
+
 func (m *AuthRoleGrantPermissionResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
@@ -3305,7 +5779,10 @@ func (m *AuthRoleGrantPermissionResponse) GetHeader() *ResponseHeader {
 }
 
 type AuthRoleRevokePermissionResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *AuthRoleRevokePermissionResponse) Reset()         { *m = AuthRoleRevokePermissionResponse{} }
@@ -3314,6 +5791,29 @@ func (*AuthRoleRevokePermissionResponse) ProtoMessage()    {}
 func (*AuthRoleRevokePermissionResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptorRpc, []int{90}
 }
+func (m *AuthRoleRevokePermissionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AuthRoleRevokePermissionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AuthRoleRevokePermissionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AuthRoleRevokePermissionResponse.Merge(m, src)
+}
+func (m *AuthRoleRevokePermissionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *AuthRoleRevokePermissionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AuthRoleRevokePermissionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AuthRoleRevokePermissionResponse proto.InternalMessageInfo
 
 func (m *AuthRoleRevokePermissionResponse) GetHeader() *ResponseHeader {
 	if m != nil {
@@ -3323,6 +5823,13 @@ func (m *AuthRoleRevokePermissionResponse) GetHeader() *ResponseHeader {
 }
 
 func init() {
+	proto.RegisterEnum("etcdserverpb.AlarmType", AlarmType_name, AlarmType_value)
+	proto.RegisterEnum("etcdserverpb.RangeRequest_SortOrder", RangeRequest_SortOrder_name, RangeRequest_SortOrder_value)
+	proto.RegisterEnum("etcdserverpb.RangeRequest_SortTarget", RangeRequest_SortTarget_name, RangeRequest_SortTarget_value)
+	proto.RegisterEnum("etcdserverpb.Compare_CompareResult", Compare_CompareResult_name, Compare_CompareResult_value)
+	proto.RegisterEnum("etcdserverpb.Compare_CompareTarget", Compare_CompareTarget_name, Compare_CompareTarget_value)
+	proto.RegisterEnum("etcdserverpb.WatchCreateRequest_FilterType", WatchCreateRequest_FilterType_name, WatchCreateRequest_FilterType_value)
+	proto.RegisterEnum("etcdserverpb.AlarmRequest_AlarmAction", AlarmRequest_AlarmAction_name, AlarmRequest_AlarmAction_value)
 	proto.RegisterType((*ResponseHeader)(nil), "etcdserverpb.ResponseHeader")
 	proto.RegisterType((*RangeRequest)(nil), "etcdserverpb.RangeRequest")
 	proto.RegisterType((*RangeResponse)(nil), "etcdserverpb.RangeResponse")
@@ -3414,13 +5921,244 @@ func init() {
 	proto.RegisterType((*AuthRoleDeleteResponse)(nil), "etcdserverpb.AuthRoleDeleteResponse")
 	proto.RegisterType((*AuthRoleGrantPermissionResponse)(nil), "etcdserverpb.AuthRoleGrantPermissionResponse")
 	proto.RegisterType((*AuthRoleRevokePermissionResponse)(nil), "etcdserverpb.AuthRoleRevokePermissionResponse")
-	proto.RegisterEnum("etcdserverpb.AlarmType", AlarmType_name, AlarmType_value)
-	proto.RegisterEnum("etcdserverpb.RangeRequest_SortOrder", RangeRequest_SortOrder_name, RangeRequest_SortOrder_value)
-	proto.RegisterEnum("etcdserverpb.RangeRequest_SortTarget", RangeRequest_SortTarget_name, RangeRequest_SortTarget_value)
-	proto.RegisterEnum("etcdserverpb.Compare_CompareResult", Compare_CompareResult_name, Compare_CompareResult_value)
-	proto.RegisterEnum("etcdserverpb.Compare_CompareTarget", Compare_CompareTarget_name, Compare_CompareTarget_value)
-	proto.RegisterEnum("etcdserverpb.WatchCreateRequest_FilterType", WatchCreateRequest_FilterType_name, WatchCreateRequest_FilterType_value)
-	proto.RegisterEnum("etcdserverpb.AlarmRequest_AlarmAction", AlarmRequest_AlarmAction_name, AlarmRequest_AlarmAction_value)
+}
+
+func init() { proto.RegisterFile("rpc.proto", fileDescriptor_77a6da22d6a3feb1) }
+
+var fileDescriptor_77a6da22d6a3feb1 = []byte{
+	// 3711 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x5b, 0x5b, 0x73, 0x1b, 0x47,
+	0x76, 0xe6, 0x00, 0x04, 0x40, 0x1c, 0x5c, 0x08, 0x35, 0x29, 0x09, 0x84, 0x24, 0x8a, 0x6a, 0xdd,
+	0xa8, 0x8b, 0x09, 0x9b, 0x76, 0xf2, 0xa0, 0xa4, 0x5c, 0xa6, 0x48, 0x58, 0xa4, 0x49, 0x91, 0xf4,
+	0x10, 0x94, 0x9d, 0x2a, 0x27, 0xac, 0x21, 0xd0, 0x22, 0x11, 0x02, 0x33, 0xc8, 0xcc, 0x00, 0x22,
+	0x15, 0x57, 0x52, 0xe5, 0x38, 0xae, 0x3c, 0xc7, 0x55, 0xa9, 0x24, 0xaf, 0x5b, 0x5b, 0x2e, 0xff,
+	0x82, 0xfd, 0x0b, 0x5b, 0xfb, 0xb2, 0xbb, 0xb5, 0x7f, 0x60, 0xcb, 0xbb, 0x2f, 0xfb, 0x0b, 0xf6,
+	0xf2, 0xb4, 0xd5, 0xb7, 0x99, 0x9e, 0x1b, 0x48, 0x1b, 0xb6, 0x5f, 0xa8, 0xe9, 0xd3, 0xa7, 0xcf,
+	0x39, 0x7d, 0xba, 0xcf, 0x39, 0xdd, 0x5f, 0x43, 0x90, 0xb7, 0xfb, 0xad, 0xa5, 0xbe, 0x6d, 0xb9,
+	0x16, 0x2a, 0x12, 0xb7, 0xd5, 0x76, 0x88, 0x3d, 0x24, 0x76, 0xff, 0xb0, 0x36, 0x7b, 0x64, 0x1d,
+	0x59, 0xac, 0xa3, 0x4e, 0xbf, 0x38, 0x4f, 0x6d, 0x8e, 0xf2, 0xd4, 0x7b, 0xc3, 0x56, 0x8b, 0xfd,
+	0xe9, 0x1f, 0xd6, 0x4f, 0x86, 0xa2, 0xeb, 0x1a, 0xeb, 0x32, 0x06, 0xee, 0x31, 0xfb, 0xd3, 0x3f,
+	0x64, 0xff, 0x88, 0xce, 0xeb, 0x47, 0x96, 0x75, 0xd4, 0x25, 0x75, 0xa3, 0xdf, 0xa9, 0x1b, 0xa6,
+	0x69, 0xb9, 0x86, 0xdb, 0xb1, 0x4c, 0x87, 0xf7, 0xe2, 0xff, 0xd4, 0xa0, 0xac, 0x13, 0xa7, 0x6f,
+	0x99, 0x0e, 0x59, 0x27, 0x46, 0x9b, 0xd8, 0xe8, 0x06, 0x40, 0xab, 0x3b, 0x70, 0x5c, 0x62, 0x1f,
+	0x74, 0xda, 0x55, 0x6d, 0x41, 0x5b, 0x9c, 0xd4, 0xf3, 0x82, 0xb2, 0xd1, 0x46, 0xd7, 0x20, 0xdf,
+	0x23, 0xbd, 0x43, 0xde, 0x9b, 0x62, 0xbd, 0x53, 0x9c, 0xb0, 0xd1, 0x46, 0x35, 0x98, 0xb2, 0xc9,
+	0xb0, 0xe3, 0x74, 0x2c, 0xb3, 0x9a, 0x5e, 0xd0, 0x16, 0xd3, 0xba, 0xd7, 0xa6, 0x03, 0x6d, 0xe3,
+	0xa5, 0x7b, 0xe0, 0x12, 0xbb, 0x57, 0x9d, 0xe4, 0x03, 0x29, 0xa1, 0x49, 0xec, 0x1e, 0xfe, 0x3c,
+	0x03, 0x45, 0xdd, 0x30, 0x8f, 0x88, 0x4e, 0xfe, 0x65, 0x40, 0x1c, 0x17, 0x55, 0x20, 0x7d, 0x42,
+	0xce, 0x98, 0xfa, 0xa2, 0x4e, 0x3f, 0xf9, 0x78, 0xf3, 0x88, 0x1c, 0x10, 0x93, 0x2b, 0x2e, 0xd2,
+	0xf1, 0xe6, 0x11, 0x69, 0x98, 0x6d, 0x34, 0x0b, 0x99, 0x6e, 0xa7, 0xd7, 0x71, 0x85, 0x56, 0xde,
+	0x08, 0x98, 0x33, 0x19, 0x32, 0x67, 0x15, 0xc0, 0xb1, 0x6c, 0xf7, 0xc0, 0xb2, 0xdb, 0xc4, 0xae,
+	0x66, 0x16, 0xb4, 0xc5, 0xf2, 0xf2, 0x9d, 0x25, 0x75, 0x21, 0x96, 0x54, 0x83, 0x96, 0xf6, 0x2c,
+	0xdb, 0xdd, 0xa1, 0xbc, 0x7a, 0xde, 0x91, 0x9f, 0xe8, 0x7d, 0x28, 0x30, 0x21, 0xae, 0x61, 0x1f,
+	0x11, 0xb7, 0x9a, 0x65, 0x52, 0xee, 0x9e, 0x23, 0xa5, 0xc9, 0x98, 0x75, 0xa6, 0x9e, 0x7f, 0x23,
+	0x0c, 0x45, 0x87, 0xd8, 0x1d, 0xa3, 0xdb, 0x79, 0x6d, 0x1c, 0x76, 0x49, 0x35, 0xb7, 0xa0, 0x2d,
+	0x4e, 0xe9, 0x01, 0x1a, 0x9d, 0xff, 0x09, 0x39, 0x73, 0x0e, 0x2c, 0xb3, 0x7b, 0x56, 0x9d, 0x62,
+	0x0c, 0x53, 0x94, 0xb0, 0x63, 0x76, 0xcf, 0xd8, 0xa2, 0x59, 0x03, 0xd3, 0xe5, 0xbd, 0x79, 0xd6,
+	0x9b, 0x67, 0x14, 0xd6, 0xbd, 0x08, 0x95, 0x5e, 0xc7, 0x3c, 0xe8, 0x59, 0xed, 0x03, 0xcf, 0x21,
+	0xc0, 0x1c, 0x52, 0xee, 0x75, 0xcc, 0xe7, 0x56, 0x5b, 0x97, 0x6e, 0xa1, 0x9c, 0xc6, 0x69, 0x90,
+	0xb3, 0x20, 0x38, 0x8d, 0x53, 0x95, 0x73, 0x09, 0x66, 0xa8, 0xcc, 0x96, 0x4d, 0x0c, 0x97, 0xf8,
+	0xcc, 0x45, 0xc6, 0x7c, 0xa9, 0xd7, 0x31, 0x57, 0x59, 0x4f, 0x80, 0xdf, 0x38, 0x8d, 0xf0, 0x97,
+	0x04, 0xbf, 0x71, 0x1a, 0xe4, 0xc7, 0x4b, 0x90, 0xf7, 0x7c, 0x8e, 0xa6, 0x60, 0x72, 0x7b, 0x67,
+	0xbb, 0x51, 0x99, 0x40, 0x00, 0xd9, 0x95, 0xbd, 0xd5, 0xc6, 0xf6, 0x5a, 0x45, 0x43, 0x05, 0xc8,
+	0xad, 0x35, 0x78, 0x23, 0x85, 0x9f, 0x02, 0xf8, 0xde, 0x45, 0x39, 0x48, 0x6f, 0x36, 0xfe, 0xa1,
+	0x32, 0x41, 0x79, 0x5e, 0x34, 0xf4, 0xbd, 0x8d, 0x9d, 0xed, 0x8a, 0x46, 0x07, 0xaf, 0xea, 0x8d,
+	0x95, 0x66, 0xa3, 0x92, 0xa2, 0x1c, 0xcf, 0x77, 0xd6, 0x2a, 0x69, 0x94, 0x87, 0xcc, 0x8b, 0x95,
+	0xad, 0xfd, 0x46, 0x65, 0x12, 0x7f, 0xa9, 0x41, 0x49, 0xac, 0x17, 0x8f, 0x09, 0xf4, 0x0e, 0x64,
+	0x8f, 0x59, 0x5c, 0xb0, 0xad, 0x58, 0x58, 0xbe, 0x1e, 0x5a, 0xdc, 0x40, 0xec, 0xe8, 0x82, 0x17,
+	0x61, 0x48, 0x9f, 0x0c, 0x9d, 0x6a, 0x6a, 0x21, 0xbd, 0x58, 0x58, 0xae, 0x2c, 0xf1, 0x80, 0x5d,
+	0xda, 0x24, 0x67, 0x2f, 0x8c, 0xee, 0x80, 0xe8, 0xb4, 0x13, 0x21, 0x98, 0xec, 0x59, 0x36, 0x61,
+	0x3b, 0x76, 0x4a, 0x67, 0xdf, 0x74, 0x1b, 0xb3, 0x45, 0x13, 0xbb, 0x95, 0x37, 0xf0, 0xd7, 0x1a,
+	0xc0, 0xee, 0xc0, 0x4d, 0x0e, 0x8d, 0x59, 0xc8, 0x0c, 0xa9, 0x60, 0x11, 0x16, 0xbc, 0xc1, 0x62,
+	0x82, 0x18, 0x0e, 0xf1, 0x62, 0x82, 0x36, 0xd0, 0x55, 0xc8, 0xf5, 0x6d, 0x32, 0x3c, 0x38, 0x19,
+	0x32, 0x25, 0x53, 0x7a, 0x96, 0x36, 0x37, 0x87, 0xe8, 0x16, 0x14, 0x3b, 0x47, 0xa6, 0x65, 0x93,
+	0x03, 0x2e, 0x2b, 0xc3, 0x7a, 0x0b, 0x9c, 0xc6, 0xec, 0x56, 0x58, 0xb8, 0xe0, 0xac, 0xca, 0xb2,
+	0x45, 0x49, 0xd8, 0x84, 0x02, 0x33, 0x75, 0x2c, 0xf7, 0x3d, 0xf0, 0x6d, 0x4c, 0xb1, 0x61, 0x51,
+	0x17, 0x0a, 0xab, 0xf1, 0x27, 0x80, 0xd6, 0x48, 0x97, 0xb8, 0x64, 0x9c, 0xec, 0xa1, 0xf8, 0x24,
+	0xad, 0xfa, 0x04, 0xff, 0xb7, 0x06, 0x33, 0x01, 0xf1, 0x63, 0x4d, 0xab, 0x0a, 0xb9, 0x36, 0x13,
+	0xc6, 0x2d, 0x48, 0xeb, 0xb2, 0x89, 0x1e, 0xc1, 0x94, 0x30, 0xc0, 0xa9, 0xa6, 0x13, 0x36, 0x4d,
+	0x8e, 0xdb, 0xe4, 0xe0, 0xaf, 0x53, 0x90, 0x17, 0x13, 0xdd, 0xe9, 0xa3, 0x15, 0x28, 0xd9, 0xbc,
+	0x71, 0xc0, 0xe6, 0x23, 0x2c, 0xaa, 0x25, 0x27, 0xa1, 0xf5, 0x09, 0xbd, 0x28, 0x86, 0x30, 0x32,
+	0xfa, 0x3b, 0x28, 0x48, 0x11, 0xfd, 0x81, 0x2b, 0x5c, 0x5e, 0x0d, 0x0a, 0xf0, 0xf7, 0xdf, 0xfa,
+	0x84, 0x0e, 0x82, 0x7d, 0x77, 0xe0, 0xa2, 0x26, 0xcc, 0xca, 0xc1, 0x7c, 0x36, 0xc2, 0x8c, 0x34,
+	0x93, 0xb2, 0x10, 0x94, 0x12, 0x5d, 0xaa, 0xf5, 0x09, 0x1d, 0x89, 0xf1, 0x4a, 0xa7, 0x6a, 0x92,
+	0x7b, 0xca, 0x93, 0x77, 0xc4, 0xa4, 0xe6, 0xa9, 0x19, 0x35, 0xa9, 0x79, 0x6a, 0x3e, 0xcd, 0x43,
+	0x4e, 0xb4, 0xf0, 0xcf, 0x52, 0x00, 0x72, 0x35, 0x76, 0xfa, 0x68, 0x0d, 0xca, 0xb6, 0x68, 0x05,
+	0xbc, 0x75, 0x2d, 0xd6, 0x5b, 0x62, 0x11, 0x27, 0xf4, 0x92, 0x1c, 0xc4, 0x8d, 0x7b, 0x17, 0x8a,
+	0x9e, 0x14, 0xdf, 0x61, 0x73, 0x31, 0x0e, 0xf3, 0x24, 0x14, 0xe4, 0x00, 0xea, 0xb2, 0x8f, 0xe0,
+	0xb2, 0x37, 0x3e, 0xc6, 0x67, 0xb7, 0x46, 0xf8, 0xcc, 0x13, 0x38, 0x23, 0x25, 0xa8, 0x5e, 0x53,
+	0x0d, 0xf3, 0xdd, 0x36, 0x17, 0xe3, 0xb6, 0xa8, 0x61, 0xd4, 0x71, 0x40, 0xeb, 0x25, 0x6f, 0xe2,
+	0x3f, 0xa4, 0x21, 0xb7, 0x6a, 0xf5, 0xfa, 0x86, 0x4d, 0x57, 0x23, 0x6b, 0x13, 0x67, 0xd0, 0x75,
+	0x99, 0xbb, 0xca, 0xcb, 0xb7, 0x83, 0x12, 0x05, 0x9b, 0xfc, 0x57, 0x67, 0xac, 0xba, 0x18, 0x42,
+	0x07, 0x8b, 0xf2, 0x98, 0xba, 0xc0, 0x60, 0x51, 0x1c, 0xc5, 0x10, 0x19, 0xc8, 0x69, 0x3f, 0x90,
+	0x6b, 0x90, 0x1b, 0x12, 0xdb, 0x2f, 0xe9, 0xeb, 0x13, 0xba, 0x24, 0xa0, 0x07, 0x30, 0x1d, 0x2e,
+	0x2f, 0x19, 0xc1, 0x53, 0x6e, 0x05, 0xab, 0xd1, 0x6d, 0x28, 0x06, 0x6a, 0x5c, 0x56, 0xf0, 0x15,
+	0x7a, 0x4a, 0x89, 0xbb, 0x22, 0xf3, 0x2a, 0xad, 0xc7, 0xc5, 0xf5, 0x09, 0x99, 0x59, 0xaf, 0xc8,
+	0xcc, 0x3a, 0x25, 0x46, 0x89, 0xdc, 0x1a, 0x48, 0x32, 0xef, 0x05, 0x93, 0x0c, 0x7e, 0x0f, 0x4a,
+	0x01, 0x07, 0xd1, 0xba, 0xd3, 0xf8, 0x70, 0x7f, 0x65, 0x8b, 0x17, 0xa9, 0x67, 0xac, 0x2e, 0xe9,
+	0x15, 0x8d, 0xd6, 0xba, 0xad, 0xc6, 0xde, 0x5e, 0x25, 0x85, 0x4a, 0x90, 0xdf, 0xde, 0x69, 0x1e,
+	0x70, 0xae, 0x34, 0x7e, 0xe6, 0x49, 0x10, 0x45, 0x4e, 0xa9, 0x6d, 0x13, 0x4a, 0x6d, 0xd3, 0x64,
+	0x6d, 0x4b, 0xf9, 0xb5, 0x8d, 0x95, 0xb9, 0xad, 0xc6, 0xca, 0x5e, 0xa3, 0x32, 0xf9, 0xb4, 0x0c,
+	0x45, 0xee, 0xdf, 0x83, 0x81, 0x49, 0x4b, 0xed, 0x4f, 0x34, 0x00, 0x3f, 0x9a, 0x50, 0x1d, 0x72,
+	0x2d, 0xae, 0xa7, 0xaa, 0xb1, 0x64, 0x74, 0x39, 0x76, 0xc9, 0x74, 0xc9, 0x85, 0xde, 0x82, 0x9c,
+	0x33, 0x68, 0xb5, 0x88, 0x23, 0x4b, 0xde, 0xd5, 0x70, 0x3e, 0x14, 0xd9, 0x4a, 0x97, 0x7c, 0x74,
+	0xc8, 0x4b, 0xa3, 0xd3, 0x1d, 0xb0, 0x02, 0x38, 0x7a, 0x88, 0xe0, 0xc3, 0xff, 0xa7, 0x41, 0x41,
+	0xd9, 0xbc, 0xdf, 0x31, 0x09, 0x5f, 0x87, 0x3c, 0xb3, 0x81, 0xb4, 0x45, 0x1a, 0x9e, 0xd2, 0x7d,
+	0x02, 0xfa, 0x5b, 0xc8, 0xcb, 0x08, 0x90, 0x99, 0xb8, 0x1a, 0x2f, 0x76, 0xa7, 0xaf, 0xfb, 0xac,
+	0x78, 0x13, 0x2e, 0x31, 0xaf, 0xb4, 0xe8, 0xe1, 0x5a, 0xfa, 0x51, 0x3d, 0x7e, 0x6a, 0xa1, 0xe3,
+	0x67, 0x0d, 0xa6, 0xfa, 0xc7, 0x67, 0x4e, 0xa7, 0x65, 0x74, 0x85, 0x15, 0x5e, 0x1b, 0x7f, 0x00,
+	0x48, 0x15, 0x36, 0xce, 0x74, 0x71, 0x09, 0x0a, 0xeb, 0x86, 0x73, 0x2c, 0x4c, 0xc2, 0x8f, 0xa0,
+	0x44, 0x9b, 0x9b, 0x2f, 0x2e, 0x60, 0x23, 0xbb, 0x1c, 0x48, 0xee, 0xb1, 0x7c, 0x8e, 0x60, 0xf2,
+	0xd8, 0x70, 0x8e, 0xd9, 0x44, 0x4b, 0x3a, 0xfb, 0x46, 0x0f, 0xa0, 0xd2, 0xe2, 0x93, 0x3c, 0x08,
+	0x5d, 0x19, 0xa6, 0x05, 0xdd, 0x3b, 0x09, 0x7e, 0x0c, 0x45, 0x3e, 0x87, 0xef, 0xdb, 0x08, 0x7c,
+	0x09, 0xa6, 0xf7, 0x4c, 0xa3, 0xef, 0x1c, 0x5b, 0xb2, 0xba, 0xd1, 0x49, 0x57, 0x7c, 0xda, 0x58,
+	0x1a, 0xef, 0xc3, 0xb4, 0x4d, 0x7a, 0x46, 0xc7, 0xec, 0x98, 0x47, 0x07, 0x87, 0x67, 0x2e, 0x71,
+	0xc4, 0x85, 0xa9, 0xec, 0x91, 0x9f, 0x52, 0x2a, 0x35, 0xed, 0xb0, 0x6b, 0x1d, 0x8a, 0x34, 0xc7,
+	0xbe, 0xf1, 0x17, 0x29, 0x28, 0x7e, 0x64, 0xb8, 0x2d, 0xb9, 0x74, 0x68, 0x03, 0xca, 0x5e, 0x72,
+	0x63, 0x14, 0x61, 0x4b, 0xa8, 0xc4, 0xb2, 0x31, 0xf2, 0x28, 0x2d, 0xab, 0x63, 0xa9, 0xa5, 0x12,
+	0x98, 0x28, 0xc3, 0x6c, 0x91, 0xae, 0x27, 0x2a, 0x95, 0x2c, 0x8a, 0x31, 0xaa, 0xa2, 0x54, 0x02,
+	0xda, 0x81, 0x4a, 0xdf, 0xb6, 0x8e, 0x6c, 0xe2, 0x38, 0x9e, 0x30, 0x5e, 0xc6, 0x70, 0x8c, 0xb0,
+	0x5d, 0xc1, 0xea, 0x8b, 0x9b, 0xee, 0x07, 0x49, 0x4f, 0xa7, 0xfd, 0xf3, 0x0c, 0x4f, 0x4e, 0xbf,
+	0x4e, 0x01, 0x8a, 0x4e, 0xea, 0xdb, 0x1e, 0xf1, 0xee, 0x42, 0xd9, 0x71, 0x0d, 0x3b, 0xb2, 0xd9,
+	0x4a, 0x8c, 0xea, 0x65, 0xfc, 0xfb, 0xe0, 0x19, 0x74, 0x60, 0x5a, 0x6e, 0xe7, 0xe5, 0x99, 0x38,
+	0x25, 0x97, 0x25, 0x79, 0x9b, 0x51, 0x51, 0x03, 0x72, 0x2f, 0x3b, 0x5d, 0x97, 0xd8, 0x4e, 0x35,
+	0xb3, 0x90, 0x5e, 0x2c, 0x2f, 0x3f, 0x3a, 0x6f, 0x19, 0x96, 0xde, 0x67, 0xfc, 0xcd, 0xb3, 0x3e,
+	0xd1, 0xe5, 0x58, 0xf5, 0xe4, 0x99, 0x0d, 0x9c, 0xc6, 0xe7, 0x60, 0xea, 0x15, 0x15, 0x41, 0x6f,
+	0xd9, 0x39, 0x7e, 0x58, 0x64, 0x6d, 0x7e, 0xc9, 0x7e, 0x69, 0x1b, 0x47, 0x3d, 0x62, 0xba, 0xf2,
+	0x1e, 0x28, 0xdb, 0xf8, 0x2e, 0x80, 0xaf, 0x86, 0xa6, 0xfc, 0xed, 0x9d, 0xdd, 0xfd, 0x66, 0x65,
+	0x02, 0x15, 0x61, 0x6a, 0x7b, 0x67, 0xad, 0xb1, 0xd5, 0xa0, 0xf5, 0x01, 0xd7, 0xa5, 0x4b, 0x03,
+	0x6b, 0xa9, 0xea, 0xd4, 0x02, 0x3a, 0xf1, 0x15, 0x98, 0x8d, 0x5b, 0x40, 0x7a, 0x16, 0x2d, 0x89,
+	0x5d, 0x3a, 0x56, 0xa8, 0xa8, 0xaa, 0x53, 0xc1, 0xe9, 0x56, 0x21, 0xc7, 0x77, 0x6f, 0x5b, 0x1c,
+	0xce, 0x65, 0x93, 0x3a, 0x82, 0x6f, 0x46, 0xd2, 0x16, 0xab, 0xe4, 0xb5, 0x63, 0xd3, 0x4b, 0x26,
+	0x36, 0xbd, 0xa0, 0xdb, 0x50, 0xf2, 0xa2, 0xc1, 0x70, 0xc4, 0x59, 0x20, 0xaf, 0x17, 0xe5, 0x46,
+	0xa7, 0xb4, 0x80, 0xd3, 0x73, 0x41, 0xa7, 0xa3, 0xbb, 0x90, 0x25, 0x43, 0x62, 0xba, 0x4e, 0xb5,
+	0xc0, 0x2a, 0x46, 0x49, 0x9e, 0xdd, 0x1b, 0x94, 0xaa, 0x8b, 0x4e, 0xfc, 0x37, 0x70, 0x89, 0xdd,
+	0x91, 0x9e, 0xd9, 0x86, 0xa9, 0x5e, 0xe6, 0x9a, 0xcd, 0x2d, 0xe1, 0x6e, 0xfa, 0x89, 0xca, 0x90,
+	0xda, 0x58, 0x13, 0x4e, 0x48, 0x6d, 0xac, 0xe1, 0xcf, 0x34, 0x40, 0xea, 0xb8, 0xb1, 0xfc, 0x1c,
+	0x12, 0x2e, 0xd5, 0xa7, 0x7d, 0xf5, 0xb3, 0x90, 0x21, 0xb6, 0x6d, 0xd9, 0xcc, 0xa3, 0x79, 0x9d,
+	0x37, 0xf0, 0x1d, 0x61, 0x83, 0x4e, 0x86, 0xd6, 0x89, 0x17, 0x83, 0x5c, 0x9a, 0xe6, 0x99, 0xba,
+	0x09, 0x33, 0x01, 0xae, 0xb1, 0x2a, 0xd7, 0x7d, 0xb8, 0xcc, 0x84, 0x6d, 0x12, 0xd2, 0x5f, 0xe9,
+	0x76, 0x86, 0x89, 0x5a, 0xfb, 0x70, 0x25, 0xcc, 0xf8, 0xc3, 0xfa, 0x08, 0xff, 0xbd, 0xd0, 0xd8,
+	0xec, 0xf4, 0x48, 0xd3, 0xda, 0x4a, 0xb6, 0x8d, 0x66, 0xf6, 0x13, 0x72, 0xe6, 0x88, 0x12, 0xcf,
+	0xbe, 0xf1, 0x4f, 0x35, 0xb8, 0x1a, 0x19, 0xfe, 0x03, 0xaf, 0xea, 0x3c, 0xc0, 0x11, 0xdd, 0x3e,
+	0xa4, 0x4d, 0x3b, 0x38, 0xba, 0xa0, 0x50, 0x3c, 0x3b, 0x69, 0x2e, 0x2b, 0x0a, 0x3b, 0x67, 0xc5,
+	0x9a, 0xb3, 0x3f, 0x5e, 0xc4, 0xdf, 0x80, 0x02, 0x23, 0xec, 0xb9, 0x86, 0x3b, 0x70, 0x22, 0x8b,
+	0xf1, 0x6f, 0x62, 0x0b, 0xc8, 0x41, 0x63, 0xcd, 0xeb, 0x2d, 0xc8, 0xb2, 0x83, 0xb5, 0x3c, 0x56,
+	0x86, 0x6e, 0x32, 0x8a, 0x1d, 0xba, 0x60, 0xc4, 0xc7, 0x90, 0x7d, 0xce, 0xd0, 0x48, 0xc5, 0xb2,
+	0x49, 0xb9, 0x14, 0xa6, 0xd1, 0xe3, 0x18, 0x49, 0x5e, 0x67, 0xdf, 0xec, 0x14, 0x46, 0x88, 0xbd,
+	0xaf, 0x6f, 0xf1, 0xd3, 0x5e, 0x5e, 0xf7, 0xda, 0xd4, 0x65, 0xad, 0x6e, 0x87, 0x98, 0x2e, 0xeb,
+	0x9d, 0x64, 0xbd, 0x0a, 0x05, 0x2f, 0x41, 0x85, 0x6b, 0x5a, 0x69, 0xb7, 0x95, 0xd3, 0x94, 0x27,
+	0x4f, 0x0b, 0xca, 0xc3, 0x5f, 0x69, 0x70, 0x49, 0x19, 0x30, 0x96, 0x63, 0x1e, 0x43, 0x96, 0x63,
+	0xae, 0xa2, 0x70, 0xcf, 0x06, 0x47, 0x71, 0x35, 0xba, 0xe0, 0x41, 0x4b, 0x90, 0xe3, 0x5f, 0xf2,
+	0x48, 0x1b, 0xcf, 0x2e, 0x99, 0xf0, 0x5d, 0x98, 0x11, 0x24, 0xd2, 0xb3, 0xe2, 0xf6, 0x36, 0x73,
+	0x28, 0xfe, 0x14, 0x66, 0x83, 0x6c, 0x63, 0x4d, 0x49, 0x31, 0x32, 0x75, 0x11, 0x23, 0x57, 0xa4,
+	0x91, 0xfb, 0xfd, 0xb6, 0x72, 0x2c, 0x08, 0xaf, 0xba, 0xba, 0x22, 0xa9, 0xd0, 0x8a, 0x78, 0x13,
+	0x90, 0x22, 0x7e, 0xd4, 0x09, 0xcc, 0xc8, 0xed, 0xb0, 0xd5, 0x71, 0xbc, 0xd3, 0xe7, 0x6b, 0x40,
+	0x2a, 0xf1, 0xc7, 0x36, 0x68, 0x8d, 0xc8, 0xa2, 0x26, 0x0d, 0xfa, 0x00, 0x90, 0x4a, 0x1c, 0x2b,
+	0xa3, 0xd7, 0xe1, 0xd2, 0x73, 0x6b, 0x48, 0x53, 0x03, 0xa5, 0xfa, 0x21, 0xc3, 0xef, 0xa2, 0xde,
+	0xb2, 0x79, 0x6d, 0xaa, 0x5c, 0x1d, 0x30, 0x96, 0xf2, 0x5f, 0x6a, 0x50, 0x5c, 0xe9, 0x1a, 0x76,
+	0x4f, 0x2a, 0x7e, 0x17, 0xb2, 0xfc, 0x86, 0x25, 0x40, 0x8d, 0x7b, 0x41, 0x31, 0x2a, 0x2f, 0x6f,
+	0xac, 0xf0, 0xfb, 0x98, 0x18, 0x45, 0x0d, 0x17, 0xef, 0x1e, 0x6b, 0xa1, 0x77, 0x90, 0x35, 0xf4,
+	0x06, 0x64, 0x0c, 0x3a, 0x84, 0xa5, 0xe0, 0x72, 0xf8, 0x6e, 0xcb, 0xa4, 0xb1, 0x73, 0x20, 0xe7,
+	0xc2, 0xef, 0x40, 0x41, 0xd1, 0x40, 0x6f, 0xef, 0xcf, 0x1a, 0xe2, 0xd0, 0xb6, 0xb2, 0xda, 0xdc,
+	0x78, 0xc1, 0x2f, 0xf5, 0x65, 0x80, 0xb5, 0x86, 0xd7, 0x4e, 0xe1, 0x8f, 0xc5, 0x28, 0x91, 0xef,
+	0x54, 0x7b, 0xb4, 0x24, 0x7b, 0x52, 0x17, 0xb2, 0xe7, 0x14, 0x4a, 0x62, 0xfa, 0xe3, 0xa6, 0x6f,
+	0x26, 0x2f, 0x21, 0x7d, 0x2b, 0xc6, 0xeb, 0x82, 0x11, 0x4f, 0x43, 0x49, 0x24, 0x74, 0xb1, 0xff,
+	0x7e, 0xa1, 0x41, 0x59, 0x52, 0xc6, 0x05, 0x5f, 0x25, 0x6e, 0xc4, 0x2b, 0x80, 0x87, 0x1a, 0x5d,
+	0x81, 0x6c, 0xfb, 0x70, 0xaf, 0xf3, 0x5a, 0x02, 0xe5, 0xa2, 0x45, 0xe9, 0x5d, 0xae, 0x87, 0xbf,
+	0x56, 0x89, 0x16, 0xba, 0xce, 0x1f, 0xb2, 0x36, 0xcc, 0x36, 0x39, 0x65, 0x67, 0xca, 0x49, 0xdd,
+	0x27, 0xb0, 0x0b, 0xb5, 0x78, 0xd5, 0x62, 0x07, 0x49, 0xf5, 0x95, 0x6b, 0x06, 0x2e, 0xad, 0x0c,
+	0xdc, 0xe3, 0x86, 0x69, 0x1c, 0x76, 0x65, 0xc6, 0xa2, 0x65, 0x96, 0x12, 0xd7, 0x3a, 0x8e, 0x4a,
+	0x6d, 0xc0, 0x0c, 0xa5, 0x12, 0xd3, 0xed, 0xb4, 0x94, 0xf4, 0x26, 0x8b, 0x98, 0x16, 0x2a, 0x62,
+	0x86, 0xe3, 0xbc, 0xb2, 0xec, 0xb6, 0x98, 0x9a, 0xd7, 0xc6, 0x6b, 0x5c, 0xf8, 0xbe, 0x13, 0x28,
+	0x53, 0xdf, 0x56, 0xca, 0xa2, 0x2f, 0xe5, 0x19, 0x71, 0x47, 0x48, 0xc1, 0x8f, 0xe0, 0xb2, 0xe4,
+	0x14, 0xc0, 0xe4, 0x08, 0xe6, 0x1d, 0xb8, 0x21, 0x99, 0x57, 0x8f, 0xe9, 0x45, 0x6d, 0x57, 0x28,
+	0xfc, 0xae, 0x76, 0x3e, 0x85, 0xaa, 0x67, 0x27, 0x3b, 0x2c, 0x5b, 0x5d, 0xd5, 0x80, 0x81, 0x23,
+	0xf6, 0x4c, 0x5e, 0x67, 0xdf, 0x94, 0x66, 0x5b, 0x5d, 0xef, 0x48, 0x40, 0xbf, 0xf1, 0x2a, 0xcc,
+	0x49, 0x19, 0xe2, 0x18, 0x1b, 0x14, 0x12, 0x31, 0x28, 0x4e, 0x88, 0x70, 0x18, 0x1d, 0x3a, 0xda,
+	0xed, 0x2a, 0x67, 0xd0, 0xb5, 0x4c, 0xa6, 0xa6, 0xc8, 0xbc, 0xcc, 0x77, 0x04, 0x35, 0x4c, 0xad,
+	0x18, 0x82, 0x4c, 0x05, 0xa8, 0x64, 0xb1, 0x10, 0x94, 0x1c, 0x59, 0x88, 0x88, 0xe8, 0x4f, 0x60,
+	0xde, 0x33, 0x82, 0xfa, 0x6d, 0x97, 0xd8, 0xbd, 0x8e, 0xe3, 0x28, 0x50, 0x56, 0xdc, 0xc4, 0xef,
+	0xc1, 0x64, 0x9f, 0x88, 0x9c, 0x52, 0x58, 0x46, 0x4b, 0xfc, 0xed, 0x79, 0x49, 0x19, 0xcc, 0xfa,
+	0x71, 0x1b, 0x6e, 0x4a, 0xe9, 0xdc, 0xa3, 0xb1, 0xe2, 0xc3, 0x46, 0xc9, 0x0b, 0x3e, 0x77, 0x6b,
+	0xf4, 0x82, 0x9f, 0xe6, 0x6b, 0xef, 0xc1, 0xab, 0x1f, 0x70, 0x47, 0xca, 0xd8, 0x1a, 0xab, 0x56,
+	0x6c, 0x72, 0x9f, 0x7a, 0x21, 0x39, 0x96, 0xb0, 0x43, 0x98, 0x0d, 0x46, 0xf2, 0x58, 0x69, 0x6c,
+	0x16, 0x32, 0xae, 0x75, 0x42, 0x64, 0x12, 0xe3, 0x0d, 0x69, 0xb0, 0x17, 0xe6, 0x63, 0x19, 0x6c,
+	0xf8, 0xc2, 0xd8, 0x96, 0x1c, 0xd7, 0x5e, 0xba, 0x9a, 0xf2, 0xf0, 0xc5, 0x1b, 0x78, 0x1b, 0xae,
+	0x84, 0xd3, 0xc4, 0x58, 0x26, 0xbf, 0xe0, 0x1b, 0x38, 0x2e, 0x93, 0x8c, 0x25, 0xf7, 0x43, 0x3f,
+	0x19, 0x28, 0x09, 0x65, 0x2c, 0x91, 0x3a, 0xd4, 0xe2, 0xf2, 0xcb, 0xf7, 0xb1, 0x5f, 0xbd, 0x74,
+	0x33, 0x96, 0x30, 0xc7, 0x17, 0x36, 0xfe, 0xf2, 0xfb, 0x39, 0x22, 0x3d, 0x32, 0x47, 0x88, 0x20,
+	0xf1, 0xb3, 0xd8, 0x0f, 0xb0, 0xe9, 0x84, 0x0e, 0x3f, 0x81, 0x8e, 0xab, 0x83, 0xd6, 0x10, 0x4f,
+	0x07, 0x6b, 0xc8, 0x8d, 0xad, 0xa6, 0xdd, 0xb1, 0x16, 0xe3, 0x23, 0x3f, 0x77, 0x46, 0x32, 0xf3,
+	0x58, 0x82, 0x3f, 0x86, 0x85, 0xe4, 0xa4, 0x3c, 0x8e, 0xe4, 0x87, 0x75, 0xc8, 0x7b, 0x07, 0x4a,
+	0xe5, 0x77, 0x1b, 0x05, 0xc8, 0x6d, 0xef, 0xec, 0xed, 0xae, 0xac, 0x36, 0xf8, 0x0f, 0x37, 0x56,
+	0x77, 0x74, 0x7d, 0x7f, 0xb7, 0x59, 0x49, 0x2d, 0xff, 0x29, 0x0d, 0xa9, 0xcd, 0x17, 0xe8, 0x1f,
+	0x21, 0xc3, 0x5f, 0x31, 0x47, 0x3c, 0x5d, 0xd7, 0x46, 0x3d, 0xd4, 0xe2, 0x6b, 0x9f, 0xfd, 0xe6,
+	0xf7, 0x5f, 0xa6, 0x2e, 0xe3, 0x4a, 0x7d, 0xf8, 0xf6, 0x21, 0x71, 0x8d, 0xfa, 0xc9, 0xb0, 0xce,
+	0xea, 0xc3, 0x13, 0xed, 0x21, 0xda, 0x87, 0xf4, 0xee, 0xc0, 0x45, 0x89, 0xcf, 0xda, 0xb5, 0xe4,
+	0xf7, 0x5b, 0x3c, 0xc7, 0x04, 0xcf, 0xe0, 0xb2, 0x22, 0xb8, 0x3f, 0x70, 0xa9, 0xd8, 0x01, 0x14,
+	0xd4, 0x17, 0xd8, 0x73, 0xdf, 0xbb, 0x6b, 0xe7, 0xbf, 0xee, 0xe2, 0x5b, 0x4c, 0xdd, 0x35, 0x7c,
+	0x45, 0x51, 0xc7, 0xdf, 0x89, 0xd5, 0xd9, 0x34, 0x4f, 0x4d, 0x94, 0xf8, 0x22, 0x5e, 0x4b, 0x7e,
+	0xf4, 0x8d, 0x9d, 0x8d, 0x7b, 0x6a, 0x52, 0xb1, 0xa6, 0x78, 0xf3, 0x6d, 0xb9, 0xe8, 0x66, 0xcc,
+	0x9b, 0x9f, 0xfa, 0xba, 0x55, 0x5b, 0x48, 0x66, 0x10, 0x8a, 0x16, 0x98, 0xa2, 0x1a, 0xbe, 0xac,
+	0x28, 0x6a, 0x79, 0x6c, 0x4f, 0xb4, 0x87, 0xcb, 0x47, 0x90, 0x61, 0xe8, 0x31, 0xfa, 0x27, 0xf9,
+	0x51, 0x8b, 0x81, 0xd1, 0x13, 0x16, 0x3f, 0x80, 0x3b, 0xe3, 0x2a, 0x53, 0x86, 0x70, 0x49, 0x2a,
+	0x63, 0xf8, 0xf1, 0x13, 0xed, 0xe1, 0xa2, 0xf6, 0xa6, 0xb6, 0xfc, 0xc7, 0x49, 0xc8, 0x30, 0xb8,
+	0x08, 0x59, 0x00, 0x3e, 0x9a, 0x1a, 0x9e, 0x65, 0x04, 0x9f, 0x0d, 0xcf, 0x32, 0x0a, 0xc4, 0xe2,
+	0x79, 0xa6, 0xb8, 0x8a, 0x67, 0xa4, 0x62, 0x86, 0x44, 0xd5, 0x19, 0xb8, 0x46, 0x7d, 0x3a, 0x14,
+	0x80, 0x19, 0x0f, 0x33, 0x14, 0x27, 0x30, 0x80, 0xaa, 0x86, 0x77, 0x48, 0x0c, 0xa2, 0x8a, 0x31,
+	0xd3, 0x79, 0x1d, 0x5f, 0x55, 0x3c, 0xcb, 0xd5, 0xda, 0x8c, 0x91, 0xea, 0xfd, 0x0f, 0x0d, 0xca,
+	0x41, 0x5c, 0x14, 0xdd, 0x8e, 0x91, 0x1c, 0x86, 0x57, 0x6b, 0x77, 0x46, 0x33, 0x25, 0x59, 0xc0,
+	0xd5, 0x9f, 0x10, 0xd2, 0x37, 0x28, 0xa3, 0x70, 0x3c, 0xfa, 0x42, 0x83, 0xe9, 0x10, 0xd8, 0x89,
+	0xe2, 0x34, 0x44, 0xa0, 0xd4, 0xda, 0xdd, 0x73, 0xb8, 0x84, 0x21, 0xf7, 0x98, 0x21, 0x0b, 0xf8,
+	0x5a, 0xc4, 0x15, 0x6e, 0xa7, 0x47, 0x5c, 0x4b, 0x18, 0xe3, 0x2d, 0x03, 0x07, 0x26, 0x63, 0x97,
+	0x21, 0x00, 0x74, 0xc6, 0x2e, 0x43, 0x10, 0xd5, 0x1c, 0xb1, 0x0c, 0x1c, 0x8d, 0xa4, 0x5b, 0xfc,
+	0xcf, 0x69, 0xc8, 0xad, 0xf2, 0x5f, 0x4f, 0x22, 0x07, 0xf2, 0x1e, 0x02, 0x88, 0xe6, 0xe3, 0xd0,
+	0x18, 0xff, 0xb6, 0x50, 0xbb, 0x99, 0xd8, 0x2f, 0xb4, 0xdf, 0x65, 0xda, 0x6f, 0xe2, 0x9a, 0xd4,
+	0x2e, 0x7e, 0xa4, 0x59, 0xe7, 0xd7, 0xfe, 0xba, 0xd1, 0x6e, 0xd3, 0x89, 0xff, 0x3b, 0x14, 0x55,
+	0x98, 0x0e, 0xdd, 0x8a, 0x45, 0x81, 0x54, 0xa4, 0xaf, 0x86, 0x47, 0xb1, 0x08, 0xed, 0x8b, 0x4c,
+	0x3b, 0xc6, 0x37, 0x12, 0xb4, 0xdb, 0x8c, 0x3d, 0x60, 0x00, 0x87, 0xd9, 0xe2, 0x0d, 0x08, 0xa0,
+	0x78, 0xf1, 0x06, 0x04, 0x51, 0xba, 0x73, 0x0d, 0x18, 0x30, 0x76, 0x6a, 0xc0, 0x2b, 0x00, 0x1f,
+	0x54, 0x43, 0xb1, 0x7e, 0x55, 0xae, 0x4e, 0xe1, 0x90, 0x8f, 0xe2, 0x71, 0xd1, 0x3d, 0x17, 0x52,
+	0xdd, 0xed, 0x38, 0x34, 0xf4, 0x97, 0xbf, 0xca, 0x42, 0xe1, 0xb9, 0xd1, 0x31, 0x5d, 0x62, 0x1a,
+	0x66, 0x8b, 0xa0, 0x97, 0x90, 0x61, 0xa5, 0x31, 0x9c, 0xe5, 0x54, 0xac, 0x29, 0x9c, 0xe5, 0x02,
+	0x40, 0x0c, 0xbe, 0xc3, 0x34, 0xcf, 0xe3, 0x39, 0xa9, 0xb9, 0xe7, 0x8b, 0xaf, 0x33, 0x0c, 0x85,
+	0x4e, 0xf8, 0x9f, 0x21, 0x2b, 0xe0, 0xf9, 0x90, 0xb0, 0x00, 0xb6, 0x52, 0xbb, 0x1e, 0xdf, 0x99,
+	0xb4, 0xbd, 0x54, 0x55, 0x0e, 0xe3, 0xa5, 0xba, 0x5e, 0x03, 0xf8, 0x00, 0x61, 0xd8, 0xb9, 0x11,
+	0x3c, 0xb1, 0xb6, 0x90, 0xcc, 0x20, 0xf4, 0x3e, 0x60, 0x7a, 0x6f, 0xe3, 0xf9, 0x38, 0xbd, 0x6d,
+	0x8f, 0x9f, 0xea, 0x3e, 0x84, 0xc9, 0x75, 0xc3, 0x39, 0x46, 0xa1, 0x62, 0xa7, 0xfc, 0xe0, 0xa1,
+	0x56, 0x8b, 0xeb, 0x12, 0x9a, 0x6e, 0x33, 0x4d, 0x37, 0x70, 0x35, 0x4e, 0xd3, 0xb1, 0xe1, 0xd0,
+	0xea, 0x81, 0x8e, 0x21, 0xcb, 0x7f, 0x03, 0x11, 0xf6, 0x65, 0xe0, 0x77, 0x14, 0x61, 0x5f, 0x06,
+	0x7f, 0x36, 0x71, 0x31, 0x4d, 0x2e, 0x4c, 0xc9, 0x1f, 0x1e, 0xa0, 0x1b, 0xa1, 0xa5, 0x09, 0xfe,
+	0x48, 0xa1, 0x36, 0x9f, 0xd4, 0x2d, 0xf4, 0xdd, 0x67, 0xfa, 0x6e, 0xe1, 0xeb, 0xb1, 0x6b, 0x27,
+	0xb8, 0x9f, 0x68, 0x0f, 0xdf, 0xd4, 0x68, 0x99, 0x00, 0x1f, 0x64, 0x8d, 0x44, 0x47, 0x18, 0xaf,
+	0x8d, 0x44, 0x47, 0x04, 0x9f, 0xc5, 0xcb, 0x4c, 0xf9, 0x63, 0x7c, 0x3f, 0x4e, 0xb9, 0x6b, 0x1b,
+	0xa6, 0xf3, 0x92, 0xd8, 0x6f, 0x70, 0x30, 0xcd, 0x39, 0xee, 0xf4, 0x69, 0xa4, 0xfc, 0x65, 0x1a,
+	0x26, 0xe9, 0x79, 0x94, 0x96, 0x67, 0xff, 0x1a, 0x1f, 0xb6, 0x26, 0x02, 0x9e, 0x85, 0xad, 0x89,
+	0x22, 0x00, 0xd1, 0xf2, 0xcc, 0x7e, 0x27, 0x4f, 0x18, 0x13, 0xf5, 0xba, 0x03, 0x05, 0xe5, 0xae,
+	0x8f, 0x62, 0x04, 0x06, 0x91, 0xb9, 0x70, 0x5d, 0x88, 0x01, 0x0a, 0xf0, 0x4d, 0xa6, 0x73, 0x0e,
+	0xcf, 0x06, 0x74, 0xb6, 0x39, 0x17, 0x55, 0xfa, 0xaf, 0x50, 0x54, 0x31, 0x01, 0x14, 0x23, 0x33,
+	0x84, 0xfc, 0x85, 0x53, 0x62, 0x1c, 0xa4, 0x10, 0xcd, 0x0e, 0xde, 0xff, 0x09, 0x90, 0xac, 0x54,
+	0x79, 0x1f, 0x72, 0x02, 0x28, 0x88, 0x9b, 0x6d, 0x10, 0x2a, 0x8c, 0x9b, 0x6d, 0x08, 0x65, 0x88,
+	0x1e, 0xf3, 0x98, 0x56, 0x7a, 0x1f, 0x92, 0x25, 0x48, 0x68, 0x7c, 0x46, 0xdc, 0x24, 0x8d, 0x3e,
+	0xf6, 0x95, 0xa4, 0x51, 0xb9, 0x8b, 0x8e, 0xd2, 0x78, 0x44, 0x5c, 0x11, 0x4b, 0xf2, 0x9e, 0x87,
+	0x12, 0x04, 0xaa, 0x29, 0x1f, 0x8f, 0x62, 0x49, 0x3a, 0x95, 0xfb, 0x4a, 0x45, 0xbe, 0x47, 0x9f,
+	0x02, 0xf8, 0x90, 0x46, 0xf8, 0xb4, 0x15, 0x8b, 0x8b, 0x86, 0x4f, 0x5b, 0xf1, 0xa8, 0x48, 0x34,
+	0x7f, 0xf8, 0xba, 0xf9, 0xc5, 0x80, 0x6a, 0xff, 0x1f, 0x0d, 0x50, 0x14, 0x01, 0x41, 0x8f, 0xe2,
+	0x35, 0xc4, 0x22, 0xae, 0xb5, 0xc7, 0x17, 0x63, 0x4e, 0x2a, 0x11, 0xbe, 0x59, 0x2d, 0x36, 0xa2,
+	0xff, 0x8a, 0x1a, 0xf6, 0xb9, 0x06, 0xa5, 0x00, 0x84, 0x82, 0xee, 0x25, 0xac, 0x71, 0x08, 0xb4,
+	0xad, 0xdd, 0x3f, 0x97, 0x2f, 0xe9, 0x24, 0xa6, 0xec, 0x08, 0x79, 0x10, 0xff, 0x2f, 0x0d, 0xca,
+	0x41, 0xd8, 0x05, 0x25, 0xc8, 0x8f, 0x00, 0xbf, 0xb5, 0xc5, 0xf3, 0x19, 0xcf, 0x5f, 0x2a, 0xff,
+	0x6c, 0xde, 0x87, 0x9c, 0x00, 0x6b, 0xe2, 0x02, 0x22, 0x08, 0x1b, 0xc7, 0x05, 0x44, 0x08, 0xe9,
+	0x49, 0x08, 0x08, 0xdb, 0xea, 0x12, 0x25, 0x04, 0x05, 0xa2, 0x93, 0xa4, 0x71, 0x74, 0x08, 0x86,
+	0xe0, 0xa0, 0x51, 0x1a, 0xfd, 0x10, 0x94, 0x70, 0x0e, 0x4a, 0x10, 0x78, 0x4e, 0x08, 0x86, 0xd1,
+	0xa0, 0x84, 0x10, 0x64, 0x4a, 0x95, 0x10, 0xf4, 0xc1, 0x97, 0xb8, 0x10, 0x8c, 0x20, 0xe2, 0x71,
+	0x21, 0x18, 0xc5, 0x6f, 0x12, 0xd6, 0x95, 0xe9, 0x0e, 0x84, 0xe0, 0x4c, 0x0c, 0x56, 0x83, 0x1e,
+	0x27, 0x38, 0x34, 0x16, 0x6c, 0xaf, 0xbd, 0x71, 0x41, 0xee, 0x91, 0x7b, 0x9f, 0x2f, 0x85, 0xdc,
+	0xfb, 0xff, 0xaf, 0xc1, 0x6c, 0x1c, 0xd6, 0x83, 0x12, 0x74, 0x25, 0x00, 0xf5, 0xb5, 0xa5, 0x8b,
+	0xb2, 0x9f, 0xef, 0x35, 0x2f, 0x1a, 0x9e, 0x56, 0x7e, 0xfe, 0xcd, 0xbc, 0xf6, 0xab, 0x6f, 0xe6,
+	0xb5, 0xdf, 0x7e, 0x33, 0xaf, 0xfd, 0xef, 0xef, 0xe6, 0x27, 0x0e, 0xb3, 0xec, 0x7f, 0xa7, 0xbd,
+	0xfd, 0xd7, 0x00, 0x00, 0x00, 0xff, 0xff, 0xc8, 0x77, 0x6b, 0x63, 0x24, 0x37, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -3431,8 +6169,9 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for KV service
-
+// KVClient is the client API for KV service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type KVClient interface {
 	// Range gets the keys in the range from the key-value store.
 	Range(ctx context.Context, in *RangeRequest, opts ...grpc.CallOption) (*RangeResponse, error)
@@ -3465,7 +6204,7 @@ func NewKVClient(cc *grpc.ClientConn) KVClient {
 
 func (c *kVClient) Range(ctx context.Context, in *RangeRequest, opts ...grpc.CallOption) (*RangeResponse, error) {
 	out := new(RangeResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.KV/Range", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.KV/Range", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3474,7 +6213,7 @@ func (c *kVClient) Range(ctx context.Context, in *RangeRequest, opts ...grpc.Cal
 
 func (c *kVClient) Put(ctx context.Context, in *PutRequest, opts ...grpc.CallOption) (*PutResponse, error) {
 	out := new(PutResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.KV/Put", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.KV/Put", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3483,7 +6222,7 @@ func (c *kVClient) Put(ctx context.Context, in *PutRequest, opts ...grpc.CallOpt
 
 func (c *kVClient) DeleteRange(ctx context.Context, in *DeleteRangeRequest, opts ...grpc.CallOption) (*DeleteRangeResponse, error) {
 	out := new(DeleteRangeResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.KV/DeleteRange", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.KV/DeleteRange", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3492,7 +6231,7 @@ func (c *kVClient) DeleteRange(ctx context.Context, in *DeleteRangeRequest, opts
 
 func (c *kVClient) Txn(ctx context.Context, in *TxnRequest, opts ...grpc.CallOption) (*TxnResponse, error) {
 	out := new(TxnResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.KV/Txn", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.KV/Txn", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3501,15 +6240,14 @@ func (c *kVClient) Txn(ctx context.Context, in *TxnRequest, opts ...grpc.CallOpt
 
 func (c *kVClient) Compact(ctx context.Context, in *CompactionRequest, opts ...grpc.CallOption) (*CompactionResponse, error) {
 	out := new(CompactionResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.KV/Compact", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.KV/Compact", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for KV service
-
+// KVServer is the server API for KV service.
 type KVServer interface {
 	// Range gets the keys in the range from the key-value store.
 	Range(context.Context, *RangeRequest) (*RangeResponse, error)
@@ -3530,6 +6268,26 @@ type KVServer interface {
 	// store should be periodically compacted or the event history will continue to grow
 	// indefinitely.
 	Compact(context.Context, *CompactionRequest) (*CompactionResponse, error)
+}
+
+// UnimplementedKVServer can be embedded to have forward compatible implementations.
+type UnimplementedKVServer struct {
+}
+
+func (*UnimplementedKVServer) Range(ctx context.Context, req *RangeRequest) (*RangeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Range not implemented")
+}
+func (*UnimplementedKVServer) Put(ctx context.Context, req *PutRequest) (*PutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Put not implemented")
+}
+func (*UnimplementedKVServer) DeleteRange(ctx context.Context, req *DeleteRangeRequest) (*DeleteRangeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRange not implemented")
+}
+func (*UnimplementedKVServer) Txn(ctx context.Context, req *TxnRequest) (*TxnResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Txn not implemented")
+}
+func (*UnimplementedKVServer) Compact(ctx context.Context, req *CompactionRequest) (*CompactionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Compact not implemented")
 }
 
 func RegisterKVServer(s *grpc.Server, srv KVServer) {
@@ -3655,8 +6413,9 @@ var _KV_serviceDesc = grpc.ServiceDesc{
 	Metadata: "rpc.proto",
 }
 
-// Client API for Watch service
-
+// WatchClient is the client API for Watch service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type WatchClient interface {
 	// Watch watches for events happening or that have happened. Both input and output
 	// are streams; the input stream is for creating and canceling watchers and the output
@@ -3675,7 +6434,7 @@ func NewWatchClient(cc *grpc.ClientConn) WatchClient {
 }
 
 func (c *watchClient) Watch(ctx context.Context, opts ...grpc.CallOption) (Watch_WatchClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_Watch_serviceDesc.Streams[0], c.cc, "/etcdserverpb.Watch/Watch", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Watch_serviceDesc.Streams[0], "/etcdserverpb.Watch/Watch", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3705,8 +6464,7 @@ func (x *watchWatchClient) Recv() (*WatchResponse, error) {
 	return m, nil
 }
 
-// Server API for Watch service
-
+// WatchServer is the server API for Watch service.
 type WatchServer interface {
 	// Watch watches for events happening or that have happened. Both input and output
 	// are streams; the input stream is for creating and canceling watchers and the output
@@ -3714,6 +6472,14 @@ type WatchServer interface {
 	// for several watches at once. The entire event history can be watched starting from the
 	// last compaction revision.
 	Watch(Watch_WatchServer) error
+}
+
+// UnimplementedWatchServer can be embedded to have forward compatible implementations.
+type UnimplementedWatchServer struct {
+}
+
+func (*UnimplementedWatchServer) Watch(srv Watch_WatchServer) error {
+	return status.Errorf(codes.Unimplemented, "method Watch not implemented")
 }
 
 func RegisterWatchServer(s *grpc.Server, srv WatchServer) {
@@ -3761,8 +6527,9 @@ var _Watch_serviceDesc = grpc.ServiceDesc{
 	Metadata: "rpc.proto",
 }
 
-// Client API for Lease service
-
+// LeaseClient is the client API for Lease service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type LeaseClient interface {
 	// LeaseGrant creates a lease which expires if the server does not receive a keepAlive
 	// within a given time to live period. All keys attached to the lease will be expired and
@@ -3789,7 +6556,7 @@ func NewLeaseClient(cc *grpc.ClientConn) LeaseClient {
 
 func (c *leaseClient) LeaseGrant(ctx context.Context, in *LeaseGrantRequest, opts ...grpc.CallOption) (*LeaseGrantResponse, error) {
 	out := new(LeaseGrantResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Lease/LeaseGrant", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Lease/LeaseGrant", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3798,7 +6565,7 @@ func (c *leaseClient) LeaseGrant(ctx context.Context, in *LeaseGrantRequest, opt
 
 func (c *leaseClient) LeaseRevoke(ctx context.Context, in *LeaseRevokeRequest, opts ...grpc.CallOption) (*LeaseRevokeResponse, error) {
 	out := new(LeaseRevokeResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Lease/LeaseRevoke", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Lease/LeaseRevoke", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3806,7 +6573,7 @@ func (c *leaseClient) LeaseRevoke(ctx context.Context, in *LeaseRevokeRequest, o
 }
 
 func (c *leaseClient) LeaseKeepAlive(ctx context.Context, opts ...grpc.CallOption) (Lease_LeaseKeepAliveClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_Lease_serviceDesc.Streams[0], c.cc, "/etcdserverpb.Lease/LeaseKeepAlive", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Lease_serviceDesc.Streams[0], "/etcdserverpb.Lease/LeaseKeepAlive", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3838,7 +6605,7 @@ func (x *leaseLeaseKeepAliveClient) Recv() (*LeaseKeepAliveResponse, error) {
 
 func (c *leaseClient) LeaseTimeToLive(ctx context.Context, in *LeaseTimeToLiveRequest, opts ...grpc.CallOption) (*LeaseTimeToLiveResponse, error) {
 	out := new(LeaseTimeToLiveResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Lease/LeaseTimeToLive", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Lease/LeaseTimeToLive", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3847,15 +6614,14 @@ func (c *leaseClient) LeaseTimeToLive(ctx context.Context, in *LeaseTimeToLiveRe
 
 func (c *leaseClient) LeaseLeases(ctx context.Context, in *LeaseLeasesRequest, opts ...grpc.CallOption) (*LeaseLeasesResponse, error) {
 	out := new(LeaseLeasesResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Lease/LeaseLeases", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Lease/LeaseLeases", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for Lease service
-
+// LeaseServer is the server API for Lease service.
 type LeaseServer interface {
 	// LeaseGrant creates a lease which expires if the server does not receive a keepAlive
 	// within a given time to live period. All keys attached to the lease will be expired and
@@ -3870,6 +6636,26 @@ type LeaseServer interface {
 	LeaseTimeToLive(context.Context, *LeaseTimeToLiveRequest) (*LeaseTimeToLiveResponse, error)
 	// LeaseLeases lists all existing leases.
 	LeaseLeases(context.Context, *LeaseLeasesRequest) (*LeaseLeasesResponse, error)
+}
+
+// UnimplementedLeaseServer can be embedded to have forward compatible implementations.
+type UnimplementedLeaseServer struct {
+}
+
+func (*UnimplementedLeaseServer) LeaseGrant(ctx context.Context, req *LeaseGrantRequest) (*LeaseGrantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaseGrant not implemented")
+}
+func (*UnimplementedLeaseServer) LeaseRevoke(ctx context.Context, req *LeaseRevokeRequest) (*LeaseRevokeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaseRevoke not implemented")
+}
+func (*UnimplementedLeaseServer) LeaseKeepAlive(srv Lease_LeaseKeepAliveServer) error {
+	return status.Errorf(codes.Unimplemented, "method LeaseKeepAlive not implemented")
+}
+func (*UnimplementedLeaseServer) LeaseTimeToLive(ctx context.Context, req *LeaseTimeToLiveRequest) (*LeaseTimeToLiveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaseTimeToLive not implemented")
+}
+func (*UnimplementedLeaseServer) LeaseLeases(ctx context.Context, req *LeaseLeasesRequest) (*LeaseLeasesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaseLeases not implemented")
 }
 
 func RegisterLeaseServer(s *grpc.Server, srv LeaseServer) {
@@ -4006,8 +6792,9 @@ var _Lease_serviceDesc = grpc.ServiceDesc{
 	Metadata: "rpc.proto",
 }
 
-// Client API for Cluster service
-
+// ClusterClient is the client API for Cluster service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ClusterClient interface {
 	// MemberAdd adds a member into the cluster.
 	MemberAdd(ctx context.Context, in *MemberAddRequest, opts ...grpc.CallOption) (*MemberAddResponse, error)
@@ -4031,7 +6818,7 @@ func NewClusterClient(cc *grpc.ClientConn) ClusterClient {
 
 func (c *clusterClient) MemberAdd(ctx context.Context, in *MemberAddRequest, opts ...grpc.CallOption) (*MemberAddResponse, error) {
 	out := new(MemberAddResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Cluster/MemberAdd", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Cluster/MemberAdd", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4040,7 +6827,7 @@ func (c *clusterClient) MemberAdd(ctx context.Context, in *MemberAddRequest, opt
 
 func (c *clusterClient) MemberRemove(ctx context.Context, in *MemberRemoveRequest, opts ...grpc.CallOption) (*MemberRemoveResponse, error) {
 	out := new(MemberRemoveResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Cluster/MemberRemove", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Cluster/MemberRemove", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4049,7 +6836,7 @@ func (c *clusterClient) MemberRemove(ctx context.Context, in *MemberRemoveReques
 
 func (c *clusterClient) MemberUpdate(ctx context.Context, in *MemberUpdateRequest, opts ...grpc.CallOption) (*MemberUpdateResponse, error) {
 	out := new(MemberUpdateResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Cluster/MemberUpdate", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Cluster/MemberUpdate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4058,7 +6845,7 @@ func (c *clusterClient) MemberUpdate(ctx context.Context, in *MemberUpdateReques
 
 func (c *clusterClient) MemberList(ctx context.Context, in *MemberListRequest, opts ...grpc.CallOption) (*MemberListResponse, error) {
 	out := new(MemberListResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Cluster/MemberList", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Cluster/MemberList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4087,6 +6874,23 @@ type ClusterServer interface {
 	MemberList(context.Context, *MemberListRequest) (*MemberListResponse, error)
 	// MemberPromote promotes a member from raft learner (non-voting) to raft voting member.
 	MemberPromote(context.Context, *MemberPromoteRequest) (*MemberPromoteResponse, error)
+}
+
+// UnimplementedClusterServer can be embedded to have forward compatible implementations.
+type UnimplementedClusterServer struct {
+}
+
+func (*UnimplementedClusterServer) MemberAdd(ctx context.Context, req *MemberAddRequest) (*MemberAddResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberAdd not implemented")
+}
+func (*UnimplementedClusterServer) MemberRemove(ctx context.Context, req *MemberRemoveRequest) (*MemberRemoveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberRemove not implemented")
+}
+func (*UnimplementedClusterServer) MemberUpdate(ctx context.Context, req *MemberUpdateRequest) (*MemberUpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberUpdate not implemented")
+}
+func (*UnimplementedClusterServer) MemberList(ctx context.Context, req *MemberListRequest) (*MemberListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberList not implemented")
 }
 
 func RegisterClusterServer(s *grpc.Server, srv ClusterServer) {
@@ -4212,8 +7016,9 @@ var _Cluster_serviceDesc = grpc.ServiceDesc{
 	Metadata: "rpc.proto",
 }
 
-// Client API for Maintenance service
-
+// MaintenanceClient is the client API for Maintenance service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MaintenanceClient interface {
 	// Alarm activates, deactivates, and queries alarms regarding cluster health.
 	Alarm(ctx context.Context, in *AlarmRequest, opts ...grpc.CallOption) (*AlarmResponse, error)
@@ -4247,7 +7052,7 @@ func NewMaintenanceClient(cc *grpc.ClientConn) MaintenanceClient {
 
 func (c *maintenanceClient) Alarm(ctx context.Context, in *AlarmRequest, opts ...grpc.CallOption) (*AlarmResponse, error) {
 	out := new(AlarmResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Maintenance/Alarm", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Maintenance/Alarm", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4256,7 +7061,7 @@ func (c *maintenanceClient) Alarm(ctx context.Context, in *AlarmRequest, opts ..
 
 func (c *maintenanceClient) Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
 	out := new(StatusResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Maintenance/Status", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Maintenance/Status", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4265,7 +7070,7 @@ func (c *maintenanceClient) Status(ctx context.Context, in *StatusRequest, opts 
 
 func (c *maintenanceClient) Defragment(ctx context.Context, in *DefragmentRequest, opts ...grpc.CallOption) (*DefragmentResponse, error) {
 	out := new(DefragmentResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Maintenance/Defragment", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Maintenance/Defragment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4274,7 +7079,7 @@ func (c *maintenanceClient) Defragment(ctx context.Context, in *DefragmentReques
 
 func (c *maintenanceClient) Hash(ctx context.Context, in *HashRequest, opts ...grpc.CallOption) (*HashResponse, error) {
 	out := new(HashResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Maintenance/Hash", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Maintenance/Hash", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4283,7 +7088,7 @@ func (c *maintenanceClient) Hash(ctx context.Context, in *HashRequest, opts ...g
 
 func (c *maintenanceClient) HashKV(ctx context.Context, in *HashKVRequest, opts ...grpc.CallOption) (*HashKVResponse, error) {
 	out := new(HashKVResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Maintenance/HashKV", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Maintenance/HashKV", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4291,7 +7096,7 @@ func (c *maintenanceClient) HashKV(ctx context.Context, in *HashKVRequest, opts 
 }
 
 func (c *maintenanceClient) Snapshot(ctx context.Context, in *SnapshotRequest, opts ...grpc.CallOption) (Maintenance_SnapshotClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_Maintenance_serviceDesc.Streams[0], c.cc, "/etcdserverpb.Maintenance/Snapshot", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Maintenance_serviceDesc.Streams[0], "/etcdserverpb.Maintenance/Snapshot", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4324,15 +7129,14 @@ func (x *maintenanceSnapshotClient) Recv() (*SnapshotResponse, error) {
 
 func (c *maintenanceClient) MoveLeader(ctx context.Context, in *MoveLeaderRequest, opts ...grpc.CallOption) (*MoveLeaderResponse, error) {
 	out := new(MoveLeaderResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Maintenance/MoveLeader", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Maintenance/MoveLeader", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for Maintenance service
-
+// MaintenanceServer is the server API for Maintenance service.
 type MaintenanceServer interface {
 	// Alarm activates, deactivates, and queries alarms regarding cluster health.
 	Alarm(context.Context, *AlarmRequest) (*AlarmResponse, error)
@@ -4354,6 +7158,32 @@ type MaintenanceServer interface {
 	Snapshot(*SnapshotRequest, Maintenance_SnapshotServer) error
 	// MoveLeader requests current leader node to transfer its leadership to transferee.
 	MoveLeader(context.Context, *MoveLeaderRequest) (*MoveLeaderResponse, error)
+}
+
+// UnimplementedMaintenanceServer can be embedded to have forward compatible implementations.
+type UnimplementedMaintenanceServer struct {
+}
+
+func (*UnimplementedMaintenanceServer) Alarm(ctx context.Context, req *AlarmRequest) (*AlarmResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Alarm not implemented")
+}
+func (*UnimplementedMaintenanceServer) Status(ctx context.Context, req *StatusRequest) (*StatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Status not implemented")
+}
+func (*UnimplementedMaintenanceServer) Defragment(ctx context.Context, req *DefragmentRequest) (*DefragmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Defragment not implemented")
+}
+func (*UnimplementedMaintenanceServer) Hash(ctx context.Context, req *HashRequest) (*HashResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Hash not implemented")
+}
+func (*UnimplementedMaintenanceServer) HashKV(ctx context.Context, req *HashKVRequest) (*HashKVResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HashKV not implemented")
+}
+func (*UnimplementedMaintenanceServer) Snapshot(req *SnapshotRequest, srv Maintenance_SnapshotServer) error {
+	return status.Errorf(codes.Unimplemented, "method Snapshot not implemented")
+}
+func (*UnimplementedMaintenanceServer) MoveLeader(ctx context.Context, req *MoveLeaderRequest) (*MoveLeaderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MoveLeader not implemented")
 }
 
 func RegisterMaintenanceServer(s *grpc.Server, srv MaintenanceServer) {
@@ -4528,8 +7358,9 @@ var _Maintenance_serviceDesc = grpc.ServiceDesc{
 	Metadata: "rpc.proto",
 }
 
-// Client API for Auth service
-
+// AuthClient is the client API for Auth service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AuthClient interface {
 	// AuthEnable enables authentication.
 	AuthEnable(ctx context.Context, in *AuthEnableRequest, opts ...grpc.CallOption) (*AuthEnableResponse, error)
@@ -4575,7 +7406,7 @@ func NewAuthClient(cc *grpc.ClientConn) AuthClient {
 
 func (c *authClient) AuthEnable(ctx context.Context, in *AuthEnableRequest, opts ...grpc.CallOption) (*AuthEnableResponse, error) {
 	out := new(AuthEnableResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/AuthEnable", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/AuthEnable", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4584,7 +7415,7 @@ func (c *authClient) AuthEnable(ctx context.Context, in *AuthEnableRequest, opts
 
 func (c *authClient) AuthDisable(ctx context.Context, in *AuthDisableRequest, opts ...grpc.CallOption) (*AuthDisableResponse, error) {
 	out := new(AuthDisableResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/AuthDisable", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/AuthDisable", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4593,7 +7424,7 @@ func (c *authClient) AuthDisable(ctx context.Context, in *AuthDisableRequest, op
 
 func (c *authClient) Authenticate(ctx context.Context, in *AuthenticateRequest, opts ...grpc.CallOption) (*AuthenticateResponse, error) {
 	out := new(AuthenticateResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/Authenticate", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/Authenticate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4602,7 +7433,7 @@ func (c *authClient) Authenticate(ctx context.Context, in *AuthenticateRequest, 
 
 func (c *authClient) UserAdd(ctx context.Context, in *AuthUserAddRequest, opts ...grpc.CallOption) (*AuthUserAddResponse, error) {
 	out := new(AuthUserAddResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/UserAdd", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/UserAdd", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4611,7 +7442,7 @@ func (c *authClient) UserAdd(ctx context.Context, in *AuthUserAddRequest, opts .
 
 func (c *authClient) UserGet(ctx context.Context, in *AuthUserGetRequest, opts ...grpc.CallOption) (*AuthUserGetResponse, error) {
 	out := new(AuthUserGetResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/UserGet", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/UserGet", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4620,7 +7451,7 @@ func (c *authClient) UserGet(ctx context.Context, in *AuthUserGetRequest, opts .
 
 func (c *authClient) UserList(ctx context.Context, in *AuthUserListRequest, opts ...grpc.CallOption) (*AuthUserListResponse, error) {
 	out := new(AuthUserListResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/UserList", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/UserList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4629,7 +7460,7 @@ func (c *authClient) UserList(ctx context.Context, in *AuthUserListRequest, opts
 
 func (c *authClient) UserDelete(ctx context.Context, in *AuthUserDeleteRequest, opts ...grpc.CallOption) (*AuthUserDeleteResponse, error) {
 	out := new(AuthUserDeleteResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/UserDelete", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/UserDelete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4638,7 +7469,7 @@ func (c *authClient) UserDelete(ctx context.Context, in *AuthUserDeleteRequest, 
 
 func (c *authClient) UserChangePassword(ctx context.Context, in *AuthUserChangePasswordRequest, opts ...grpc.CallOption) (*AuthUserChangePasswordResponse, error) {
 	out := new(AuthUserChangePasswordResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/UserChangePassword", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/UserChangePassword", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4647,7 +7478,7 @@ func (c *authClient) UserChangePassword(ctx context.Context, in *AuthUserChangeP
 
 func (c *authClient) UserGrantRole(ctx context.Context, in *AuthUserGrantRoleRequest, opts ...grpc.CallOption) (*AuthUserGrantRoleResponse, error) {
 	out := new(AuthUserGrantRoleResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/UserGrantRole", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/UserGrantRole", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4656,7 +7487,7 @@ func (c *authClient) UserGrantRole(ctx context.Context, in *AuthUserGrantRoleReq
 
 func (c *authClient) UserRevokeRole(ctx context.Context, in *AuthUserRevokeRoleRequest, opts ...grpc.CallOption) (*AuthUserRevokeRoleResponse, error) {
 	out := new(AuthUserRevokeRoleResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/UserRevokeRole", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/UserRevokeRole", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4665,7 +7496,7 @@ func (c *authClient) UserRevokeRole(ctx context.Context, in *AuthUserRevokeRoleR
 
 func (c *authClient) RoleAdd(ctx context.Context, in *AuthRoleAddRequest, opts ...grpc.CallOption) (*AuthRoleAddResponse, error) {
 	out := new(AuthRoleAddResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/RoleAdd", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/RoleAdd", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4674,7 +7505,7 @@ func (c *authClient) RoleAdd(ctx context.Context, in *AuthRoleAddRequest, opts .
 
 func (c *authClient) RoleGet(ctx context.Context, in *AuthRoleGetRequest, opts ...grpc.CallOption) (*AuthRoleGetResponse, error) {
 	out := new(AuthRoleGetResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/RoleGet", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/RoleGet", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4683,7 +7514,7 @@ func (c *authClient) RoleGet(ctx context.Context, in *AuthRoleGetRequest, opts .
 
 func (c *authClient) RoleList(ctx context.Context, in *AuthRoleListRequest, opts ...grpc.CallOption) (*AuthRoleListResponse, error) {
 	out := new(AuthRoleListResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/RoleList", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/RoleList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4692,7 +7523,7 @@ func (c *authClient) RoleList(ctx context.Context, in *AuthRoleListRequest, opts
 
 func (c *authClient) RoleDelete(ctx context.Context, in *AuthRoleDeleteRequest, opts ...grpc.CallOption) (*AuthRoleDeleteResponse, error) {
 	out := new(AuthRoleDeleteResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/RoleDelete", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/RoleDelete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4701,7 +7532,7 @@ func (c *authClient) RoleDelete(ctx context.Context, in *AuthRoleDeleteRequest, 
 
 func (c *authClient) RoleGrantPermission(ctx context.Context, in *AuthRoleGrantPermissionRequest, opts ...grpc.CallOption) (*AuthRoleGrantPermissionResponse, error) {
 	out := new(AuthRoleGrantPermissionResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/RoleGrantPermission", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/RoleGrantPermission", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4710,15 +7541,14 @@ func (c *authClient) RoleGrantPermission(ctx context.Context, in *AuthRoleGrantP
 
 func (c *authClient) RoleRevokePermission(ctx context.Context, in *AuthRoleRevokePermissionRequest, opts ...grpc.CallOption) (*AuthRoleRevokePermissionResponse, error) {
 	out := new(AuthRoleRevokePermissionResponse)
-	err := grpc.Invoke(ctx, "/etcdserverpb.Auth/RoleRevokePermission", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/etcdserverpb.Auth/RoleRevokePermission", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for Auth service
-
+// AuthServer is the server API for Auth service.
 type AuthServer interface {
 	// AuthEnable enables authentication.
 	AuthEnable(context.Context, *AuthEnableRequest) (*AuthEnableResponse, error)
@@ -4752,6 +7582,59 @@ type AuthServer interface {
 	RoleGrantPermission(context.Context, *AuthRoleGrantPermissionRequest) (*AuthRoleGrantPermissionResponse, error)
 	// RoleRevokePermission revokes a key or range permission of a specified role.
 	RoleRevokePermission(context.Context, *AuthRoleRevokePermissionRequest) (*AuthRoleRevokePermissionResponse, error)
+}
+
+// UnimplementedAuthServer can be embedded to have forward compatible implementations.
+type UnimplementedAuthServer struct {
+}
+
+func (*UnimplementedAuthServer) AuthEnable(ctx context.Context, req *AuthEnableRequest) (*AuthEnableResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AuthEnable not implemented")
+}
+func (*UnimplementedAuthServer) AuthDisable(ctx context.Context, req *AuthDisableRequest) (*AuthDisableResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AuthDisable not implemented")
+}
+func (*UnimplementedAuthServer) Authenticate(ctx context.Context, req *AuthenticateRequest) (*AuthenticateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Authenticate not implemented")
+}
+func (*UnimplementedAuthServer) UserAdd(ctx context.Context, req *AuthUserAddRequest) (*AuthUserAddResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserAdd not implemented")
+}
+func (*UnimplementedAuthServer) UserGet(ctx context.Context, req *AuthUserGetRequest) (*AuthUserGetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserGet not implemented")
+}
+func (*UnimplementedAuthServer) UserList(ctx context.Context, req *AuthUserListRequest) (*AuthUserListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserList not implemented")
+}
+func (*UnimplementedAuthServer) UserDelete(ctx context.Context, req *AuthUserDeleteRequest) (*AuthUserDeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserDelete not implemented")
+}
+func (*UnimplementedAuthServer) UserChangePassword(ctx context.Context, req *AuthUserChangePasswordRequest) (*AuthUserChangePasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserChangePassword not implemented")
+}
+func (*UnimplementedAuthServer) UserGrantRole(ctx context.Context, req *AuthUserGrantRoleRequest) (*AuthUserGrantRoleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserGrantRole not implemented")
+}
+func (*UnimplementedAuthServer) UserRevokeRole(ctx context.Context, req *AuthUserRevokeRoleRequest) (*AuthUserRevokeRoleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserRevokeRole not implemented")
+}
+func (*UnimplementedAuthServer) RoleAdd(ctx context.Context, req *AuthRoleAddRequest) (*AuthRoleAddResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleAdd not implemented")
+}
+func (*UnimplementedAuthServer) RoleGet(ctx context.Context, req *AuthRoleGetRequest) (*AuthRoleGetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleGet not implemented")
+}
+func (*UnimplementedAuthServer) RoleList(ctx context.Context, req *AuthRoleListRequest) (*AuthRoleListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleList not implemented")
+}
+func (*UnimplementedAuthServer) RoleDelete(ctx context.Context, req *AuthRoleDeleteRequest) (*AuthRoleDeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleDelete not implemented")
+}
+func (*UnimplementedAuthServer) RoleGrantPermission(ctx context.Context, req *AuthRoleGrantPermissionRequest) (*AuthRoleGrantPermissionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleGrantPermission not implemented")
+}
+func (*UnimplementedAuthServer) RoleRevokePermission(ctx context.Context, req *AuthRoleRevokePermissionRequest) (*AuthRoleRevokePermissionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleRevokePermission not implemented")
 }
 
 func RegisterAuthServer(s *grpc.Server, srv AuthServer) {
@@ -5122,7 +8005,7 @@ var _Auth_serviceDesc = grpc.ServiceDesc{
 func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5130,37 +8013,46 @@ func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ResponseHeader) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ResponseHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ClusterId))
-	}
-	if m.MemberId != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.MemberId))
-	}
-	if m.Revision != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Revision))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.RaftTerm != 0 {
-		dAtA[i] = 0x20
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.RaftTerm))
+		i--
+		dAtA[i] = 0x20
 	}
-	return i, nil
+	if m.Revision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Revision))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.MemberId != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.MemberId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.ClusterId != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ClusterId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *RangeRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5168,99 +8060,110 @@ func (m *RangeRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RangeRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RangeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Key) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.RangeEnd) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.RangeEnd)))
-		i += copy(dAtA[i:], m.RangeEnd)
+	if m.MaxCreateRevision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.MaxCreateRevision))
+		i--
+		dAtA[i] = 0x68
 	}
-	if m.Limit != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Limit))
+	if m.MinCreateRevision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.MinCreateRevision))
+		i--
+		dAtA[i] = 0x60
 	}
-	if m.Revision != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Revision))
+	if m.MaxModRevision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.MaxModRevision))
+		i--
+		dAtA[i] = 0x58
 	}
-	if m.SortOrder != 0 {
-		dAtA[i] = 0x28
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.SortOrder))
-	}
-	if m.SortTarget != 0 {
-		dAtA[i] = 0x30
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.SortTarget))
-	}
-	if m.Serializable {
-		dAtA[i] = 0x38
-		i++
-		if m.Serializable {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if m.KeysOnly {
-		dAtA[i] = 0x40
-		i++
-		if m.KeysOnly {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
+	if m.MinModRevision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.MinModRevision))
+		i--
+		dAtA[i] = 0x50
 	}
 	if m.CountOnly {
-		dAtA[i] = 0x48
-		i++
+		i--
 		if m.CountOnly {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x48
 	}
-	if m.MinModRevision != 0 {
-		dAtA[i] = 0x50
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.MinModRevision))
+	if m.KeysOnly {
+		i--
+		if m.KeysOnly {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x40
 	}
-	if m.MaxModRevision != 0 {
-		dAtA[i] = 0x58
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.MaxModRevision))
+	if m.Serializable {
+		i--
+		if m.Serializable {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x38
 	}
-	if m.MinCreateRevision != 0 {
-		dAtA[i] = 0x60
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.MinCreateRevision))
+	if m.SortTarget != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.SortTarget))
+		i--
+		dAtA[i] = 0x30
 	}
-	if m.MaxCreateRevision != 0 {
-		dAtA[i] = 0x68
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.MaxCreateRevision))
+	if m.SortOrder != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.SortOrder))
+		i--
+		dAtA[i] = 0x28
 	}
-	return i, nil
+	if m.Revision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Revision))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.Limit != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Limit))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.RangeEnd) > 0 {
+		i -= len(m.RangeEnd)
+		copy(dAtA[i:], m.RangeEnd)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.RangeEnd)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *RangeResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5268,54 +8171,67 @@ func (m *RangeResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RangeResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RangeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Header.Size()))
-		n1, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Kvs) > 0 {
-		for _, msg := range m.Kvs {
-			dAtA[i] = 0x12
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
-		}
+	if m.Count != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Count))
+		i--
+		dAtA[i] = 0x20
 	}
 	if m.More {
-		dAtA[i] = 0x18
-		i++
+		i--
 		if m.More {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x18
 	}
-	if m.Count != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Count))
+	if len(m.Kvs) > 0 {
+		for iNdEx := len(m.Kvs) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Kvs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *PutRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5323,64 +8239,75 @@ func (m *PutRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PutRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PutRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Key) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
-	}
-	if len(m.Value) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Value)))
-		i += copy(dAtA[i:], m.Value)
-	}
-	if m.Lease != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Lease))
-	}
-	if m.PrevKv {
-		dAtA[i] = 0x20
-		i++
-		if m.PrevKv {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if m.IgnoreValue {
-		dAtA[i] = 0x28
-		i++
-		if m.IgnoreValue {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.IgnoreLease {
-		dAtA[i] = 0x30
-		i++
+		i--
 		if m.IgnoreLease {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x30
 	}
-	return i, nil
+	if m.IgnoreValue {
+		i--
+		if m.IgnoreValue {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.PrevKv {
+		i--
+		if m.PrevKv {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.Lease != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Lease))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Value) > 0 {
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Value)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *PutResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5388,37 +8315,50 @@ func (m *PutResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PutResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PutResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Header.Size()))
-		n2, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n2
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.PrevKv != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.PrevKv.Size()))
-		n3, err := m.PrevKv.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.PrevKv.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n3
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *DeleteRangeRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5426,39 +8366,50 @@ func (m *DeleteRangeRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DeleteRangeRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeleteRangeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Key) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
-	}
-	if len(m.RangeEnd) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.RangeEnd)))
-		i += copy(dAtA[i:], m.RangeEnd)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.PrevKv {
-		dAtA[i] = 0x18
-		i++
+		i--
 		if m.PrevKv {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x18
 	}
-	return i, nil
+	if len(m.RangeEnd) > 0 {
+		i -= len(m.RangeEnd)
+		copy(dAtA[i:], m.RangeEnd)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.RangeEnd)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *DeleteRangeResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5466,44 +8417,57 @@ func (m *DeleteRangeResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DeleteRangeResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeleteRangeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Header.Size()))
-		n4, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
-	}
-	if m.Deleted != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Deleted))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.PrevKvs) > 0 {
-		for _, msg := range m.PrevKvs {
+		for iNdEx := len(m.PrevKvs) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.PrevKvs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x1a
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.Deleted != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Deleted))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *RequestOp) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5511,80 +8475,115 @@ func (m *RequestOp) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RequestOp) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RequestOp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Request != nil {
-		nn5, err := m.Request.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += nn5
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Request != nil {
+		{
+			size := m.Request.Size()
+			i -= size
+			if _, err := m.Request.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *RequestOp_RequestRange) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *RequestOp_RequestRange) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.RequestRange != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.RequestRange.Size()))
-		n6, err := m.RequestRange.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.RequestRange.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n6
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *RequestOp_RequestPut) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *RequestOp_RequestPut) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.RequestPut != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.RequestPut.Size()))
-		n7, err := m.RequestPut.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.RequestPut.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n7
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *RequestOp_RequestDeleteRange) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *RequestOp_RequestDeleteRange) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.RequestDeleteRange != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.RequestDeleteRange.Size()))
-		n8, err := m.RequestDeleteRange.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.RequestDeleteRange.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n8
+		i--
+		dAtA[i] = 0x1a
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *RequestOp_RequestTxn) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *RequestOp_RequestTxn) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.RequestTxn != nil {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.RequestTxn.Size()))
-		n9, err := m.RequestTxn.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.RequestTxn.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n9
+		i--
+		dAtA[i] = 0x22
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *ResponseOp) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5592,80 +8591,115 @@ func (m *ResponseOp) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ResponseOp) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ResponseOp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Response != nil {
-		nn10, err := m.Response.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += nn10
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Response != nil {
+		{
+			size := m.Response.Size()
+			i -= size
+			if _, err := m.Response.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *ResponseOp_ResponseRange) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *ResponseOp_ResponseRange) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.ResponseRange != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ResponseRange.Size()))
-		n11, err := m.ResponseRange.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.ResponseRange.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n11
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *ResponseOp_ResponsePut) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *ResponseOp_ResponsePut) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.ResponsePut != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ResponsePut.Size()))
-		n12, err := m.ResponsePut.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.ResponsePut.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n12
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *ResponseOp_ResponseDeleteRange) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *ResponseOp_ResponseDeleteRange) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.ResponseDeleteRange != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ResponseDeleteRange.Size()))
-		n13, err := m.ResponseDeleteRange.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.ResponseDeleteRange.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n13
+		i--
+		dAtA[i] = 0x1a
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *ResponseOp_ResponseTxn) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *ResponseOp_ResponseTxn) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.ResponseTxn != nil {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ResponseTxn.Size()))
-		n14, err := m.ResponseTxn.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.ResponseTxn.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n14
+		i--
+		dAtA[i] = 0x22
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *Compare) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5673,86 +8707,120 @@ func (m *Compare) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Compare) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Compare) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Result != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Result))
-	}
-	if m.Target != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Target))
-	}
-	if len(m.Key) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
-	}
-	if m.TargetUnion != nil {
-		nn15, err := m.TargetUnion.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += nn15
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.RangeEnd) > 0 {
-		dAtA[i] = 0x82
-		i++
-		dAtA[i] = 0x4
-		i++
+		i -= len(m.RangeEnd)
+		copy(dAtA[i:], m.RangeEnd)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.RangeEnd)))
-		i += copy(dAtA[i:], m.RangeEnd)
+		i--
+		dAtA[i] = 0x4
+		i--
+		dAtA[i] = 0x82
 	}
-	return i, nil
+	if m.TargetUnion != nil {
+		{
+			size := m.TargetUnion.Size()
+			i -= size
+			if _, err := m.TargetUnion.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Target != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Target))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Result != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Result))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Compare_Version) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	dAtA[i] = 0x20
-	i++
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Compare_Version) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	i = encodeVarintRpc(dAtA, i, uint64(m.Version))
-	return i, nil
+	i--
+	dAtA[i] = 0x20
+	return len(dAtA) - i, nil
 }
 func (m *Compare_CreateRevision) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	dAtA[i] = 0x28
-	i++
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Compare_CreateRevision) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	i = encodeVarintRpc(dAtA, i, uint64(m.CreateRevision))
-	return i, nil
+	i--
+	dAtA[i] = 0x28
+	return len(dAtA) - i, nil
 }
 func (m *Compare_ModRevision) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	dAtA[i] = 0x30
-	i++
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Compare_ModRevision) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	i = encodeVarintRpc(dAtA, i, uint64(m.ModRevision))
-	return i, nil
+	i--
+	dAtA[i] = 0x30
+	return len(dAtA) - i, nil
 }
 func (m *Compare_Value) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Compare_Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.Value != nil {
-		dAtA[i] = 0x3a
-		i++
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.Value)))
-		i += copy(dAtA[i:], m.Value)
+		i--
+		dAtA[i] = 0x3a
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *Compare_Lease) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	dAtA[i] = 0x40
-	i++
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Compare_Lease) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	i = encodeVarintRpc(dAtA, i, uint64(m.Lease))
-	return i, nil
+	i--
+	dAtA[i] = 0x40
+	return len(dAtA) - i, nil
 }
 func (m *TxnRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5760,53 +8828,68 @@ func (m *TxnRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *TxnRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TxnRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Compare) > 0 {
-		for _, msg := range m.Compare {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Failure) > 0 {
+		for iNdEx := len(m.Failure) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Failure[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0x1a
 		}
 	}
 	if len(m.Success) > 0 {
-		for _, msg := range m.Success {
+		for iNdEx := len(m.Success) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Success[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x12
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
 		}
 	}
-	if len(m.Failure) > 0 {
-		for _, msg := range m.Failure {
-			dAtA[i] = 0x1a
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+	if len(m.Compare) > 0 {
+		for iNdEx := len(m.Compare) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Compare[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0xa
 		}
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *TxnResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5814,49 +8897,62 @@ func (m *TxnResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *TxnResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TxnResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Header.Size()))
-		n16, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Responses) > 0 {
+		for iNdEx := len(m.Responses) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Responses[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
 		}
-		i += n16
 	}
 	if m.Succeeded {
-		dAtA[i] = 0x10
-		i++
+		i--
 		if m.Succeeded {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x10
 	}
-	if len(m.Responses) > 0 {
-		for _, msg := range m.Responses {
-			dAtA[i] = 0x1a
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *CompactionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5864,32 +8960,41 @@ func (m *CompactionRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CompactionRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CompactionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Revision != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Revision))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Physical {
-		dAtA[i] = 0x10
-		i++
+		i--
 		if m.Physical {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if m.Revision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Revision))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *CompactionResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5897,27 +9002,38 @@ func (m *CompactionResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CompactionResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CompactionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Header.Size()))
-		n17, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n17
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *HashRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5925,17 +9041,26 @@ func (m *HashRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *HashRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *HashRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *HashKVRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5943,22 +9068,31 @@ func (m *HashKVRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *HashKVRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *HashKVRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Revision != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Revision))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Revision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Revision))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *HashKVResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -5966,37 +9100,48 @@ func (m *HashKVResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *HashKVResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *HashKVResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Header.Size()))
-		n18, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n18
-	}
-	if m.Hash != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Hash))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.CompactRevision != 0 {
-		dAtA[i] = 0x18
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.CompactRevision))
+		i--
+		dAtA[i] = 0x18
 	}
-	return i, nil
+	if m.Hash != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Hash))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *HashResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6004,32 +9149,43 @@ func (m *HashResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *HashResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *HashResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Header.Size()))
-		n19, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n19
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Hash != 0 {
-		dAtA[i] = 0x10
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.Hash))
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SnapshotRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6037,17 +9193,26 @@ func (m *SnapshotRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SnapshotRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SnapshotRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SnapshotResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6055,38 +9220,50 @@ func (m *SnapshotResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SnapshotResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SnapshotResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Header.Size()))
-		n20, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n20
-	}
-	if m.RemainingBytes != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.RemainingBytes))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Blob) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.Blob)
+		copy(dAtA[i:], m.Blob)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.Blob)))
-		i += copy(dAtA[i:], m.Blob)
+		i--
+		dAtA[i] = 0x1a
 	}
-	return i, nil
+	if m.RemainingBytes != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.RemainingBytes))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *WatchRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6094,47 +9271,90 @@ func (m *WatchRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WatchRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WatchRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.RequestUnion != nil {
-		nn21, err := m.RequestUnion.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += nn21
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.RequestUnion != nil {
+		{
+			size := m.RequestUnion.Size()
+			i -= size
+			if _, err := m.RequestUnion.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *WatchRequest_CreateRequest) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *WatchRequest_CreateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.CreateRequest != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.CreateRequest.Size()))
-		n22, err := m.CreateRequest.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.CreateRequest.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n22
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *WatchRequest_CancelRequest) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *WatchRequest_CancelRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.CancelRequest != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.CancelRequest.Size()))
-		n23, err := m.CancelRequest.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.CancelRequest.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
-		i += n23
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	return len(dAtA) - i, nil
+}
+func (m *WatchRequest_ProgressRequest) MarshalTo(dAtA []byte) (int, error) {
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *WatchRequest_ProgressRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.ProgressRequest != nil {
+		{
+			size, err := m.ProgressRequest.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	return len(dAtA) - i, nil
 }
 func (m *WatchRequest_ProgressRequest) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
@@ -6153,7 +9373,7 @@ func (m *WatchRequest_ProgressRequest) MarshalTo(dAtA []byte) (int, error) {
 func (m *WatchCreateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6161,36 +9381,43 @@ func (m *WatchCreateRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WatchCreateRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WatchCreateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Key) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.RangeEnd) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.RangeEnd)))
-		i += copy(dAtA[i:], m.RangeEnd)
-	}
-	if m.StartRevision != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.StartRevision))
-	}
-	if m.ProgressNotify {
-		dAtA[i] = 0x20
-		i++
-		if m.ProgressNotify {
+	if m.Fragment {
+		i--
+		if m.Fragment {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.WatchId != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.WatchId))
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.PrevKv {
+		i--
+		if m.PrevKv {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x30
 	}
 	if len(m.Filters) > 0 {
 		dAtA26 := make([]byte, len(m.Filters)*10)
@@ -6204,20 +9431,43 @@ func (m *WatchCreateRequest) MarshalTo(dAtA []byte) (int, error) {
 			dAtA26[j25] = uint8(num)
 			j25++
 		}
+		i -= j21
+		copy(dAtA[i:], dAtA22[:j21])
+		i = encodeVarintRpc(dAtA, i, uint64(j21))
+		i--
 		dAtA[i] = 0x2a
 		i++
 		i = encodeVarintRpc(dAtA, i, uint64(j25))
 		i += copy(dAtA[i:], dAtA26[:j25])
 	}
-	if m.PrevKv {
-		dAtA[i] = 0x30
-		i++
-		if m.PrevKv {
+	if m.ProgressNotify {
+		i--
+		if m.ProgressNotify {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.StartRevision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.StartRevision))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.RangeEnd) > 0 {
+		i -= len(m.RangeEnd)
+		copy(dAtA[i:], m.RangeEnd)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.RangeEnd)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0xa
 	}
 	if m.WatchId != 0 {
 		dAtA[i] = 0x38
@@ -6240,7 +9490,7 @@ func (m *WatchCreateRequest) MarshalTo(dAtA []byte) (int, error) {
 func (m *WatchCancelRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6248,16 +9498,52 @@ func (m *WatchCancelRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WatchCancelRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WatchCancelRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.WatchId != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.WatchId))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.WatchId != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.WatchId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *WatchProgressRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *WatchProgressRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WatchProgressRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *WatchProgressRequest) Marshal() (dAtA []byte, err error) {
@@ -6281,7 +9567,7 @@ func (m *WatchProgressRequest) MarshalTo(dAtA []byte) (int, error) {
 func (m *WatchResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6289,7 +9575,12 @@ func (m *WatchResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WatchResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WatchResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -6303,41 +9594,66 @@ func (m *WatchResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n27
 	}
-	if m.WatchId != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.WatchId))
+	if len(m.Events) > 0 {
+		for iNdEx := len(m.Events) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Events[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x5a
+		}
 	}
-	if m.Created {
-		dAtA[i] = 0x18
-		i++
-		if m.Created {
+	if m.Fragment {
+		i--
+		if m.Fragment {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x38
+	}
+	if len(m.CancelReason) > 0 {
+		i -= len(m.CancelReason)
+		copy(dAtA[i:], m.CancelReason)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.CancelReason)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.CompactRevision != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.CompactRevision))
+		i--
+		dAtA[i] = 0x28
 	}
 	if m.Canceled {
-		dAtA[i] = 0x20
-		i++
+		i--
 		if m.Canceled {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x20
 	}
-	if m.CompactRevision != 0 {
-		dAtA[i] = 0x28
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.CompactRevision))
+	if m.Created {
+		i--
+		if m.Created {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x18
 	}
-	if len(m.CancelReason) > 0 {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.CancelReason)))
-		i += copy(dAtA[i:], m.CancelReason)
+	if m.WatchId != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.WatchId))
+		i--
+		dAtA[i] = 0x10
 	}
 	if m.Fragment {
 		dAtA[i] = 0x38
@@ -6358,16 +9674,19 @@ func (m *WatchResponse) MarshalTo(dAtA []byte) (int, error) {
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseGrantRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6375,27 +9694,36 @@ func (m *LeaseGrantRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaseGrantRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaseGrantRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.TTL != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.TTL))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.ID != 0 {
-		dAtA[i] = 0x10
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if m.TTL != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.TTL))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseGrantResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6403,7 +9731,12 @@ func (m *LeaseGrantResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaseGrantResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaseGrantResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -6417,29 +9750,42 @@ func (m *LeaseGrantResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n28
 	}
-	if m.ID != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+	if len(m.Error) > 0 {
+		i -= len(m.Error)
+		copy(dAtA[i:], m.Error)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Error)))
+		i--
+		dAtA[i] = 0x22
 	}
 	if m.TTL != 0 {
-		dAtA[i] = 0x18
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.TTL))
+		i--
+		dAtA[i] = 0x18
 	}
-	if len(m.Error) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Error)))
-		i += copy(dAtA[i:], m.Error)
+	if m.ID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseRevokeRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6447,22 +9793,31 @@ func (m *LeaseRevokeRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaseRevokeRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaseRevokeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.ID != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.ID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseRevokeResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6470,10 +9825,19 @@ func (m *LeaseRevokeResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaseRevokeResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaseRevokeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -6484,13 +9848,13 @@ func (m *LeaseRevokeResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n29
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseCheckpoint) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6502,10 +9866,14 @@ func (m *LeaseCheckpoint) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.ID != 0 {
-		dAtA[i] = 0x8
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x8
 	}
 	if m.Remaining_TTL != 0 {
 		dAtA[i] = 0x10
@@ -6518,7 +9886,7 @@ func (m *LeaseCheckpoint) MarshalTo(dAtA []byte) (int, error) {
 func (m *LeaseCheckpointRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6542,13 +9910,13 @@ func (m *LeaseCheckpointRequest) MarshalTo(dAtA []byte) (int, error) {
 			i += n
 		}
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseCheckpointResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6662,15 +10030,21 @@ func (m *LeaseTimeToLiveRequest) MarshalTo(dAtA []byte) (int, error) {
 		} else {
 			dAtA[i] = 0
 		}
-		i++
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if m.ID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseTimeToLiveResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6678,7 +10052,12 @@ func (m *LeaseTimeToLiveResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaseTimeToLiveResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaseTimeToLiveResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -6692,36 +10071,40 @@ func (m *LeaseTimeToLiveResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n32
 	}
-	if m.ID != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+	if m.GrantedTTL != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.GrantedTTL))
+		i--
+		dAtA[i] = 0x20
 	}
 	if m.TTL != 0 {
-		dAtA[i] = 0x18
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.TTL))
+		i--
+		dAtA[i] = 0x18
 	}
-	if m.GrantedTTL != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.GrantedTTL))
+	if m.ID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x10
 	}
-	if len(m.Keys) > 0 {
-		for _, b := range m.Keys {
-			dAtA[i] = 0x2a
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(len(b)))
-			i += copy(dAtA[i:], b)
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseLeasesRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6729,17 +10112,26 @@ func (m *LeaseLeasesRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaseLeasesRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaseLeasesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseStatus) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6747,22 +10139,31 @@ func (m *LeaseStatus) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaseStatus) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaseStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.ID != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.ID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaseLeasesResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6770,7 +10171,12 @@ func (m *LeaseLeasesResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaseLeasesResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaseLeasesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -6785,24 +10191,38 @@ func (m *LeaseLeasesResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n33
 	}
 	if len(m.Leases) > 0 {
-		for _, msg := range m.Leases {
+		for iNdEx := len(m.Leases) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Leases[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x12
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *Member) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6810,50 +10230,48 @@ func (m *Member) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Member) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Member) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.ID != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
-	}
-	if len(m.Name) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
-	}
-	if len(m.PeerURLs) > 0 {
-		for _, s := range m.PeerURLs {
-			dAtA[i] = 0x1a
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
-		}
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.ClientURLs) > 0 {
-		for _, s := range m.ClientURLs {
+		for iNdEx := len(m.ClientURLs) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.ClientURLs[iNdEx])
+			copy(dAtA[i:], m.ClientURLs[iNdEx])
+			i = encodeVarintRpc(dAtA, i, uint64(len(m.ClientURLs[iNdEx])))
+			i--
 			dAtA[i] = 0x22
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
+	}
+	if len(m.PeerURLs) > 0 {
+		for iNdEx := len(m.PeerURLs) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.PeerURLs[iNdEx])
+			copy(dAtA[i:], m.PeerURLs[iNdEx])
+			i = encodeVarintRpc(dAtA, i, uint64(len(m.PeerURLs[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x8
 	}
 	if m.IsLearner {
 		dAtA[i] = 0x28
@@ -6871,7 +10289,7 @@ func (m *Member) MarshalTo(dAtA []byte) (int, error) {
 func (m *MemberAddRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6879,23 +10297,26 @@ func (m *MemberAddRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MemberAddRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MemberAddRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.PeerURLs) > 0 {
-		for _, s := range m.PeerURLs {
+		for iNdEx := len(m.PeerURLs) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.PeerURLs[iNdEx])
+			copy(dAtA[i:], m.PeerURLs[iNdEx])
+			i = encodeVarintRpc(dAtA, i, uint64(len(m.PeerURLs[iNdEx])))
+			i--
 			dAtA[i] = 0xa
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
 	if m.IsLearner {
@@ -6914,7 +10335,7 @@ func (m *MemberAddRequest) MarshalTo(dAtA []byte) (int, error) {
 func (m *MemberAddResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6922,7 +10343,12 @@ func (m *MemberAddResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MemberAddResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MemberAddResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -6946,25 +10372,25 @@ func (m *MemberAddResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n35
 	}
-	if len(m.Members) > 0 {
-		for _, msg := range m.Members {
-			dAtA[i] = 0x1a
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *MemberRemoveRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6972,22 +10398,31 @@ func (m *MemberRemoveRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MemberRemoveRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MemberRemoveRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.ID != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.ID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *MemberRemoveResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -6995,7 +10430,12 @@ func (m *MemberRemoveResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MemberRemoveResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MemberRemoveResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -7010,24 +10450,38 @@ func (m *MemberRemoveResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n36
 	}
 	if len(m.Members) > 0 {
-		for _, msg := range m.Members {
+		for iNdEx := len(m.Members) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Members[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x12
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *MemberUpdateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7035,37 +10489,40 @@ func (m *MemberUpdateRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MemberUpdateRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MemberUpdateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.ID != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.PeerURLs) > 0 {
-		for _, s := range m.PeerURLs {
+		for iNdEx := len(m.PeerURLs) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.PeerURLs[iNdEx])
+			copy(dAtA[i:], m.PeerURLs[iNdEx])
+			i = encodeVarintRpc(dAtA, i, uint64(len(m.PeerURLs[iNdEx])))
+			i--
 			dAtA[i] = 0x12
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	return i, nil
+	if m.ID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *MemberUpdateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7073,7 +10530,12 @@ func (m *MemberUpdateResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MemberUpdateResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MemberUpdateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -7088,24 +10550,38 @@ func (m *MemberUpdateResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n37
 	}
 	if len(m.Members) > 0 {
-		for _, msg := range m.Members {
+		for iNdEx := len(m.Members) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Members[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x12
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *MemberListRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7113,17 +10589,26 @@ func (m *MemberListRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MemberListRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MemberListRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *MemberListResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7131,7 +10616,12 @@ func (m *MemberListResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MemberListResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MemberListResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -7209,24 +10699,38 @@ func (m *MemberPromoteResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n39
 	}
 	if len(m.Members) > 0 {
-		for _, msg := range m.Members {
+		for iNdEx := len(m.Members) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Members[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x12
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *DefragmentRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7234,17 +10738,26 @@ func (m *DefragmentRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DefragmentRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DefragmentRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *DefragmentResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7252,10 +10765,19 @@ func (m *DefragmentResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DefragmentResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DefragmentResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -7266,13 +10788,13 @@ func (m *DefragmentResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n40
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *MoveLeaderRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7280,22 +10802,31 @@ func (m *MoveLeaderRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MoveLeaderRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MoveLeaderRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.TargetID != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.TargetID))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.TargetID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.TargetID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *MoveLeaderResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7303,10 +10834,19 @@ func (m *MoveLeaderResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MoveLeaderResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MoveLeaderResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -7317,13 +10857,13 @@ func (m *MoveLeaderResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n41
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AlarmRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7331,32 +10871,41 @@ func (m *AlarmRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AlarmRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AlarmRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Action != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Action))
-	}
-	if m.MemberID != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.MemberID))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Alarm != 0 {
-		dAtA[i] = 0x18
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.Alarm))
+		i--
+		dAtA[i] = 0x18
 	}
-	return i, nil
+	if m.MemberID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.MemberID))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Action != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Action))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AlarmMember) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7364,27 +10913,36 @@ func (m *AlarmMember) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AlarmMember) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AlarmMember) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.MemberID != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.MemberID))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Alarm != 0 {
-		dAtA[i] = 0x10
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.Alarm))
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if m.MemberID != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.MemberID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AlarmResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7392,7 +10950,12 @@ func (m *AlarmResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AlarmResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AlarmResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -7407,24 +10970,38 @@ func (m *AlarmResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n42
 	}
 	if len(m.Alarms) > 0 {
-		for _, msg := range m.Alarms {
+		for iNdEx := len(m.Alarms) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Alarms[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x12
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *StatusRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7432,17 +11009,26 @@ func (m *StatusRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *StatusRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StatusRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *StatusResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7450,7 +11036,12 @@ func (m *StatusResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *StatusResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StatusResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -7464,31 +11055,44 @@ func (m *StatusResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n43
 	}
-	if len(m.Version) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Version)))
-		i += copy(dAtA[i:], m.Version)
-	}
-	if m.DbSize != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.DbSize))
-	}
-	if m.Leader != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.Leader))
+	if m.RaftTerm != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.RaftTerm))
+		i--
+		dAtA[i] = 0x30
 	}
 	if m.RaftIndex != 0 {
-		dAtA[i] = 0x28
-		i++
 		i = encodeVarintRpc(dAtA, i, uint64(m.RaftIndex))
+		i--
+		dAtA[i] = 0x28
 	}
-	if m.RaftTerm != 0 {
-		dAtA[i] = 0x30
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(m.RaftTerm))
+	if m.Leader != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.Leader))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.DbSize != 0 {
+		i = encodeVarintRpc(dAtA, i, uint64(m.DbSize))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Version) > 0 {
+		i -= len(m.Version)
+		copy(dAtA[i:], m.Version)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Version)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
 	if m.RaftAppliedIndex != 0 {
 		dAtA[i] = 0x38
@@ -7531,7 +11135,7 @@ func (m *StatusResponse) MarshalTo(dAtA []byte) (int, error) {
 func (m *AuthEnableRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7539,17 +11143,26 @@ func (m *AuthEnableRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthEnableRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthEnableRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthDisableRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7557,17 +11170,26 @@ func (m *AuthDisableRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthDisableRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthDisableRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthenticateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7575,29 +11197,40 @@ func (m *AuthenticateRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthenticateRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthenticateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Password) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Password)
+		copy(dAtA[i:], m.Password)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.Password)))
-		i += copy(dAtA[i:], m.Password)
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserAddRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7605,21 +11238,32 @@ func (m *AuthUserAddRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserAddRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserAddRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Password) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Password)
+		copy(dAtA[i:], m.Password)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.Password)))
-		i += copy(dAtA[i:], m.Password)
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
 	}
 	if m.Options != nil {
 		dAtA[i] = 0x1a
@@ -7637,7 +11281,7 @@ func (m *AuthUserAddRequest) MarshalTo(dAtA []byte) (int, error) {
 func (m *AuthUserGetRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7645,23 +11289,33 @@ func (m *AuthUserGetRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserGetRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserGetRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserDeleteRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7669,23 +11323,33 @@ func (m *AuthUserDeleteRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserDeleteRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserDeleteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserChangePasswordRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7693,29 +11357,40 @@ func (m *AuthUserChangePasswordRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserChangePasswordRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserChangePasswordRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Password) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Password)
+		copy(dAtA[i:], m.Password)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.Password)))
-		i += copy(dAtA[i:], m.Password)
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserGrantRoleRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7723,29 +11398,40 @@ func (m *AuthUserGrantRoleRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserGrantRoleRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserGrantRoleRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.User) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.User)))
-		i += copy(dAtA[i:], m.User)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Role) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Role)
+		copy(dAtA[i:], m.Role)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.Role)))
-		i += copy(dAtA[i:], m.Role)
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.User) > 0 {
+		i -= len(m.User)
+		copy(dAtA[i:], m.User)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.User)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserRevokeRoleRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7753,29 +11439,40 @@ func (m *AuthUserRevokeRoleRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserRevokeRoleRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserRevokeRoleRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Role) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Role)
+		copy(dAtA[i:], m.Role)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.Role)))
-		i += copy(dAtA[i:], m.Role)
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleAddRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7783,23 +11480,33 @@ func (m *AuthRoleAddRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleAddRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleAddRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleGetRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7807,23 +11514,33 @@ func (m *AuthRoleGetRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleGetRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleGetRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Role) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Role)))
-		i += copy(dAtA[i:], m.Role)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Role) > 0 {
+		i -= len(m.Role)
+		copy(dAtA[i:], m.Role)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Role)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserListRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7831,17 +11548,26 @@ func (m *AuthUserListRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserListRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserListRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleListRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7849,17 +11575,26 @@ func (m *AuthRoleListRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleListRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleListRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	return i, nil
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleDeleteRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7867,23 +11602,33 @@ func (m *AuthRoleDeleteRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleDeleteRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleDeleteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Role) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Role)))
-		i += copy(dAtA[i:], m.Role)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Role) > 0 {
+		i -= len(m.Role)
+		copy(dAtA[i:], m.Role)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Role)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleGrantPermissionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7891,15 +11636,18 @@ func (m *AuthRoleGrantPermissionRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleGrantPermissionRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleGrantPermissionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Perm != nil {
 		dAtA[i] = 0x12
@@ -7911,13 +11659,13 @@ func (m *AuthRoleGrantPermissionRequest) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n45
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleRevokePermissionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7925,35 +11673,47 @@ func (m *AuthRoleRevokePermissionRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleRevokePermissionRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleRevokePermissionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Role) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Role)))
-		i += copy(dAtA[i:], m.Role)
-	}
-	if len(m.Key) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.RangeEnd) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.RangeEnd)
+		copy(dAtA[i:], m.RangeEnd)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.RangeEnd)))
-		i += copy(dAtA[i:], m.RangeEnd)
+		i--
+		dAtA[i] = 0x1a
 	}
-	return i, nil
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Role) > 0 {
+		i -= len(m.Role)
+		copy(dAtA[i:], m.Role)
+		i = encodeVarintRpc(dAtA, i, uint64(len(m.Role)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthEnableResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7961,10 +11721,19 @@ func (m *AuthEnableResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthEnableResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthEnableResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -7975,13 +11744,13 @@ func (m *AuthEnableResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n46
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthDisableResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -7989,10 +11758,19 @@ func (m *AuthDisableResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthDisableResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthDisableResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8003,13 +11781,13 @@ func (m *AuthDisableResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n47
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthenticateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8017,7 +11795,12 @@ func (m *AuthenticateResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthenticateResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthenticateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -8032,18 +11815,31 @@ func (m *AuthenticateResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n48
 	}
 	if len(m.Token) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Token)
+		copy(dAtA[i:], m.Token)
 		i = encodeVarintRpc(dAtA, i, uint64(len(m.Token)))
-		i += copy(dAtA[i:], m.Token)
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserAddResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8051,10 +11847,19 @@ func (m *AuthUserAddResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserAddResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserAddResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8065,13 +11870,13 @@ func (m *AuthUserAddResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n49
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserGetResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8079,7 +11884,12 @@ func (m *AuthUserGetResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserGetResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserGetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -8094,27 +11904,33 @@ func (m *AuthUserGetResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n50
 	}
 	if len(m.Roles) > 0 {
-		for _, s := range m.Roles {
+		for iNdEx := len(m.Roles) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Roles[iNdEx])
+			copy(dAtA[i:], m.Roles[iNdEx])
+			i = encodeVarintRpc(dAtA, i, uint64(len(m.Roles[iNdEx])))
+			i--
 			dAtA[i] = 0x12
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserDeleteResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8122,10 +11938,19 @@ func (m *AuthUserDeleteResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserDeleteResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserDeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8136,13 +11961,13 @@ func (m *AuthUserDeleteResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n51
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserChangePasswordResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8150,10 +11975,19 @@ func (m *AuthUserChangePasswordResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserChangePasswordResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserChangePasswordResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8164,13 +11998,13 @@ func (m *AuthUserChangePasswordResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n52
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserGrantRoleResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8178,10 +12012,19 @@ func (m *AuthUserGrantRoleResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserGrantRoleResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserGrantRoleResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8192,13 +12035,13 @@ func (m *AuthUserGrantRoleResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n53
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserRevokeRoleResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8206,10 +12049,19 @@ func (m *AuthUserRevokeRoleResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserRevokeRoleResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserRevokeRoleResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8220,13 +12072,13 @@ func (m *AuthUserRevokeRoleResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n54
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleAddResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8234,10 +12086,19 @@ func (m *AuthRoleAddResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleAddResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleAddResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8248,13 +12109,13 @@ func (m *AuthRoleAddResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n55
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleGetResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8262,7 +12123,12 @@ func (m *AuthRoleGetResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleGetResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleGetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -8277,24 +12143,38 @@ func (m *AuthRoleGetResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n56
 	}
 	if len(m.Perm) > 0 {
-		for _, msg := range m.Perm {
+		for iNdEx := len(m.Perm) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Perm[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRpc(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x12
-			i++
-			i = encodeVarintRpc(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleListResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8302,7 +12182,12 @@ func (m *AuthRoleListResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleListResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleListResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -8317,27 +12202,33 @@ func (m *AuthRoleListResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n57
 	}
 	if len(m.Roles) > 0 {
-		for _, s := range m.Roles {
+		for iNdEx := len(m.Roles) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Roles[iNdEx])
+			copy(dAtA[i:], m.Roles[iNdEx])
+			i = encodeVarintRpc(dAtA, i, uint64(len(m.Roles[iNdEx])))
+			i--
 			dAtA[i] = 0x12
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthUserListResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8345,7 +12236,12 @@ func (m *AuthUserListResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthUserListResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthUserListResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
@@ -8360,27 +12256,33 @@ func (m *AuthUserListResponse) MarshalTo(dAtA []byte) (int, error) {
 		i += n58
 	}
 	if len(m.Users) > 0 {
-		for _, s := range m.Users {
+		for iNdEx := len(m.Users) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Users[iNdEx])
+			copy(dAtA[i:], m.Users[iNdEx])
+			i = encodeVarintRpc(dAtA, i, uint64(len(m.Users[iNdEx])))
+			i--
 			dAtA[i] = 0x12
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	return i, nil
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRpc(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleDeleteResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8388,10 +12290,19 @@ func (m *AuthRoleDeleteResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleDeleteResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleDeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8402,13 +12313,13 @@ func (m *AuthRoleDeleteResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n59
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleGrantPermissionResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8416,10 +12327,19 @@ func (m *AuthRoleGrantPermissionResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleGrantPermissionResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleGrantPermissionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8430,13 +12350,13 @@ func (m *AuthRoleGrantPermissionResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n60
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AuthRoleRevokePermissionResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -8444,10 +12364,19 @@ func (m *AuthRoleRevokePermissionResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AuthRoleRevokePermissionResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AuthRoleRevokePermissionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Header != nil {
 		dAtA[i] = 0xa
 		i++
@@ -8458,19 +12387,24 @@ func (m *AuthRoleRevokePermissionResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n61
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintRpc(dAtA []byte, offset int, v uint64) int {
+	offset -= sovRpc(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *ResponseHeader) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ClusterId != 0 {
@@ -8485,10 +12419,16 @@ func (m *ResponseHeader) Size() (n int) {
 	if m.RaftTerm != 0 {
 		n += 1 + sovRpc(uint64(m.RaftTerm))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *RangeRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Key)
@@ -8532,10 +12472,16 @@ func (m *RangeRequest) Size() (n int) {
 	if m.MaxCreateRevision != 0 {
 		n += 1 + sovRpc(uint64(m.MaxCreateRevision))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *RangeResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -8554,10 +12500,16 @@ func (m *RangeResponse) Size() (n int) {
 	if m.Count != 0 {
 		n += 1 + sovRpc(uint64(m.Count))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *PutRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Key)
@@ -8580,10 +12532,16 @@ func (m *PutRequest) Size() (n int) {
 	if m.IgnoreLease {
 		n += 2
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *PutResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -8594,10 +12552,16 @@ func (m *PutResponse) Size() (n int) {
 		l = m.PrevKv.Size()
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *DeleteRangeRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Key)
@@ -8611,10 +12575,16 @@ func (m *DeleteRangeRequest) Size() (n int) {
 	if m.PrevKv {
 		n += 2
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *DeleteRangeResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -8630,19 +12600,31 @@ func (m *DeleteRangeResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *RequestOp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Request != nil {
 		n += m.Request.Size()
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *RequestOp_RequestRange) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.RequestRange != nil {
@@ -8652,6 +12634,9 @@ func (m *RequestOp_RequestRange) Size() (n int) {
 	return n
 }
 func (m *RequestOp_RequestPut) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.RequestPut != nil {
@@ -8661,6 +12646,9 @@ func (m *RequestOp_RequestPut) Size() (n int) {
 	return n
 }
 func (m *RequestOp_RequestDeleteRange) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.RequestDeleteRange != nil {
@@ -8670,6 +12658,9 @@ func (m *RequestOp_RequestDeleteRange) Size() (n int) {
 	return n
 }
 func (m *RequestOp_RequestTxn) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.RequestTxn != nil {
@@ -8679,15 +12670,24 @@ func (m *RequestOp_RequestTxn) Size() (n int) {
 	return n
 }
 func (m *ResponseOp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Response != nil {
 		n += m.Response.Size()
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *ResponseOp_ResponseRange) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ResponseRange != nil {
@@ -8697,6 +12697,9 @@ func (m *ResponseOp_ResponseRange) Size() (n int) {
 	return n
 }
 func (m *ResponseOp_ResponsePut) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ResponsePut != nil {
@@ -8706,6 +12709,9 @@ func (m *ResponseOp_ResponsePut) Size() (n int) {
 	return n
 }
 func (m *ResponseOp_ResponseDeleteRange) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ResponseDeleteRange != nil {
@@ -8715,6 +12721,9 @@ func (m *ResponseOp_ResponseDeleteRange) Size() (n int) {
 	return n
 }
 func (m *ResponseOp_ResponseTxn) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ResponseTxn != nil {
@@ -8724,6 +12733,9 @@ func (m *ResponseOp_ResponseTxn) Size() (n int) {
 	return n
 }
 func (m *Compare) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Result != 0 {
@@ -8743,28 +12755,43 @@ func (m *Compare) Size() (n int) {
 	if l > 0 {
 		n += 2 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *Compare_Version) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	n += 1 + sovRpc(uint64(m.Version))
 	return n
 }
 func (m *Compare_CreateRevision) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	n += 1 + sovRpc(uint64(m.CreateRevision))
 	return n
 }
 func (m *Compare_ModRevision) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	n += 1 + sovRpc(uint64(m.ModRevision))
 	return n
 }
 func (m *Compare_Value) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Value != nil {
@@ -8774,12 +12801,18 @@ func (m *Compare_Value) Size() (n int) {
 	return n
 }
 func (m *Compare_Lease) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	n += 1 + sovRpc(uint64(m.Lease))
 	return n
 }
 func (m *TxnRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if len(m.Compare) > 0 {
@@ -8800,10 +12833,16 @@ func (m *TxnRequest) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *TxnResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -8819,10 +12858,16 @@ func (m *TxnResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *CompactionRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Revision != 0 {
@@ -8831,35 +12876,59 @@ func (m *CompactionRequest) Size() (n int) {
 	if m.Physical {
 		n += 2
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *CompactionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *HashRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *HashKVRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Revision != 0 {
 		n += 1 + sovRpc(uint64(m.Revision))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *HashKVResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -8872,10 +12941,16 @@ func (m *HashKVResponse) Size() (n int) {
 	if m.CompactRevision != 0 {
 		n += 1 + sovRpc(uint64(m.CompactRevision))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *HashResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -8885,16 +12960,28 @@ func (m *HashResponse) Size() (n int) {
 	if m.Hash != 0 {
 		n += 1 + sovRpc(uint64(m.Hash))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *SnapshotRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *SnapshotResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -8908,19 +12995,31 @@ func (m *SnapshotResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *WatchRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.RequestUnion != nil {
 		n += m.RequestUnion.Size()
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *WatchRequest_CreateRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.CreateRequest != nil {
@@ -8930,6 +13029,9 @@ func (m *WatchRequest_CreateRequest) Size() (n int) {
 	return n
 }
 func (m *WatchRequest_CancelRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.CancelRequest != nil {
@@ -8948,6 +13050,9 @@ func (m *WatchRequest_ProgressRequest) Size() (n int) {
 	return n
 }
 func (m *WatchCreateRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Key)
@@ -8984,10 +13089,28 @@ func (m *WatchCreateRequest) Size() (n int) {
 }
 
 func (m *WatchCancelRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.WatchId != 0 {
 		n += 1 + sovRpc(uint64(m.WatchId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *WatchProgressRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -8999,6 +13122,9 @@ func (m *WatchProgressRequest) Size() (n int) {
 }
 
 func (m *WatchResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9030,10 +13156,16 @@ func (m *WatchResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseGrantRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.TTL != 0 {
@@ -9042,10 +13174,16 @@ func (m *LeaseGrantRequest) Size() (n int) {
 	if m.ID != 0 {
 		n += 1 + sovRpc(uint64(m.ID))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseGrantResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9062,24 +13200,39 @@ func (m *LeaseGrantResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseRevokeRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ID != 0 {
 		n += 1 + sovRpc(uint64(m.ID))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseRevokeResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -9119,15 +13272,24 @@ func (m *LeaseCheckpointResponse) Size() (n int) {
 }
 
 func (m *LeaseKeepAliveRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ID != 0 {
 		n += 1 + sovRpc(uint64(m.ID))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseKeepAliveResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9140,10 +13302,16 @@ func (m *LeaseKeepAliveResponse) Size() (n int) {
 	if m.TTL != 0 {
 		n += 1 + sovRpc(uint64(m.TTL))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseTimeToLiveRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ID != 0 {
@@ -9152,10 +13320,16 @@ func (m *LeaseTimeToLiveRequest) Size() (n int) {
 	if m.Keys {
 		n += 2
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseTimeToLiveResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9177,25 +13351,43 @@ func (m *LeaseTimeToLiveResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseLeasesRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ID != 0 {
 		n += 1 + sovRpc(uint64(m.ID))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *LeaseLeasesResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9208,10 +13400,16 @@ func (m *LeaseLeasesResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *Member) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ID != 0 {
@@ -9240,6 +13438,9 @@ func (m *Member) Size() (n int) {
 }
 
 func (m *MemberAddRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if len(m.PeerURLs) > 0 {
@@ -9255,6 +13456,9 @@ func (m *MemberAddRequest) Size() (n int) {
 }
 
 func (m *MemberAddResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9271,19 +13475,31 @@ func (m *MemberAddResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *MemberRemoveRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ID != 0 {
 		n += 1 + sovRpc(uint64(m.ID))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *MemberRemoveResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9296,10 +13512,16 @@ func (m *MemberRemoveResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *MemberUpdateRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.ID != 0 {
@@ -9311,10 +13533,16 @@ func (m *MemberUpdateRequest) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *MemberUpdateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9326,17 +13554,29 @@ func (m *MemberUpdateResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovRpc(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *MemberListRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *MemberListResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9348,6 +13588,9 @@ func (m *MemberListResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovRpc(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -9378,41 +13621,68 @@ func (m *MemberPromoteResponse) Size() (n int) {
 }
 
 func (m *DefragmentRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *DefragmentResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *MoveLeaderRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.TargetID != 0 {
 		n += 1 + sovRpc(uint64(m.TargetID))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *MoveLeaderResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AlarmRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Action != 0 {
@@ -9424,10 +13694,16 @@ func (m *AlarmRequest) Size() (n int) {
 	if m.Alarm != 0 {
 		n += 1 + sovRpc(uint64(m.Alarm))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AlarmMember) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.MemberID != 0 {
@@ -9436,10 +13712,16 @@ func (m *AlarmMember) Size() (n int) {
 	if m.Alarm != 0 {
 		n += 1 + sovRpc(uint64(m.Alarm))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AlarmResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9452,16 +13734,28 @@ func (m *AlarmResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *StatusRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *StatusResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9503,18 +13797,33 @@ func (m *StatusResponse) Size() (n int) {
 }
 
 func (m *AuthEnableRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthDisableRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthenticateRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -9525,10 +13834,16 @@ func (m *AuthenticateRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthUserAddRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -9547,26 +13862,41 @@ func (m *AuthUserAddRequest) Size() (n int) {
 }
 
 func (m *AuthUserGetRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthUserDeleteRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthUserChangePasswordRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -9577,10 +13907,16 @@ func (m *AuthUserChangePasswordRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthUserGrantRoleRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.User)
@@ -9591,10 +13927,16 @@ func (m *AuthUserGrantRoleRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthUserRevokeRoleRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -9604,53 +13946,89 @@ func (m *AuthUserRevokeRoleRequest) Size() (n int) {
 	l = len(m.Role)
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthRoleAddRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthRoleGetRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Role)
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthUserListRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthRoleListRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthRoleDeleteRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Role)
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthRoleGrantPermissionRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -9661,10 +14039,16 @@ func (m *AuthRoleGrantPermissionRequest) Size() (n int) {
 		l = m.Perm.Size()
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthRoleRevokePermissionRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Role)
@@ -9679,30 +14063,48 @@ func (m *AuthRoleRevokePermissionRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthEnableResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthDisableResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthenticateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9713,20 +14115,32 @@ func (m *AuthenticateResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthUserAddResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthUserGetResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9739,60 +14153,96 @@ func (m *AuthUserGetResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthUserDeleteResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthUserChangePasswordResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthUserGrantRoleResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthUserRevokeRoleResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthRoleAddResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthRoleGetResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9805,10 +14255,16 @@ func (m *AuthRoleGetResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthRoleListResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9821,10 +14277,16 @@ func (m *AuthRoleListResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthUserListResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -9837,48 +14299,62 @@ func (m *AuthUserListResponse) Size() (n int) {
 			n += 1 + l + sovRpc(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func (m *AuthRoleDeleteResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthRoleGrantPermissionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
 func (m *AuthRoleRevokePermissionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovRpc(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
 func sovRpc(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozRpc(x uint64) (n int) {
 	return sovRpc(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -9898,7 +14374,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -9926,7 +14402,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				m.ClusterId |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -9945,7 +14421,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MemberId |= (uint64(b) & 0x7F) << shift
+				m.MemberId |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -9964,7 +14440,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= (int64(b) & 0x7F) << shift
+				m.Revision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -9983,7 +14459,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.RaftTerm |= (uint64(b) & 0x7F) << shift
+				m.RaftTerm |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -9997,9 +14473,13 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10024,7 +14504,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -10052,7 +14532,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10061,6 +14541,9 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10083,7 +14566,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10092,6 +14575,9 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10114,7 +14600,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Limit |= (int64(b) & 0x7F) << shift
+				m.Limit |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10133,7 +14619,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= (int64(b) & 0x7F) << shift
+				m.Revision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10152,7 +14638,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SortOrder |= (RangeRequest_SortOrder(b) & 0x7F) << shift
+				m.SortOrder |= RangeRequest_SortOrder(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10171,7 +14657,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SortTarget |= (RangeRequest_SortTarget(b) & 0x7F) << shift
+				m.SortTarget |= RangeRequest_SortTarget(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10190,7 +14676,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10210,7 +14696,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10230,7 +14716,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10250,7 +14736,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MinModRevision |= (int64(b) & 0x7F) << shift
+				m.MinModRevision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10269,7 +14755,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MaxModRevision |= (int64(b) & 0x7F) << shift
+				m.MaxModRevision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10288,7 +14774,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MinCreateRevision |= (int64(b) & 0x7F) << shift
+				m.MinCreateRevision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10307,7 +14793,7 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MaxCreateRevision |= (int64(b) & 0x7F) << shift
+				m.MaxCreateRevision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10321,9 +14807,13 @@ func (m *RangeRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10348,7 +14838,7 @@ func (m *RangeResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -10376,7 +14866,7 @@ func (m *RangeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10385,6 +14875,9 @@ func (m *RangeResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10409,7 +14902,7 @@ func (m *RangeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10418,6 +14911,9 @@ func (m *RangeResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10440,7 +14936,7 @@ func (m *RangeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10460,7 +14956,7 @@ func (m *RangeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Count |= (int64(b) & 0x7F) << shift
+				m.Count |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10474,9 +14970,13 @@ func (m *RangeResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10501,7 +15001,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -10529,7 +15029,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10538,6 +15038,9 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10560,7 +15063,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10569,6 +15072,9 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10591,7 +15097,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Lease |= (int64(b) & 0x7F) << shift
+				m.Lease |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10610,7 +15116,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10630,7 +15136,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10650,7 +15156,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10665,9 +15171,13 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10692,7 +15202,7 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -10720,7 +15230,7 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10729,6 +15239,9 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10753,7 +15266,7 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10762,6 +15275,9 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10781,9 +15297,13 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10808,7 +15328,7 @@ func (m *DeleteRangeRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -10836,7 +15356,7 @@ func (m *DeleteRangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10845,6 +15365,9 @@ func (m *DeleteRangeRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10867,7 +15390,7 @@ func (m *DeleteRangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10876,6 +15399,9 @@ func (m *DeleteRangeRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10898,7 +15424,7 @@ func (m *DeleteRangeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10913,9 +15439,13 @@ func (m *DeleteRangeRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10940,7 +15470,7 @@ func (m *DeleteRangeResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -10968,7 +15498,7 @@ func (m *DeleteRangeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -10977,6 +15507,9 @@ func (m *DeleteRangeResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11001,7 +15534,7 @@ func (m *DeleteRangeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Deleted |= (int64(b) & 0x7F) << shift
+				m.Deleted |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11020,7 +15553,7 @@ func (m *DeleteRangeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11029,6 +15562,9 @@ func (m *DeleteRangeResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11046,9 +15582,13 @@ func (m *DeleteRangeResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11073,7 +15613,7 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -11101,7 +15641,7 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11110,6 +15650,9 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11133,7 +15676,7 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11142,6 +15685,9 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11165,7 +15711,7 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11174,6 +15720,9 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11197,7 +15746,7 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11206,6 +15755,9 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11224,9 +15776,13 @@ func (m *RequestOp) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11251,7 +15807,7 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -11279,7 +15835,7 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11288,6 +15844,9 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11311,7 +15870,7 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11320,6 +15879,9 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11343,7 +15905,7 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11352,6 +15914,9 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11375,7 +15940,7 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11384,6 +15949,9 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11402,9 +15970,13 @@ func (m *ResponseOp) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11429,7 +16001,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -11457,7 +16029,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Result |= (Compare_CompareResult(b) & 0x7F) << shift
+				m.Result |= Compare_CompareResult(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11476,7 +16048,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Target |= (Compare_CompareTarget(b) & 0x7F) << shift
+				m.Target |= Compare_CompareTarget(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11495,7 +16067,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11504,6 +16076,9 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11526,7 +16101,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int64(b) & 0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11546,7 +16121,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int64(b) & 0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11566,7 +16141,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int64(b) & 0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11586,7 +16161,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11595,6 +16170,9 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11616,7 +16194,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int64(b) & 0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11636,7 +16214,7 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11645,6 +16223,9 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11662,9 +16243,13 @@ func (m *Compare) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11689,7 +16274,7 @@ func (m *TxnRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -11717,7 +16302,7 @@ func (m *TxnRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11726,6 +16311,9 @@ func (m *TxnRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11748,7 +16336,7 @@ func (m *TxnRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11757,6 +16345,9 @@ func (m *TxnRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11779,7 +16370,7 @@ func (m *TxnRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11788,6 +16379,9 @@ func (m *TxnRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11805,9 +16399,13 @@ func (m *TxnRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11832,7 +16430,7 @@ func (m *TxnResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -11860,7 +16458,7 @@ func (m *TxnResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11869,6 +16467,9 @@ func (m *TxnResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11893,7 +16494,7 @@ func (m *TxnResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11913,7 +16514,7 @@ func (m *TxnResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -11922,6 +16523,9 @@ func (m *TxnResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11939,9 +16543,13 @@ func (m *TxnResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11966,7 +16574,7 @@ func (m *CompactionRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -11994,7 +16602,7 @@ func (m *CompactionRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= (int64(b) & 0x7F) << shift
+				m.Revision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12013,7 +16621,7 @@ func (m *CompactionRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12028,9 +16636,13 @@ func (m *CompactionRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12055,7 +16667,7 @@ func (m *CompactionResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12083,7 +16695,7 @@ func (m *CompactionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12092,6 +16704,9 @@ func (m *CompactionResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12111,9 +16726,13 @@ func (m *CompactionResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12138,7 +16757,7 @@ func (m *HashRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12161,9 +16780,13 @@ func (m *HashRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12188,7 +16811,7 @@ func (m *HashKVRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12216,7 +16839,7 @@ func (m *HashKVRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= (int64(b) & 0x7F) << shift
+				m.Revision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12230,9 +16853,13 @@ func (m *HashKVRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12257,7 +16884,7 @@ func (m *HashKVResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12285,7 +16912,7 @@ func (m *HashKVResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12294,6 +16921,9 @@ func (m *HashKVResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12318,7 +16948,7 @@ func (m *HashKVResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Hash |= (uint32(b) & 0x7F) << shift
+				m.Hash |= uint32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12337,7 +16967,7 @@ func (m *HashKVResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CompactRevision |= (int64(b) & 0x7F) << shift
+				m.CompactRevision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12351,9 +16981,13 @@ func (m *HashKVResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12378,7 +17012,7 @@ func (m *HashResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12406,7 +17040,7 @@ func (m *HashResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12415,6 +17049,9 @@ func (m *HashResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12439,7 +17076,7 @@ func (m *HashResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Hash |= (uint32(b) & 0x7F) << shift
+				m.Hash |= uint32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12453,9 +17090,13 @@ func (m *HashResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12480,7 +17121,7 @@ func (m *SnapshotRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12503,9 +17144,13 @@ func (m *SnapshotRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12530,7 +17175,7 @@ func (m *SnapshotResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12558,7 +17203,7 @@ func (m *SnapshotResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12567,6 +17212,9 @@ func (m *SnapshotResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12591,7 +17239,7 @@ func (m *SnapshotResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.RemainingBytes |= (uint64(b) & 0x7F) << shift
+				m.RemainingBytes |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12610,7 +17258,7 @@ func (m *SnapshotResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12619,6 +17267,9 @@ func (m *SnapshotResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12636,9 +17287,13 @@ func (m *SnapshotResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12663,7 +17318,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12691,7 +17346,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12700,6 +17355,9 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12723,7 +17381,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12732,6 +17390,9 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12782,9 +17443,13 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12809,7 +17474,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -12837,7 +17502,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12846,6 +17511,9 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12868,7 +17536,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12877,6 +17545,9 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12899,7 +17570,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.StartRevision |= (int64(b) & 0x7F) << shift
+				m.StartRevision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12918,7 +17589,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12936,7 +17607,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					v |= (WatchCreateRequest_FilterType(b) & 0x7F) << shift
+					v |= WatchCreateRequest_FilterType(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -12953,7 +17624,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
+					packedLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -12962,8 +17633,15 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 					return ErrInvalidLengthRpc
 				}
 				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthRpc
+				}
 				if postIndex > l {
 					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				if elementCount != 0 && len(m.Filters) == 0 {
+					m.Filters = make([]WatchCreateRequest_FilterType, 0, elementCount)
 				}
 				for iNdEx < postIndex {
 					var v WatchCreateRequest_FilterType
@@ -12976,7 +17654,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 						}
 						b := dAtA[iNdEx]
 						iNdEx++
-						v |= (WatchCreateRequest_FilterType(b) & 0x7F) << shift
+						v |= WatchCreateRequest_FilterType(b&0x7F) << shift
 						if b < 0x80 {
 							break
 						}
@@ -13000,7 +17678,7 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13054,9 +17732,13 @@ func (m *WatchCreateRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13081,7 +17763,7 @@ func (m *WatchCancelRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -13109,7 +17791,7 @@ func (m *WatchCancelRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.WatchId |= (int64(b) & 0x7F) << shift
+				m.WatchId |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13123,9 +17805,67 @@ func (m *WatchCancelRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *WatchProgressRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRpc
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: WatchProgressRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: WatchProgressRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRpc(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthRpc
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13200,7 +17940,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -13228,7 +17968,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13237,6 +17977,9 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13261,7 +18004,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.WatchId |= (int64(b) & 0x7F) << shift
+				m.WatchId |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13280,7 +18023,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13300,7 +18043,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13320,7 +18063,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CompactRevision |= (int64(b) & 0x7F) << shift
+				m.CompactRevision |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13339,7 +18082,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13349,6 +18092,9 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13388,7 +18134,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13397,6 +18143,9 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13414,9 +18163,13 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13441,7 +18194,7 @@ func (m *LeaseGrantRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -13469,7 +18222,7 @@ func (m *LeaseGrantRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TTL |= (int64(b) & 0x7F) << shift
+				m.TTL |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13488,7 +18241,7 @@ func (m *LeaseGrantRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (int64(b) & 0x7F) << shift
+				m.ID |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13502,9 +18255,13 @@ func (m *LeaseGrantRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13529,7 +18286,7 @@ func (m *LeaseGrantResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -13557,7 +18314,7 @@ func (m *LeaseGrantResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13566,6 +18323,9 @@ func (m *LeaseGrantResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13590,7 +18350,7 @@ func (m *LeaseGrantResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (int64(b) & 0x7F) << shift
+				m.ID |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13609,7 +18369,7 @@ func (m *LeaseGrantResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TTL |= (int64(b) & 0x7F) << shift
+				m.TTL |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13628,7 +18388,7 @@ func (m *LeaseGrantResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13638,6 +18398,9 @@ func (m *LeaseGrantResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13652,9 +18415,13 @@ func (m *LeaseGrantResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13679,7 +18446,7 @@ func (m *LeaseRevokeRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -13707,7 +18474,7 @@ func (m *LeaseRevokeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (int64(b) & 0x7F) << shift
+				m.ID |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13721,9 +18488,13 @@ func (m *LeaseRevokeRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13748,7 +18519,7 @@ func (m *LeaseRevokeResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -13776,7 +18547,7 @@ func (m *LeaseRevokeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -13785,6 +18556,9 @@ func (m *LeaseRevokeResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13804,9 +18578,13 @@ func (m *LeaseRevokeResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13831,7 +18609,7 @@ func (m *LeaseCheckpoint) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14111,7 +18889,7 @@ func (m *LeaseKeepAliveRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (int64(b) & 0x7F) << shift
+				m.ID |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14125,9 +18903,13 @@ func (m *LeaseKeepAliveRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14152,7 +18934,7 @@ func (m *LeaseKeepAliveResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14180,7 +18962,7 @@ func (m *LeaseKeepAliveResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14189,6 +18971,9 @@ func (m *LeaseKeepAliveResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14213,7 +18998,7 @@ func (m *LeaseKeepAliveResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (int64(b) & 0x7F) << shift
+				m.ID |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14232,7 +19017,7 @@ func (m *LeaseKeepAliveResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TTL |= (int64(b) & 0x7F) << shift
+				m.TTL |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14246,9 +19031,13 @@ func (m *LeaseKeepAliveResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14273,7 +19062,7 @@ func (m *LeaseTimeToLiveRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14301,7 +19090,7 @@ func (m *LeaseTimeToLiveRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (int64(b) & 0x7F) << shift
+				m.ID |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14320,7 +19109,7 @@ func (m *LeaseTimeToLiveRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14335,9 +19124,13 @@ func (m *LeaseTimeToLiveRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14362,7 +19155,7 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14390,7 +19183,7 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14399,6 +19192,9 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14423,7 +19219,7 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (int64(b) & 0x7F) << shift
+				m.ID |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14442,7 +19238,7 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TTL |= (int64(b) & 0x7F) << shift
+				m.TTL |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14461,7 +19257,7 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.GrantedTTL |= (int64(b) & 0x7F) << shift
+				m.GrantedTTL |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14480,7 +19276,7 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14489,6 +19285,9 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14504,9 +19303,13 @@ func (m *LeaseTimeToLiveResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14531,7 +19334,7 @@ func (m *LeaseLeasesRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14554,9 +19357,13 @@ func (m *LeaseLeasesRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14581,7 +19388,7 @@ func (m *LeaseStatus) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14609,7 +19416,7 @@ func (m *LeaseStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (int64(b) & 0x7F) << shift
+				m.ID |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14623,9 +19430,13 @@ func (m *LeaseStatus) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14650,7 +19461,7 @@ func (m *LeaseLeasesResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14678,7 +19489,7 @@ func (m *LeaseLeasesResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14687,6 +19498,9 @@ func (m *LeaseLeasesResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14711,7 +19525,7 @@ func (m *LeaseLeasesResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14720,6 +19534,9 @@ func (m *LeaseLeasesResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14737,9 +19554,13 @@ func (m *LeaseLeasesResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14764,7 +19585,7 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14792,7 +19613,7 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (uint64(b) & 0x7F) << shift
+				m.ID |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14811,7 +19632,7 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14821,6 +19642,9 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14840,7 +19664,7 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14850,6 +19674,9 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14869,7 +19696,7 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14879,6 +19706,9 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14913,9 +19743,13 @@ func (m *Member) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14940,7 +19774,7 @@ func (m *MemberAddRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -14968,7 +19802,7 @@ func (m *MemberAddRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14978,6 +19812,9 @@ func (m *MemberAddRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15012,9 +19849,13 @@ func (m *MemberAddRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15039,7 +19880,7 @@ func (m *MemberAddResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -15067,7 +19908,7 @@ func (m *MemberAddResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15076,6 +19917,9 @@ func (m *MemberAddResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15100,7 +19944,7 @@ func (m *MemberAddResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15109,6 +19953,9 @@ func (m *MemberAddResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15133,7 +19980,7 @@ func (m *MemberAddResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15142,6 +19989,9 @@ func (m *MemberAddResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15159,9 +20009,13 @@ func (m *MemberAddResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15186,7 +20040,7 @@ func (m *MemberRemoveRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -15397,7 +20251,7 @@ func (m *MemberUpdateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ID |= (uint64(b) & 0x7F) << shift
+				m.ID |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15440,9 +20294,13 @@ func (m *MemberUpdateRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15467,7 +20325,7 @@ func (m *MemberUpdateResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -15495,7 +20353,7 @@ func (m *MemberUpdateResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15504,6 +20362,9 @@ func (m *MemberUpdateResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15528,7 +20389,7 @@ func (m *MemberUpdateResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15537,6 +20398,9 @@ func (m *MemberUpdateResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15554,9 +20418,13 @@ func (m *MemberUpdateResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15581,7 +20449,7 @@ func (m *MemberListRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -15604,9 +20472,13 @@ func (m *MemberListRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15631,7 +20503,7 @@ func (m *MemberListResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -15659,7 +20531,7 @@ func (m *MemberListResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15668,6 +20540,9 @@ func (m *MemberListResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15692,7 +20567,7 @@ func (m *MemberListResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15701,6 +20576,9 @@ func (m *MemberListResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15718,9 +20596,13 @@ func (m *MemberListResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15745,7 +20627,7 @@ func (m *MemberPromoteRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -15787,9 +20669,13 @@ func (m *MemberPromoteRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15814,7 +20700,7 @@ func (m *MemberPromoteResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -15842,7 +20728,7 @@ func (m *MemberPromoteResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15851,6 +20737,9 @@ func (m *MemberPromoteResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15875,7 +20764,7 @@ func (m *MemberPromoteResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -15884,6 +20773,9 @@ func (m *MemberPromoteResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15901,9 +20793,13 @@ func (m *MemberPromoteResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15928,7 +20824,7 @@ func (m *DefragmentRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -15951,9 +20847,13 @@ func (m *DefragmentRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -15978,7 +20878,7 @@ func (m *DefragmentResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16006,7 +20906,7 @@ func (m *DefragmentResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16015,6 +20915,9 @@ func (m *DefragmentResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16034,9 +20937,13 @@ func (m *DefragmentResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16061,7 +20968,7 @@ func (m *MoveLeaderRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16089,7 +20996,7 @@ func (m *MoveLeaderRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TargetID |= (uint64(b) & 0x7F) << shift
+				m.TargetID |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16103,9 +21010,13 @@ func (m *MoveLeaderRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16130,7 +21041,7 @@ func (m *MoveLeaderResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16158,7 +21069,7 @@ func (m *MoveLeaderResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16167,6 +21078,9 @@ func (m *MoveLeaderResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16186,9 +21100,13 @@ func (m *MoveLeaderResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16213,7 +21131,7 @@ func (m *AlarmRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16241,7 +21159,7 @@ func (m *AlarmRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Action |= (AlarmRequest_AlarmAction(b) & 0x7F) << shift
+				m.Action |= AlarmRequest_AlarmAction(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16260,7 +21178,7 @@ func (m *AlarmRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MemberID |= (uint64(b) & 0x7F) << shift
+				m.MemberID |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16279,7 +21197,7 @@ func (m *AlarmRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Alarm |= (AlarmType(b) & 0x7F) << shift
+				m.Alarm |= AlarmType(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16293,9 +21211,13 @@ func (m *AlarmRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16320,7 +21242,7 @@ func (m *AlarmMember) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16348,7 +21270,7 @@ func (m *AlarmMember) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MemberID |= (uint64(b) & 0x7F) << shift
+				m.MemberID |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16367,7 +21289,7 @@ func (m *AlarmMember) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Alarm |= (AlarmType(b) & 0x7F) << shift
+				m.Alarm |= AlarmType(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16381,9 +21303,13 @@ func (m *AlarmMember) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16408,7 +21334,7 @@ func (m *AlarmResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16436,7 +21362,7 @@ func (m *AlarmResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16445,6 +21371,9 @@ func (m *AlarmResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16469,7 +21398,7 @@ func (m *AlarmResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16478,6 +21407,9 @@ func (m *AlarmResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16495,9 +21427,13 @@ func (m *AlarmResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16522,7 +21458,7 @@ func (m *StatusRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16545,9 +21481,13 @@ func (m *StatusRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16572,7 +21512,7 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16600,7 +21540,7 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16609,6 +21549,9 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16633,7 +21576,7 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16643,6 +21586,9 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16662,7 +21608,7 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DbSize |= (int64(b) & 0x7F) << shift
+				m.DbSize |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16681,7 +21627,7 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Leader |= (uint64(b) & 0x7F) << shift
+				m.Leader |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16700,7 +21646,7 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.RaftIndex |= (uint64(b) & 0x7F) << shift
+				m.RaftIndex |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16719,7 +21665,7 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.RaftTerm |= (uint64(b) & 0x7F) << shift
+				m.RaftTerm |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16820,9 +21766,13 @@ func (m *StatusResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16847,7 +21797,7 @@ func (m *AuthEnableRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16870,9 +21820,13 @@ func (m *AuthEnableRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16897,7 +21851,7 @@ func (m *AuthDisableRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16920,9 +21874,13 @@ func (m *AuthDisableRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -16947,7 +21905,7 @@ func (m *AuthenticateRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -16975,7 +21933,7 @@ func (m *AuthenticateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -16985,6 +21943,9 @@ func (m *AuthenticateRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17004,7 +21965,7 @@ func (m *AuthenticateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17014,6 +21975,9 @@ func (m *AuthenticateRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17028,9 +21992,13 @@ func (m *AuthenticateRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17055,7 +22023,7 @@ func (m *AuthUserAddRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17083,7 +22051,7 @@ func (m *AuthUserAddRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17093,6 +22061,9 @@ func (m *AuthUserAddRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17112,7 +22083,7 @@ func (m *AuthUserAddRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17122,6 +22093,9 @@ func (m *AuthUserAddRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17169,9 +22143,13 @@ func (m *AuthUserAddRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17196,7 +22174,7 @@ func (m *AuthUserGetRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17224,7 +22202,7 @@ func (m *AuthUserGetRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17234,6 +22212,9 @@ func (m *AuthUserGetRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17248,9 +22229,13 @@ func (m *AuthUserGetRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17275,7 +22260,7 @@ func (m *AuthUserDeleteRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17303,7 +22288,7 @@ func (m *AuthUserDeleteRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17313,6 +22298,9 @@ func (m *AuthUserDeleteRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17327,9 +22315,13 @@ func (m *AuthUserDeleteRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17354,7 +22346,7 @@ func (m *AuthUserChangePasswordRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17382,7 +22374,7 @@ func (m *AuthUserChangePasswordRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17392,6 +22384,9 @@ func (m *AuthUserChangePasswordRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17411,7 +22406,7 @@ func (m *AuthUserChangePasswordRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17421,6 +22416,9 @@ func (m *AuthUserChangePasswordRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17435,9 +22433,13 @@ func (m *AuthUserChangePasswordRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17462,7 +22464,7 @@ func (m *AuthUserGrantRoleRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17490,7 +22492,7 @@ func (m *AuthUserGrantRoleRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17500,6 +22502,9 @@ func (m *AuthUserGrantRoleRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17519,7 +22524,7 @@ func (m *AuthUserGrantRoleRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17529,6 +22534,9 @@ func (m *AuthUserGrantRoleRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17543,9 +22551,13 @@ func (m *AuthUserGrantRoleRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17570,7 +22582,7 @@ func (m *AuthUserRevokeRoleRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17598,7 +22610,7 @@ func (m *AuthUserRevokeRoleRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17608,6 +22620,9 @@ func (m *AuthUserRevokeRoleRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17627,7 +22642,7 @@ func (m *AuthUserRevokeRoleRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17637,6 +22652,9 @@ func (m *AuthUserRevokeRoleRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17651,9 +22669,13 @@ func (m *AuthUserRevokeRoleRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17678,7 +22700,7 @@ func (m *AuthRoleAddRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17706,7 +22728,7 @@ func (m *AuthRoleAddRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17716,6 +22738,9 @@ func (m *AuthRoleAddRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17730,9 +22755,13 @@ func (m *AuthRoleAddRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17757,7 +22786,7 @@ func (m *AuthRoleGetRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17785,7 +22814,7 @@ func (m *AuthRoleGetRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17795,6 +22824,9 @@ func (m *AuthRoleGetRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17809,9 +22841,13 @@ func (m *AuthRoleGetRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17836,7 +22872,7 @@ func (m *AuthUserListRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17859,9 +22895,13 @@ func (m *AuthUserListRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17886,7 +22926,7 @@ func (m *AuthRoleListRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17909,9 +22949,13 @@ func (m *AuthRoleListRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -17936,7 +22980,7 @@ func (m *AuthRoleDeleteRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -17964,7 +23008,7 @@ func (m *AuthRoleDeleteRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -17974,6 +23018,9 @@ func (m *AuthRoleDeleteRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -17988,9 +23035,13 @@ func (m *AuthRoleDeleteRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18015,7 +23066,7 @@ func (m *AuthRoleGrantPermissionRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18043,7 +23094,7 @@ func (m *AuthRoleGrantPermissionRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18053,6 +23104,9 @@ func (m *AuthRoleGrantPermissionRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18072,7 +23126,7 @@ func (m *AuthRoleGrantPermissionRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18081,6 +23135,9 @@ func (m *AuthRoleGrantPermissionRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18100,9 +23157,13 @@ func (m *AuthRoleGrantPermissionRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18127,7 +23188,7 @@ func (m *AuthRoleRevokePermissionRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18155,7 +23216,7 @@ func (m *AuthRoleRevokePermissionRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18165,6 +23226,9 @@ func (m *AuthRoleRevokePermissionRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18241,9 +23305,13 @@ func (m *AuthRoleRevokePermissionRequest) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18268,7 +23336,7 @@ func (m *AuthEnableResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18296,7 +23364,7 @@ func (m *AuthEnableResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18305,6 +23373,9 @@ func (m *AuthEnableResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18324,9 +23395,13 @@ func (m *AuthEnableResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18351,7 +23426,7 @@ func (m *AuthDisableResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18379,7 +23454,7 @@ func (m *AuthDisableResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18388,6 +23463,9 @@ func (m *AuthDisableResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18407,9 +23485,13 @@ func (m *AuthDisableResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18434,7 +23516,7 @@ func (m *AuthenticateResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18462,7 +23544,7 @@ func (m *AuthenticateResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18471,6 +23553,9 @@ func (m *AuthenticateResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18495,7 +23580,7 @@ func (m *AuthenticateResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18505,6 +23590,9 @@ func (m *AuthenticateResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18519,9 +23607,13 @@ func (m *AuthenticateResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18546,7 +23638,7 @@ func (m *AuthUserAddResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18574,7 +23666,7 @@ func (m *AuthUserAddResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18583,6 +23675,9 @@ func (m *AuthUserAddResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18602,9 +23697,13 @@ func (m *AuthUserAddResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18629,7 +23728,7 @@ func (m *AuthUserGetResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18657,7 +23756,7 @@ func (m *AuthUserGetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18666,6 +23765,9 @@ func (m *AuthUserGetResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18690,7 +23792,7 @@ func (m *AuthUserGetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18700,6 +23802,9 @@ func (m *AuthUserGetResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18714,9 +23819,13 @@ func (m *AuthUserGetResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18741,7 +23850,7 @@ func (m *AuthUserDeleteResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18769,7 +23878,7 @@ func (m *AuthUserDeleteResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18778,6 +23887,9 @@ func (m *AuthUserDeleteResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18797,9 +23909,13 @@ func (m *AuthUserDeleteResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18824,7 +23940,7 @@ func (m *AuthUserChangePasswordResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18852,7 +23968,7 @@ func (m *AuthUserChangePasswordResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18861,6 +23977,9 @@ func (m *AuthUserChangePasswordResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18880,9 +23999,13 @@ func (m *AuthUserChangePasswordResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18907,7 +24030,7 @@ func (m *AuthUserGrantRoleResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -18935,7 +24058,7 @@ func (m *AuthUserGrantRoleResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -18944,6 +24067,9 @@ func (m *AuthUserGrantRoleResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -18963,9 +24089,13 @@ func (m *AuthUserGrantRoleResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -18990,7 +24120,7 @@ func (m *AuthUserRevokeRoleResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -19018,7 +24148,7 @@ func (m *AuthUserRevokeRoleResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19027,6 +24157,9 @@ func (m *AuthUserRevokeRoleResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19046,9 +24179,13 @@ func (m *AuthUserRevokeRoleResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -19073,7 +24210,7 @@ func (m *AuthRoleAddResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -19101,7 +24238,7 @@ func (m *AuthRoleAddResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19110,6 +24247,9 @@ func (m *AuthRoleAddResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19129,9 +24269,13 @@ func (m *AuthRoleAddResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -19156,7 +24300,7 @@ func (m *AuthRoleGetResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -19184,7 +24328,7 @@ func (m *AuthRoleGetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19193,6 +24337,9 @@ func (m *AuthRoleGetResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19217,7 +24364,7 @@ func (m *AuthRoleGetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19226,6 +24373,9 @@ func (m *AuthRoleGetResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19243,9 +24393,13 @@ func (m *AuthRoleGetResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -19270,7 +24424,7 @@ func (m *AuthRoleListResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -19298,7 +24452,7 @@ func (m *AuthRoleListResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19307,6 +24461,9 @@ func (m *AuthRoleListResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19331,7 +24488,7 @@ func (m *AuthRoleListResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19341,6 +24498,9 @@ func (m *AuthRoleListResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19355,9 +24515,13 @@ func (m *AuthRoleListResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -19382,7 +24546,7 @@ func (m *AuthUserListResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -19410,7 +24574,7 @@ func (m *AuthUserListResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19419,6 +24583,9 @@ func (m *AuthUserListResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19443,7 +24610,7 @@ func (m *AuthUserListResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19453,6 +24620,9 @@ func (m *AuthUserListResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19467,9 +24637,13 @@ func (m *AuthUserListResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -19494,7 +24668,7 @@ func (m *AuthRoleDeleteResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -19522,7 +24696,7 @@ func (m *AuthRoleDeleteResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19531,6 +24705,9 @@ func (m *AuthRoleDeleteResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19550,9 +24727,13 @@ func (m *AuthRoleDeleteResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -19577,7 +24758,7 @@ func (m *AuthRoleGrantPermissionResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -19605,7 +24786,7 @@ func (m *AuthRoleGrantPermissionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19614,6 +24795,9 @@ func (m *AuthRoleGrantPermissionResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19633,9 +24817,13 @@ func (m *AuthRoleGrantPermissionResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -19660,7 +24848,7 @@ func (m *AuthRoleRevokePermissionResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -19688,7 +24876,7 @@ func (m *AuthRoleRevokePermissionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -19697,6 +24885,9 @@ func (m *AuthRoleRevokePermissionResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthRpc
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -19716,9 +24907,13 @@ func (m *AuthRoleRevokePermissionResponse) Unmarshal(dAtA []byte) error {
 			if skippy < 0 {
 				return ErrInvalidLengthRpc
 			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthRpc
+			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -19782,8 +24977,11 @@ func skipRpc(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			iNdEx += length
 			if length < 0 {
+				return 0, ErrInvalidLengthRpc
+			}
+			iNdEx += length
+			if iNdEx < 0 {
 				return 0, ErrInvalidLengthRpc
 			}
 			return iNdEx, nil
@@ -19814,6 +25012,9 @@ func skipRpc(dAtA []byte) (n int, err error) {
 					return 0, err
 				}
 				iNdEx = start + next
+				if iNdEx < 0 {
+					return 0, ErrInvalidLengthRpc
+				}
 			}
 			return iNdEx, nil
 		case 4:
