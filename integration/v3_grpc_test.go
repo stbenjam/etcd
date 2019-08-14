@@ -1758,6 +1758,7 @@ func testTLSReload(
 				DialOptions: []grpc.DialOption{grpc.WithBlock()},
 				Endpoints:   []string{clus.Members[0].GRPCAddr()},
 				DialTimeout: time.Second,
+				DialOptions: []grpc.DialOption{grpc.WithBlock()},
 				TLS:         cc,
 			})
 			if cerr != nil {
@@ -1792,6 +1793,7 @@ func testTLSReload(
 	cl, cerr := clientv3.New(clientv3.Config{
 		Endpoints:   []string{clus.Members[0].GRPCAddr()},
 		DialTimeout: 5 * time.Second,
+		DialOptions: []grpc.DialOption{grpc.WithBlock()},
 		TLS:         tls,
 	})
 	if cerr != nil {
