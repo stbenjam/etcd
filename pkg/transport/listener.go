@@ -71,6 +71,8 @@ type TLSInfo struct {
 	InsecureSkipVerify  bool
 	SkipClientSANVerify bool
 
+	SkipClientSANVerify bool
+
 	// ServerName ensures the cert matches the given host in case of discovery / virtual hosting
 	ServerName string
 
