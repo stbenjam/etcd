@@ -32,6 +32,9 @@ func PurgeFile(lg *zap.Logger, dirname string, suffix string, max uint, interval
 func purgeFile(lg *zap.Logger, dirname string, suffix string, max uint, interval time.Duration, stop <-chan struct{}, purgec chan<- string) <-chan error {
 	errC := make(chan error, 1)
 	go func() {
+		if donec != nil {
+			defer close(donec)
+		}
 		for {
 			fnames, err := ReadDir(dirname)
 			if err != nil {

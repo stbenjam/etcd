@@ -806,6 +806,7 @@ func (s *EtcdServer) start() {
 
 func (s *EtcdServer) purgeFile() {
 	var dberrc, serrc, werrc <-chan error
+	var dbdonec, sdonec, wdonec <-chan struct{}
 	if s.Cfg.MaxSnapFiles > 0 {
 		dberrc = fileutil.PurgeFile(s.getLogger(), s.Cfg.SnapDir(), "snap.db", s.Cfg.MaxSnapFiles, purgeFileInterval, s.done)
 		serrc = fileutil.PurgeFile(s.getLogger(), s.Cfg.SnapDir(), "snap", s.Cfg.MaxSnapFiles, purgeFileInterval, s.done)
@@ -835,6 +836,15 @@ func (s *EtcdServer) purgeFile() {
 			plog.Fatalf("failed to purge wal file %v", e)
 		}
 	case <-s.stopping:
+		if dbdonec != nil {
+			<-dbdonec
+		}
+		if sdonec != nil {
+			<-sdonec
+		}
+		if wdonec != nil {
+			<-wdonec
+		}
 		return
 	}
 }
