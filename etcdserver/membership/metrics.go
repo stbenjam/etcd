@@ -1,4 +1,4 @@
-// Copyright 2015 The etcd Authors
+// Copyright 2018 The etcd Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,27 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package mvcc
+package membership
 
-import (
-	"fmt"
-	"testing"
+import "github.com/prometheus/client_golang/prometheus"
 
-	"github.com/coreos/etcd/lease"
-	"github.com/coreos/etcd/mvcc/backend"
+var (
+	ClusterVersionMetrics = prometheus.NewGaugeVec(prometheus.GaugeOpts{
+		Namespace: "etcd",
+		Subsystem: "cluster",
+		Name:      "version",
+		Help:      "Which version is running. 1 for 'cluster_version' label with current cluster version",
+	},
+		[]string{"cluster_version"})
 )
 
-func BenchmarkKVWatcherMemoryUsage(b *testing.B) {
-	be, tmpPath := backend.NewDefaultTmpBackend()
-	watchable := newWatchableStore(be, &lease.FakeLessor{}, nil, nil)
-
-	defer cleanup(watchable, be, tmpPath)
-
-	w := watchable.NewWatchStream()
-
-	b.ReportAllocs()
-	b.StartTimer()
-	for i := 0; i < b.N; i++ {
-		w.Watch([]byte(fmt.Sprint("foo", i)), nil, 0)
-	}
+func init() {
+	prometheus.MustRegister(ClusterVersionMetrics)
 }

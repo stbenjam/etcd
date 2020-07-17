@@ -25,6 +25,8 @@ healthcheck
 iff
 inflight
 keepalive
+hasleader
+racey
 keepalives
 keyspace
 linearization
