@@ -104,7 +104,7 @@ func clusterVersionTest(cx ctlCtx, expected string) {
 
 func ctlV3Version(cx ctlCtx) error {
 	cmdArgs := append(cx.PrefixArgs(), "version")
-	return spawnWithExpectWithEnv(cmdArgs, cx.envMap, version.Version)
+	return spawnWithExpect(cmdArgs, version.Version)
 }
 
 // TestCtlV3DialWithHTTPScheme ensures that client handles endpoints with HTTPS scheme.
@@ -114,7 +114,7 @@ func TestCtlV3DialWithHTTPScheme(t *testing.T) {
 
 func dialWithSchemeTest(cx ctlCtx) {
 	cmdArgs := append(cx.prefixArgs(cx.epc.EndpointsV3()), "put", "foo", "bar")
-	if err := spawnWithExpectWithEnv(cmdArgs, cx.envMap, "OK"); err != nil {
+	if err := spawnWithExpect(cmdArgs, "OK"); err != nil {
 		cx.t.Fatal(err)
 	}
 }
@@ -129,7 +129,7 @@ type ctlCtx struct {
 
 	epc *etcdProcessCluster
 
-	envMap map[string]string
+	envMap map[string]struct{}
 
 	dialTimeout time.Duration
 
@@ -201,7 +201,7 @@ func withApiPrefix(p string) ctlOption {
 }
 
 func withFlagByEnv() ctlOption {
-	return func(cx *ctlCtx) { cx.envMap = make(map[string]string) }
+	return func(cx *ctlCtx) { cx.envMap = make(map[string]struct{}) }
 }
 
 func withEtcdutl() ctlOption {
@@ -248,7 +248,6 @@ func testCtlWithOffline(t *testing.T, testFunc func(ctlCtx), testOfflineFunc fun
 			for k := range ret.envMap {
 				os.Unsetenv(k)
 			}
-			ret.envMap = make(map[string]string)
 		}
 		if ret.epc != nil {
 			if errC := ret.epc.Close(); errC != nil {
@@ -312,7 +311,8 @@ func (cx *ctlCtx) prefixArgs(eps []string) []string {
 	for k, v := range fmap {
 		if useEnv {
 			ek := flags.FlagToEnv("ETCDCTL", k)
-			cx.envMap[ek] = v
+			os.Setenv(ek, v)
+			cx.envMap[ek] = struct{}{}
 		} else {
 			cmdArgs = append(cmdArgs, fmt.Sprintf("--%s=%s", k, v))
 		}

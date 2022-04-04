@@ -52,13 +52,13 @@ func ctlV3OnlineDefrag(cx ctlCtx) error {
 	for i := range lines {
 		lines[i] = "Finished defragmenting etcd member"
 	}
-	return spawnWithExpects(cmdArgs, cx.envMap, lines...)
+	return spawnWithExpects(cmdArgs, lines...)
 }
 
 func ctlV3OfflineDefrag(cx ctlCtx) error {
 	cmdArgs := append(cx.PrefixArgsUtl(), "defrag", "--data-dir", cx.dataDir)
 	lines := []string{"finished defragmenting directory"}
-	return spawnWithExpects(cmdArgs, cx.envMap, lines...)
+	return spawnWithExpects(cmdArgs, lines...)
 }
 
 func defragOfflineTest(cx ctlCtx) {

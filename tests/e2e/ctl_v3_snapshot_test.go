@@ -84,11 +84,10 @@ func snapshotCorruptTest(cx ctlCtx) {
 
 	datadir := cx.t.TempDir()
 
-	serr := spawnWithExpectWithEnv(
+	serr := spawnWithExpect(
 		append(cx.PrefixArgsUtl(), "snapshot", "restore",
 			"--data-dir", datadir,
 			fpath),
-		cx.envMap,
 		"expected sha256")
 
 	if serr != nil {
@@ -118,11 +117,10 @@ func snapshotStatusBeforeRestoreTest(cx ctlCtx) {
 
 	dataDir := cx.t.TempDir()
 	defer os.RemoveAll(dataDir)
-	serr := spawnWithExpectWithEnv(
+	serr := spawnWithExpect(
 		append(cx.PrefixArgsUtl(), "snapshot", "restore",
 			"--data-dir", dataDir,
 			fpath),
-		cx.envMap,
 		"added member")
 	if serr != nil {
 		cx.t.Fatal(serr)
@@ -131,13 +129,13 @@ func snapshotStatusBeforeRestoreTest(cx ctlCtx) {
 
 func ctlV3SnapshotSave(cx ctlCtx, fpath string) error {
 	cmdArgs := append(cx.PrefixArgs(), "snapshot", "save", fpath)
-	return spawnWithExpectWithEnv(cmdArgs, cx.envMap, fmt.Sprintf("Snapshot saved at %s", fpath))
+	return spawnWithExpect(cmdArgs, fmt.Sprintf("Snapshot saved at %s", fpath))
 }
 
 func getSnapshotStatus(cx ctlCtx, fpath string) (snapshot.Status, error) {
 	cmdArgs := append(cx.PrefixArgsUtl(), "--write-out", "json", "snapshot", "status", fpath)
 
-	proc, err := spawnCmd(cmdArgs, nil)
+	proc, err := spawnCmd(cmdArgs)
 	if err != nil {
 		return snapshot.Status{}, err
 	}
@@ -204,10 +202,7 @@ func testIssue6361(t *testing.T, etcdutl bool) {
 	fpath := filepath.Join(t.TempDir(), "test.snapshot")
 
 	t.Log("etcdctl saving snapshot...")
-	if err = spawnWithExpects(append(prefixArgs, "snapshot", "save", fpath),
-		nil,
-		fmt.Sprintf("Snapshot saved at %s", fpath),
-	); err != nil {
+	if err = spawnWithExpect(append(prefixArgs, "snapshot", "save", fpath), fmt.Sprintf("Snapshot saved at %s", fpath)); err != nil {
 		t.Fatal(err)
 	}
 
@@ -267,7 +262,7 @@ func testIssue6361(t *testing.T, etcdutl bool) {
 	nepc, err = spawnCmd([]string{epc.procs[0].Config().execPath, "--name", name2,
 		"--listen-client-urls", clientURL, "--advertise-client-urls", clientURL,
 		"--listen-peer-urls", peerURL, "--initial-advertise-peer-urls", peerURL,
-		"--initial-cluster", initialCluster2, "--initial-cluster-state", "existing", "--data-dir", newDataDir2}, nil)
+		"--initial-cluster", initialCluster2, "--initial-cluster-state", "existing", "--data-dir", newDataDir2})
 	if err != nil {
 		t.Fatal(err)
 	}

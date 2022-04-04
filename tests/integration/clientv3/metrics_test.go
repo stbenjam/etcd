@@ -75,7 +75,7 @@ func TestV3ClientMetrics(t *testing.T) {
 	defer clus.Terminate(t)
 
 	cfg := clientv3.Config{
-		Endpoints: []string{clus.Members[0].GRPCURL()},
+		Endpoints: []string{clus.Members[0].GRPCAddr()},
 		DialOptions: []grpc.DialOption{
 			grpc.WithUnaryInterceptor(grpcprom.UnaryClientInterceptor),
 			grpc.WithStreamInterceptor(grpcprom.StreamClientInterceptor),

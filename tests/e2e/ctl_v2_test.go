@@ -505,7 +505,7 @@ func etcdctlBackup(t testing.TB, clus *etcdProcessCluster, dataDir, backupDir st
 		cmdArgs = append(cmdArgs, "--with-v3=false")
 	}
 	t.Logf("Running: %v", cmdArgs)
-	proc, err := spawnCmd(cmdArgs, nil)
+	proc, err := spawnCmd(cmdArgs)
 	if err != nil {
 		return err
 	}

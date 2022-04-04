@@ -35,11 +35,10 @@ func TestBalancerUnderServerShutdownWatch(t *testing.T) {
 	clus := integration.NewClusterV3(t, &integration.ClusterConfig{
 		Size:               3,
 		SkipCreatingClient: true,
-		UseBridge:          true,
 	})
 	defer clus.Terminate(t)
 
-	eps := []string{clus.Members[0].GRPCURL(), clus.Members[1].GRPCURL(), clus.Members[2].GRPCURL()}
+	eps := []string{clus.Members[0].GRPCAddr(), clus.Members[1].GRPCAddr(), clus.Members[2].GRPCAddr()}
 
 	lead := clus.WaitLeader(t)
 
@@ -151,7 +150,7 @@ func testBalancerUnderServerShutdownMutable(t *testing.T, op func(*clientv3.Clie
 	})
 	defer clus.Terminate(t)
 
-	eps := []string{clus.Members[0].GRPCURL(), clus.Members[1].GRPCURL(), clus.Members[2].GRPCURL()}
+	eps := []string{clus.Members[0].GRPCAddr(), clus.Members[1].GRPCAddr(), clus.Members[2].GRPCAddr()}
 
 	// pin eps[0]
 	cli, err := integration.NewClient(t, clientv3.Config{Endpoints: []string{eps[0]}})
@@ -209,7 +208,7 @@ func testBalancerUnderServerShutdownImmutable(t *testing.T, op func(*clientv3.Cl
 	})
 	defer clus.Terminate(t)
 
-	eps := []string{clus.Members[0].GRPCURL(), clus.Members[1].GRPCURL(), clus.Members[2].GRPCURL()}
+	eps := []string{clus.Members[0].GRPCAddr(), clus.Members[1].GRPCAddr(), clus.Members[2].GRPCAddr()}
 
 	// pin eps[0]
 	cli, err := integration.NewClient(t, clientv3.Config{Endpoints: []string{eps[0]}})
@@ -279,7 +278,6 @@ func testBalancerUnderServerStopInflightRangeOnRestart(t *testing.T, linearizabl
 	cfg := &integration.ClusterConfig{
 		Size:               2,
 		SkipCreatingClient: true,
-		UseBridge:          true,
 	}
 	if linearizable {
 		cfg.Size = 3
@@ -287,9 +285,9 @@ func testBalancerUnderServerStopInflightRangeOnRestart(t *testing.T, linearizabl
 
 	clus := integration.NewClusterV3(t, cfg)
 	defer clus.Terminate(t)
-	eps := []string{clus.Members[0].GRPCURL(), clus.Members[1].GRPCURL()}
+	eps := []string{clus.Members[0].GRPCAddr(), clus.Members[1].GRPCAddr()}
 	if linearizable {
-		eps = append(eps, clus.Members[2].GRPCURL())
+		eps = append(eps, clus.Members[2].GRPCAddr())
 	}
 
 	lead := clus.WaitLeader(t)

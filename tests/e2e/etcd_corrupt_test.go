@@ -87,7 +87,7 @@ func corruptTest(cx ctlCtx) {
 
 	cx.t.Log("restarting etcd[0]")
 	ep := cx.epc.procs[0]
-	proc, err := spawnCmd(append([]string{ep.Config().execPath}, ep.Config().args...), cx.envMap)
+	proc, err := spawnCmd(append([]string{ep.Config().execPath}, ep.Config().args...))
 	if err != nil {
 		cx.t.Fatal(err)
 	}

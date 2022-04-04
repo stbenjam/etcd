@@ -43,11 +43,6 @@ type etcdProcess interface {
 	Close() error
 	WithStopSignal(sig os.Signal) os.Signal
 	Config() *etcdServerProcessConfig
-	Logs() logsExpect
-}
-
-type logsExpect interface {
-	Expect(string) (string, error)
 }
 
 type etcdServerProcess struct {
@@ -61,7 +56,6 @@ type etcdServerProcessConfig struct {
 	execPath string
 	args     []string
 	tlsArgs  []string
-	envVars  map[string]string
 
 	dataDirPath string
 	keepDataDir bool
@@ -98,7 +92,7 @@ func (ep *etcdServerProcess) Start() error {
 		panic("already started")
 	}
 	ep.cfg.lg.Info("starting server...", zap.String("name", ep.cfg.name))
-	proc, err := spawnCmdWithLogger(ep.cfg.lg, append([]string{ep.cfg.execPath}, ep.cfg.args...), ep.cfg.envVars)
+	proc, err := spawnCmdWithLogger(ep.cfg.lg, append([]string{ep.cfg.execPath}, ep.cfg.args...))
 	if err != nil {
 		return err
 	}
@@ -169,10 +163,3 @@ func (ep *etcdServerProcess) waitReady() error {
 }
 
 func (ep *etcdServerProcess) Config() *etcdServerProcessConfig { return ep.cfg }
-
-func (ep *etcdServerProcess) Logs() logsExpect {
-	if ep.proc == nil {
-		ep.cfg.lg.Panic("Please grap logs before process is stopped")
-	}
-	return ep.proc
-}
